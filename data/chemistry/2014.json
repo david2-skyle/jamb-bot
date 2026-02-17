@@ -1,0 +1,349 @@
+{
+  "paper_type": "E",
+  "questions": [
+    {
+      "question": "A mixture is different from a compound because",
+      "options": [
+        "the properties of a compound are those of its individual constituents while those of a mixture differ from its constituents",
+        "a mixture is always homogeneous while a compound is not",
+        "the constituents of a compound are chemically bound together while those of a mixture are not",
+        "a mixture can be represented by a chemical formula while a compound cannot"
+      ],
+      "answer_index": 2
+    },
+    {
+      "question": "What is the percentage of sulphur in sulphur (IV) oxide?",
+      "options": ["66%", "25%", "40%", "50%"],
+      "answer_index": 3
+    },
+    {
+      "question": "A gas X diffuses twice as fast as gas Y. If the relative molecular mass of X is 32, calculate the relative molecular mass of Y.",
+      "options": ["128", "8", "16", "64"],
+      "answer_index": 0
+    },
+    {
+      "question": "200cm³ of a gas at 25°C exerts a pressure of 700 mmHg. Calculate its pressure if its volume increases to 350 cm³ at 75°C.",
+      "options": ["342.53 mmHg", "1430.54 mmHg", "467.11 mmHg", "400.00 mmHg"],
+      "answer_index": 2
+    },
+    {
+      "question": "An element X has electron configuration 1s² 2s² 2p⁶ 3s² 3p⁵. Which of the following statements is correct about the element?",
+      "options": [
+        "It has a completely filled p-orbital",
+        "It has 5 electrons in its outermost shell",
+        "It belongs to group II on the periodic table",
+        "It is a halogen"
+      ],
+      "answer_index": 3
+    },
+    {
+      "question": "Beryllium and aluminium have similar properties because they",
+      "options": [
+        "are both metals",
+        "belong to the same group",
+        "belong to the same period",
+        "are positioned diagonally to each other"
+      ],
+      "answer_index": 0
+    },
+    {
+      "question": "If the difference in electronegativity of elements P and Q is 3.0, the bond that will be formed between them is",
+      "options": ["metallic", "covalent", "co-ordinate", "ionic"],
+      "answer_index": 3
+    },
+    {
+      "question": "How many protons, neutrons and electrons respectively are present in the element ⁶⁰₂₇Co?",
+      "options": [
+        "27, 33 and 33",
+        "33, 27 and 27",
+        "27, 33, and 27",
+        "60, 33 and 60"
+      ],
+      "answer_index": 2
+    },
+    {
+      "question": "The radioactive radiation used in studying the arrangement of particles in giant organic molecules is",
+      "options": ["γ-rays", "α-particles", "X-rays", "β-particles"],
+      "answer_index": 2
+    },
+    {
+      "question": "A silicon-containing ore has 92% ²⁸Si, 5% ²⁹Si and 3% ³⁰Si. Calculate the relative atomic mass of the silicon.",
+      "options": ["14.00", "29.00", "28.11", "28.00"],
+      "answer_index": 3
+    },
+    {
+      "question": "The nitrogen obtained from air has a density higher than the one from nitrogen-containing compounds because the one from air is contaminated with",
+      "options": ["water vapour", "oxygen", "rare gases", "carbon (IV) oxide"],
+      "answer_index": 2
+    },
+    {
+      "question": "Water is said to be temporarily hard when it contains",
+      "options": [
+        "Ca(HCO₃)₂ and Mg(HCO₃)₂ salts",
+        "Ca(HCO₃)₂ and CaCO₃ salts",
+        "Mg(HCO₃)₂ and CaSO₄ salts",
+        "CaSO₄ and Ca(HCO₃)₂ salts"
+      ],
+      "answer_index": 0
+    },
+    {
+      "question": "On exposure to the atmosphere, a hydrated salt loses its water of crystallization to become anhydrous. This phenomenon is referred to as",
+      "options": ["efflorescence", "deliquescence", "hygroscopy", "hydrolysis"],
+      "answer_index": 0
+    },
+    {
+      "question": "16.55g of lead (II) trioxonitrate (V) was dissolved in 100g of distilled water at 20°C, calculate the solubility of the solute in moldm⁻³ [Pb = 207, N = 14, O = 16]",
+      "options": ["0.05 g", "2.00 g", "1.00 g", "0.50 g"],
+      "answer_index": 0
+    },
+    {
+      "question": "The dispersion of a liquid in a liquid medium will give",
+      "options": ["an emulsion", "a fog", "a gel", "an aerosol"],
+      "answer_index": 2
+    },
+    {
+      "question": "The major and most effective way of controlling pollution is to",
+      "options": [
+        "improve machinery so that the substances released from combustion are less harmful",
+        "pass strict laws against it by individuals and companies",
+        "educate people on the causes and effects of pollution",
+        "convert chemical wastes to harmless substances before releasing them into the environment"
+      ],
+      "answer_index": 2
+    },
+    {
+      "question": "The basicity of CH₃COOH is",
+      "options": ["4", "1", "2", "3"],
+      "answer_index": 1
+    },
+    {
+      "question": "The colour of litmus in a neutral medium is",
+      "options": ["purple", "pink", "yellow", "orange"],
+      "answer_index": 1
+    },
+    {
+      "question": "The mathematical expression of pH is",
+      "options": [
+        "log₁₀ [OH⁻]",
+        "log₁₀ 1/[OH⁻]",
+        "log₁₀ [H₃O⁺]",
+        "log₁₀ 1/[H₃O⁺]"
+      ],
+      "answer_index": 1
+    },
+    {
+      "question": "Which of the following salts will turn blue litmus red?",
+      "options": [
+        "Sodium tetrahydroxozincate (II)",
+        "Potassium hydrogen tetraoxosulphate (VI)",
+        "Sodium trioxocarbonate (IV)",
+        "Zinc chloride hydroxide"
+      ],
+      "answer_index": 1
+    },
+    {
+      "question": "Zn(s) + CuSO₄(aq) → ZnSO₄(aq) + Cu(s). In the reaction above, the oxidation number of the reducing agent changes from",
+      "options": ["0 to +4", "0 to +2", "+1 to +2", "+1 to +3"],
+      "answer_index": 1
+    },
+    {
+      "question": "H₂O(g) + C(s) → H₂(g) + CO(g). The oxidizing agent in the reaction above is",
+      "options": ["CO(g)", "C(s)", "H₂O(g)", "H₂(g)"],
+      "answer_index": 2
+    },
+    {
+      "question": "Calculate the quantity of electricity in coulombs required to liberate 10g of copper from a copper compound [Cu=64, F = 96500 Cmol⁻¹]",
+      "options": ["32395.5", "30156.3", "60784.5", "15196.5"],
+      "answer_index": 1
+    },
+    {
+      "question": "How many faraday of electricity is required to produce 0.25 mole of copper?",
+      "options": ["1.00F", "0.01F", "0.05F", "0.50F"],
+      "answer_index": 3
+    },
+    {
+      "question": "Z in diagram represents",
+      "options": [
+        "heat of reaction",
+        "activation energy",
+        "free energy",
+        "entropy of reaction"
+      ],
+      "image": "https://myschool.ng/storage/classroom/1424872727_co60014.jpg",
+      "answer_index": 0
+    },
+    {
+      "question": "If the change in free energy of a system is -899 Jmol⁻¹ and the entropy change is 10 Jmol⁻¹K⁻¹ at 25°C, calculate the enthalpy change.",
+      "options": ["+2081 Jmol⁻¹", "-2081 Jmol⁻¹", "-649 Jmol⁻¹", "+649 Jmol⁻¹"],
+      "answer_index": 0
+    },
+    {
+      "question": "In an equilibrium reaction, which of the following conditions indicates that maximum yield of the product will be obtained?",
+      "options": [
+        "Equilibrium constant is very large",
+        "ΔH - TΔS = 0",
+        "ΔH > TΔS",
+        "Equilibrium constant is less than zero"
+      ],
+      "answer_index": 0
+    },
+    {
+      "question": "In a chemical reaction, the change in concentration of a reactant with time is",
+      "options": [
+        "entropy of reaction",
+        "enthalpy of reaction",
+        "rate of reaction",
+        "order of reaction"
+      ],
+      "answer_index": 2
+    },
+    {
+      "question": "Cr₂O₇²⁻(aq) + H₂O(l) ⇌ 2CrO₄²⁻(aq) + 2H⁺(aq). What happens to the reaction above when the hydrogen ion concentration is increased?",
+      "options": [
+        "more of the products will be formed",
+        "the reaction will not proceed",
+        "the equilibrium position will shift to the right",
+        "the equilibrium position will shift to the left"
+      ],
+      "answer_index": 3
+    },
+    {
+      "question": "Which of the following will liberate hydrogen from dilute tetraoxosulphate (VI) acid?",
+      "options": ["Lead", "Magnesium", "Copper", "Gold"],
+      "answer_index": 1
+    },
+    {
+      "question": "In the diagram, the function of the concentrated H₂SO₄ is to",
+      "options": [
+        "purify the gas",
+        "dry the gas",
+        "liquefy the gas",
+        "remove odour"
+      ],
+      "image": "https://myschool.ng/storage/classroom/4274617431_co.jpg",
+      "answer_index": 1
+    },
+    {
+      "question": "The gas that is removed by the water in the flask is",
+      "options": ["O₂", "SO₂", "HCl", "H₂"],
+      "image": "https://myschool.ng/storage/classroom/4274617431_co.jpg",
+      "answer_index": 2
+    },
+    {
+      "question": "Fluorine does not occur in the free state in nature because",
+      "options": [
+        "it is a poisonous gas",
+        "it belongs to the halogen family",
+        "it is inert",
+        "of its high reactivity"
+      ],
+      "answer_index": 3
+    },
+    {
+      "question": "In the extraction of sodium from fused sodium chloride, the anode is made of platinum because",
+      "options": [
+        "sodium is formed at the anode",
+        "chlorine is formed at the anode",
+        "sodium does not react with platinum",
+        "chlorine does not react with platinum"
+      ],
+      "answer_index": 2
+    },
+    {
+      "question": "A compound that gives a brick-red colour to a non-luminous flame is likely to contain",
+      "options": [
+        "copper ions",
+        "sodium ions",
+        "calcium ions",
+        "aluminium ions"
+      ],
+      "answer_index": 2
+    },
+    {
+      "question": "In the electrolytic extraction of calcium from calcium chloride, the cathode is",
+      "options": ["zinc", "graphite", "platinum", "iron"],
+      "answer_index": 3
+    },
+    {
+      "question": "A few drops of NaOH solution was added to an unknown salt forming a white precipitate which is insoluble in excess solution. The cation likely present is",
+      "options": ["Zn²⁺", "Pb²⁺", "Ca²⁺", "Al³⁺"],
+      "answer_index": 2
+    },
+    {
+      "question": "The general formula of haloalkanes where X represents the halide is",
+      "options": ["CₙH₂ₙ₋₁X", "CₙH₂ₙX", "CₙH₂ₙ₊₂X", "CₙH₂ₙ₊₁X"],
+      "answer_index": 3
+    },
+    {
+      "question": "The IUPAC nomenclature of the compound is",
+      "options": [
+        "2-bromo-3-chlorobutanol",
+        "3-bromo-2-chlorobutanol",
+        "3-chloro-2-bromobutanol",
+        "2-chloro-3-bromobutanol"
+      ],
+      "image": "https://myschool.ng/storage/classroom/8549233488_co70009.jpg",
+      "answer_index": 3
+    },
+    {
+      "question": "The alkanol obtained from the production of soap is",
+      "options": ["propanol", "ethanol", "glycerol", "methanol"],
+      "answer_index": 2
+    },
+    {
+      "question": "Ethyne is passed through a hot tube containing organo-nickel catalyst to produce",
+      "options": ["isoprene", "polythene", "ethanol", "benzene"],
+      "answer_index": 3
+    },
+    {
+      "question": "Due to the unstable nature of ethyne, it is stored by dissolving in",
+      "options": ["ethane-1,2-diol", "propanol", "ethanoic acid", "propanone"],
+      "answer_index": 3
+    },
+    {
+      "question": "The process of converting starch to ethanol is",
+      "options": ["cracking", "distillation", "fermentation", "oxidation"],
+      "answer_index": 2
+    },
+    {
+      "question": "The polymer used in making car rear lights is",
+      "options": ["Perspex", "Bakelite", "polystyrene", "polyacrylonitrile"],
+      "answer_index": 3
+    },
+    {
+      "question": "CH₃COOC₂H₅(l) + H₂O(l) ⇌ CH₃COOH(aq) + C₂H₅OH(aq). The purpose of H⁺ in the reaction above is to",
+      "options": [
+        "increase the yield of products",
+        "maintain the solution at a constant pH",
+        "increase the rate of the hydrolysis",
+        "decrease the rate of the reverse reaction"
+      ],
+      "answer_index": 0
+    },
+    {
+      "question": "A hydrocarbon has an empirical formula CH and a vapour density of 39. Determine its molecular formula. [C = 12, H = 1]",
+      "options": ["C₂H₆", "C₃H₈", "C₃H₄", "C₆H₆"],
+      "answer_index": 3
+    },
+    {
+      "question": "Polystyrene is widely used as packaging materials for fragile objects during transportation because of its",
+      "options": [
+        "lightness",
+        "low density",
+        "high density",
+        "high compressibility"
+      ],
+      "answer_index": 1
+    },
+    {
+      "question": "The process of converting linear alkanes to branched chain and cyclic hydrocarbons by heating in the presence of a catalyst to improve the quality of petrol is referred to as",
+      "options": ["refining", "cracking", "reforming", "blending"],
+      "answer_index": 2
+    },
+    {
+      "question": "The petroleum fraction that is used in heating furnaces in industries is",
+      "options": ["diesel oil", "gasoline", "kerosene", "lubricating oil"],
+      "answer_index": 0
+    }
+  ]
+}

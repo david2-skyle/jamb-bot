@@ -1,0 +1,403 @@
+{
+  "paper_type": "B",
+  "questions": [
+    {
+      "question": "What is the concentration of a solution containing 2g of NaOH in 100cm³ of solution? [Na = 23, O = 16, H = 1]",
+      "options": [
+        "0.40 mol dm⁻³",
+        "0.50 mol dm⁻³",
+        "0.05 mol dm⁻³",
+        "0.30 mol dm⁻³"
+      ],
+      "answer_index": 1,
+      "explanation": "Molar mass of NaOH = 23 + 16 + 1 = 40. Moles = 2/40 = 0.05. Volume = 100 cm³ = 0.1 dm³. Concentration = 0.05/0.1 = 0.50 mol dm⁻³"
+    },
+    {
+      "question": "Which of the following properties is NOT peculiar to matter?",
+      "options": [
+        "kinetic energy of particles increases from solid to gas",
+        "Random motion of particles increases from liquid to gas",
+        "Orderliness of particles increases from gas to liquid",
+        "Random motion of particles increases from gas to solid"
+      ],
+      "answer_index": 3,
+      "explanation": "Random motion decreases from gas to solid. Gas has highest random motion, then liquid, then solid with least random motion."
+    },
+    {
+      "question": "The principle of column chromatography is based on the ability of the constituents to",
+      "options": [
+        "move at different speeds in the column",
+        "dissolve in each other in the column",
+        "react with the solvent in the column",
+        "react with each other in the column"
+      ],
+      "answer_index": 0,
+      "explanation": "Column chromatography separates components based on their different rates of movement through the stationary phase."
+    },
+    {
+      "question": "From the diagram above, an ideal gas can be represented by",
+      "options": ["M", "N", "K", "L"],
+      "image": "https://myschool.ng/storage/classroom/22998168803_chem20105.gif",
+      "answer_index": 1
+    },
+    {
+      "question": "Which of the following questions is correct about the periodic table?",
+      "options": [
+        "The non-metallic properties of the elements tend to decrease across each period",
+        "The valence electrons of the elements increase progressively across the period",
+        "Elements in the same group have the same number of electron shells",
+        "Elements in the same period have the same number of valence electrons"
+      ],
+      "answer_index": 1,
+      "explanation": "Valence electrons increase from left to right across a period (e.g., Na has 1, Cl has 7)."
+    },
+    {
+      "question": "The relative atomic mass of a naturally occurring lithium consisting of 90% ⁷Li and 10% ⁶Li is",
+      "options": ["6.9", "7.1", "6.2", "6.8"],
+      "answer_index": 0,
+      "explanation": "Relative atomic mass = (0.90 × 7) + (0.10 × 6) = 6.3 + 0.6 = 6.9"
+    },
+    {
+      "question": "An isotope has an atomic number of 15 and a mass number of 31. The number of protons it contains is",
+      "options": ["16", "15", "46", "31"],
+      "answer_index": 1,
+      "explanation": "Atomic number equals the number of protons. Therefore, number of protons = 15"
+    },
+    {
+      "question": "The molecular lattice of iodine is held together by",
+      "options": [
+        "dative bond",
+        "metallic bond",
+        "hydrogen bond",
+        "van der Waal's forces"
+      ],
+      "answer_index": 3,
+      "explanation": "Iodine (I₂) is a molecular substance held together by weak van der Waal's forces between molecules."
+    },
+    {
+      "question": "The arrangement of particles in crystal lattices can be studied using",
+      "options": ["X-rays", "γ-rays", "α-rays", "β-rays"],
+      "answer_index": 0,
+      "explanation": "X-rays have wavelengths comparable to atomic spacing in crystals, making them ideal for X-ray diffraction studies."
+    },
+    {
+      "question": "From the diagram above, find the amount of solute deposited when 200 cm³ of the solution is cooled from 55°C to 40°C",
+      "options": ["0.10 mole", "0.20 mole", "0.01 mole", "0.02 mole"],
+      "image": "https://myschool.ng/storage/classroom/5411344312_chem%20201011gif.gif",
+      "answer_index": 1
+    },
+    {
+      "question": "The importance of sodium aluminate (III) in the treatment of water is to",
+      "options": [
+        "cause coagulation",
+        "neutralize acidity",
+        "prevent goitre and tooth decay",
+        "kill germs"
+      ],
+      "answer_index": 0,
+      "explanation": "Sodium aluminate acts as a coagulant to aggregate colloidal particles, aiding their removal from water."
+    },
+    {
+      "question": "What type of bond exists between an element X with atomic number 12 and Y with atomic number 17?",
+      "options": ["Electrovalent", "Metallic", "Covalent", "Dative"],
+      "answer_index": 0,
+      "explanation": "X (Mg, 2,8,2) and Y (Cl, 2,8,7) form an ionic/electrovalent bond. Mg donates electrons to Cl."
+    },
+    {
+      "question": "Hardness of water is mainly due to the presence of",
+      "options": [
+        "calcium hydroxide or magnesium hydroxide",
+        "calcium trioxocarbonate (IV) or calcium tetraoxosulphate (VI)",
+        "sodium hydroxide or magnesium hydroxide",
+        "calcium chloride or sodium chloride salts"
+      ],
+      "answer_index": 1,
+      "explanation": "Water hardness is caused by dissolved calcium and magnesium salts, particularly carbonates and sulphates."
+    },
+    {
+      "question": "A suitable solvent for iodine and naphthalene is",
+      "options": ["carbon (IV) sulphide", "ethanol", "water", "benzene"],
+      "answer_index": 1,
+      "explanation": "Ethanol dissolves both iodine and naphthalene well, making it a suitable solvent for both non-polar organic compounds."
+    },
+    {
+      "question": "Which of the following noble gases is commonly found in the atmosphere?",
+      "options": ["Xenon", "Neon", "Helium", "Argon"],
+      "answer_index": 3,
+      "explanation": "Argon makes up about 0.93% of the atmosphere, much more abundant than other noble gases."
+    },
+    {
+      "question": "N₂O₄(g) ⇋ 2NO₂(g) ΔH = +ve. In the reaction above, an increase in temperature will",
+      "options": [
+        "increase the value of the equilibrium constant",
+        "decrease the value of the equilibrium constant",
+        "increase in the reactant production",
+        "shift the equilibrium to the left"
+      ],
+      "answer_index": 0,
+      "explanation": "The reaction is endothermic (+ve ΔH). Increasing temperature favors the forward reaction, increasing Kc."
+    },
+    {
+      "question": "CH₃COOH(aq) + OH⁻(aq) ⇋ CH₃COO⁻(aq) + H₂O(l). In the reaction above, CH₃COO⁻(aq) is",
+      "options": ["conjugate base", "acid", "base", "conjugate acid"],
+      "answer_index": 0,
+      "explanation": "CH₃COO⁻ is the conjugate base of the weak acid CH₃COOH (it differs by one H⁺)."
+    },
+    {
+      "question": "How many cations will be produced from a solution of potassium aluminium tetraoxosulphate (VI)?",
+      "options": ["3", "4", "1", "2"],
+      "answer_index": 3,
+      "explanation": "KAl(SO₄)₂ dissociates into K⁺ and Al³⁺, producing 2 types of cations."
+    },
+    {
+      "question": "Which of the following is NOT an alkali?",
+      "options": ["NH₃", "Mg(OH)₂", "Ca(OH)₂", "NaOH"],
+      "answer_index": 0,
+      "explanation": "NH₃ is a weak base but not a true alkali. Alkalies are metal hydroxides; NH₃ is not a hydroxide."
+    },
+    {
+      "question": "An effect of thermal pollution on water bodies is that the",
+      "options": [
+        "volume of water reduces",
+        "volume of chemical waste increases",
+        "level of oxides of nitrogen increases",
+        "level of oxygen reduces"
+      ],
+      "answer_index": 3,
+      "explanation": "Higher temperature reduces oxygen solubility in water, causing oxygen depletion in aquatic ecosystems."
+    },
+    {
+      "question": "Which of the following is a deliquescent compound?",
+      "options": ["Na₂CO₃", "CaCl₂", "CuO", "Na₂CO₃.10H₂O"],
+      "answer_index": 1,
+      "explanation": "CaCl₂ is deliquescent—it absorbs moisture from air and dissolves in it."
+    },
+    {
+      "question": "A chemical reaction in which the hydration energy is greater than the lattice energy is referred to as",
+      "options": [
+        "a spontaneous reaction",
+        "an endothermic reaction",
+        "an exothermic reaction",
+        "a reversible reaction"
+      ],
+      "answer_index": 2,
+      "explanation": "When hydration energy > lattice energy, energy is released, making it exothermic."
+    },
+    {
+      "question": "The function of zinc electrode in a galvanic cell is that it",
+      "options": [
+        "undergoes reduction",
+        "serves as the positive electrode",
+        "produces electrons",
+        "uses up electrons"
+      ],
+      "answer_index": 2,
+      "explanation": "Zinc is more reactive and acts as the anode, undergoing oxidation to produce electrons."
+    },
+    {
+      "question": "CH₄(g) + Cl₂(g) → CH₃Cl(s) + HCl(g). The major factor that influences the rate of the reaction above is",
+      "options": ["catalyst", "temperature", "concentration", "light"],
+      "answer_index": 3,
+      "explanation": "This is a free radical substitution reaction initiated by light (photochemical reaction)."
+    },
+    {
+      "question": "The condition required for corrosion to take place is the presence of",
+      "options": [
+        "water and carbon (IV) oxide",
+        "water, carbon (IV) oxide and oxygen",
+        "oxygen and carbon (IV) oxide",
+        "water and oxygen"
+      ],
+      "answer_index": 3,
+      "explanation": "Iron corrosion requires both water (electrolyte) and oxygen. CO₂ is not essential."
+    },
+    {
+      "question": "In the diagram above, X is the",
+      "options": [
+        "enthalpy",
+        "enthalpy change",
+        "activation energy",
+        "activated complex"
+      ],
+      "image": "https://myschool.ng/storage/classroom/27072306237_co1.jpg",
+      "answer_index": 1
+    },
+    {
+      "question": "The diagram best illustrates the effect of decrease in",
+      "options": ["concentration", "temperature", "surface area", "pressure"],
+      "image": "https://myschool.ng/storage/classroom/13529306800_chem201128.gif",
+      "answer_index": 0
+    },
+    {
+      "question": "MnO₄⁻(aq) + Y + 5Fe²⁺(aq) → Mn²⁺(aq) + 5Fe³⁺(aq) + 4H₂O(l). In the equation above, Y is",
+      "options": ["5H⁺(aq)", "4H⁺(aq)", "10H⁺(aq)", "8H⁺(aq)"],
+      "answer_index": 0,
+      "explanation": "Balancing the redox equation: Mn(+7→+2) gains 5e⁻; 5Fe²⁺ loses 5e⁻. Need 5H⁺ to balance in acidic medium."
+    },
+    {
+      "question": "Given that M is the mass of a substance deposited during electrolysis and Q is the quantity of electricity consumed, then Faraday's first law can be written as",
+      "options": ["M = E/Q", "M = EQ", "M = Q/E", "M = E/2Q"],
+      "answer_index": 1,
+      "explanation": "Faraday's first law: M = EQ, where E is the electrochemical equivalent."
+    },
+    {
+      "question": "The impurities formed during the laboratory preparation of chlorine gas are removed by",
+      "options": ["H₂O", "NH₃", "H₂SO₄", "HCl"],
+      "answer_index": 0,
+      "explanation": "Water removes HCl and other soluble impurities from chlorine gas."
+    },
+    {
+      "question": "The effect of the presence of impurities such as carbon and sulphur on iron is that they",
+      "options": [
+        "give it high tensile strength",
+        "make it malleable and ductile",
+        "increase its melting point",
+        "lower its melting point"
+      ],
+      "answer_index": 3,
+      "explanation": "Carbon and sulphur impurities lower iron's melting point and make it brittle."
+    },
+    {
+      "question": "A few drops of concentrated HNO₃ is added to an unknown solution and boiled for a while. If this produces a brown solution, the cations present are likely to be",
+      "options": ["Pb²⁺", "Cu²⁺", "Fe³⁺", "Fe²⁺"],
+      "answer_index": 3,
+      "explanation": "Fe²⁺ is oxidized to Fe³⁺ by HNO₃, producing a brown/yellow Fe³⁺ solution."
+    },
+    {
+      "question": "The bleaching action of chlorine gas is effective due to the presence of",
+      "options": ["hydrogen chloride", "water", "air", "oxygen"],
+      "answer_index": 1,
+      "explanation": "Chlorine forms HClO in water, which is the actual bleaching agent."
+    },
+    {
+      "question": "In the laboratory preparation of oxygen, dried oxygen is usually collected over",
+      "options": [
+        "hydrochloric acid",
+        "mercury",
+        "calcium chloride",
+        "tetraoxosulphate (VI) acid"
+      ],
+      "answer_index": 3,
+      "explanation": "Concentrated H₂SO₄ is used both as a drying agent and collection medium for oxygen."
+    },
+    {
+      "question": "The property of concentrated H₂SO₄ that makes it suitable for preparing HNO₃ is its",
+      "options": [
+        "boiling point",
+        "density",
+        "oxidizing properties",
+        "dehydrating properties"
+      ],
+      "answer_index": 2,
+      "explanation": "H₂SO₄'s strong oxidizing properties allow it to oxidize nitrates to produce HNO₃."
+    },
+    {
+      "question": "Bronze is preferred to copper in the making of medals because it",
+      "options": [
+        "is stronger",
+        "can withstand low temperature",
+        "is lighter",
+        "has low tensile strength"
+      ],
+      "answer_index": 2,
+      "explanation": "Bronze (Cu-Sn alloy) is lighter than pure copper, making it more suitable for medals."
+    },
+    {
+      "question": "The constituent of baking powder that makes the dough to rise is",
+      "options": ["NaHCO₃", "NaOH", "Na₂CO₃", "NaCl"],
+      "answer_index": 0,
+      "explanation": "NaHCO₃ (sodium bicarbonate) decomposes when heated to produce CO₂ gas, causing dough to rise."
+    },
+    {
+      "question": "Which of the following compounds is used as a gaseous fuel?",
+      "options": [
+        "CH₃-C≡CH",
+        "CH₃-CH₂-CH₃ with OH group",
+        "CH₃-CH₂-CH₂-COOH",
+        "CH₃-CH₂-CH₂-CH₃"
+      ],
+      "answer_index": 3,
+      "explanation": "Butane (CH₃-CH₂-CH₂-CH₃) is a gaseous fuel commonly used in lighters and stoves."
+    },
+    {
+      "question": "The ability of carbon to form long chains is referred to as",
+      "options": ["alkylation", "acylation", "catenation", "carbonation"],
+      "answer_index": 2,
+      "explanation": "Catenation is the ability of carbon to bond with itself, forming long chains."
+    },
+    {
+      "question": "Which of the following compounds will undergo polymerization reaction?",
+      "options": ["C₂H₄", "C₂H₅COOH", "C₂H₆", "C₂H₅OH"],
+      "answer_index": 0,
+      "explanation": "C₂H₄ (ethene) has a C=C double bond and undergoes addition polymerization."
+    },
+    {
+      "question": "An organic compound has an empirical formula CH₂O and vapour density of 45. What is the molecular formula? [C = 12, H = 1, O = 16]",
+      "options": ["C₃H₇OH", "C₂H₅OH", "C₃H₆O₃", "C₂H₄O₂"],
+      "answer_index": 2,
+      "explanation": "Molar mass = 2 × 45 = 90. Empirical formula mass = 30. n = 90/30 = 3. Molecular formula = (CH₂O)₃ = C₃H₆O₃"
+    },
+    {
+      "question": "C₆H₁₂O₆ → 2C₂H₅OH + 2CO₂ + energy at 25°C. The reaction represented by the equation above is useful in the production of",
+      "options": ["propanol", "butanol", "methanol", "ethanol"],
+      "answer_index": 3,
+      "explanation": "This is fermentation of glucose, producing ethanol and CO₂."
+    },
+    {
+      "question": "The number of isomers that can be obtained from C₄H₁₀ is",
+      "options": ["3", "4", "1", "2"],
+      "answer_index": 3,
+      "explanation": "C₄H₁₀ has 2 isomers: n-butane and 2-methylpropane (isobutane)."
+    },
+    {
+      "question": "The functional groups present in the compound above are",
+      "options": [
+        "alkene and halo-group",
+        "hydroxyl and chloro-group",
+        "alkene and chloro-group",
+        "hydroxyl and halo-group"
+      ],
+      "image": "https://myschool.ng/storage/classroom/17588283544_chem201146.gif",
+      "answer_index": 1
+    },
+    {
+      "question": "Which of the following is a primary amine?",
+      "options": [
+        "(CH₃)₃N",
+        "CH₃NH₂",
+        "CH₃C-NH₂ with O double bond",
+        "(CH₃)₂NH"
+      ],
+      "image": "https://myschool.ng/storage/classroom/5699436752_c0.jpg",
+      "answer_index": 1
+    },
+    {
+      "question": "Two organic compounds K and L were treated with a few drops of Fehling's solution respectively. K formed a brick red precipitate while L remains unaffected. The compound K is an",
+      "options": ["alkanol", "alkane", "alkanal", "alkanone"],
+      "answer_index": 2,
+      "explanation": "Aldehydes (alkanals) give a brick-red Cu₂O precipitate with Fehling's solution; ketones do not."
+    },
+    {
+      "question": "Which of the following statements is true about 2-methylpropane and butane?",
+      "options": [
+        "They are members of the same homologous series",
+        "They have the same boiling point",
+        "They have different number of carbon atoms",
+        "They have the same chemical properties"
+      ],
+      "answer_index": 0,
+      "explanation": "2-methylpropane (isobutane) and butane are both alkanes with formula C₄H₁₀, belonging to the same homologous series (isomers)."
+    },
+    {
+      "question": "CH₃COOH + C₂H₅OH ⇌ CH₃COOC₂H₅ + H₂O in presence of H₂SO₄. The reaction above is best described as",
+      "options": [
+        "esterification",
+        "condensation",
+        "saponification",
+        "neutralization"
+      ],
+      "answer_index": 0,
+      "explanation": "Esterification is the reaction between a carboxylic acid and an alcohol to form an ester and water."
+    }
+  ]
+}

@@ -1,0 +1,339 @@
+{
+  "paper_type": "STANDARD",
+  "questions": [
+    {
+      "question": "Which of the following statements is correct?",
+      "options": [
+        "The average kinetic energy of a gas is directly proportional to its temperature",
+        "At constant temperature, the volume of a gas increases as the pressure increases",
+        "The pressure of a gas is inversely proportional to its volume",
+        "The temperature of gas is directly proportional to its volume"
+      ],
+      "answer_index": 0,
+      "explanation": "According to kinetic theory, the average kinetic energy of gas molecules is directly proportional to absolute temperature (KE = 3/2 kT)."
+    },
+    {
+      "question": "Which are the correct IUPAC names for H–CO₂CH₃ and CH≡CH?",
+      "options": [
+        "Methyl methanoate and ethene",
+        "Methanoic acid and ethyne",
+        "Ethyl methanoate and ethyne",
+        "Methyl methanoate and ethyne"
+      ],
+      "answer_index": 3,
+      "explanation": "H–CO₂CH₃ is an ester (methyl methanoate). CH≡CH is a triple bond compound (ethyne, also called acetylene)."
+    },
+    {
+      "question": "A solution X on mixing with AgNO₃ solution, gives a white precipitate soluble in NH₃(aq). A solution Y, when added to X, also gives a white precipitate which is soluble on boiling. Solution Y contains",
+      "options": ["Ag⁺ ion", "Pb²⁺ ion", "Pb⁴⁺ ion", "Zn²⁺ ion"],
+      "answer_index": 1,
+      "explanation": "The white precipitate soluble in ammonia indicates chloride (AgCl). Lead (II) ions form PbCl₂, a white precipitate soluble on boiling."
+    },
+    {
+      "question": "Methane is a member of the homologous series called",
+      "options": ["alkenes", "alcohols", "esters", "alkanes"],
+      "answer_index": 3,
+      "explanation": "Methane (CH₄) is the simplest hydrocarbon with only single C-C bonds, making it the first member of the alkane series."
+    },
+    {
+      "question": "Which of the following bonds exists in crystalline ammonium chloride (NH₄Cl)?",
+      "options": [
+        "ionic and covalent",
+        "ionic and co-ordinate",
+        "ionic, covalent and co-ordinate",
+        "covalent, co-ordinate and metallic"
+      ],
+      "answer_index": 2,
+      "explanation": "NH₄Cl contains ionic bonds between NH₄⁺ and Cl⁻, covalent bonds in the NH₄⁺ ion, and a co-ordinate bond between N and H."
+    },
+    {
+      "question": "Some copper (II) sulphate pentahydrate (CuSO₄.5H₂O), was heated at 120°C with the following results: Wt of crucible = 10.00 g; Wt of crucible + CuSO₄.5H₂O = 14.98g; Wt of crucible + residue = 13.54g. How many molecules of water of crystallization were lost? [H= 1, Cu = 63.5, O =16, S = 32]",
+      "options": ["1", "2", "3", "4"],
+      "answer_index": 3,
+      "explanation": "Mass of CuSO₄.5H₂O = 4.98g. Mass of residue = 3.54g. Water lost = 1.44g. Moles of water = 1.44/18 = 0.08. Moles of CuSO₄.5H₂O = 4.98/250 = 0.02. Ratio = 0.08/0.02 = 4 molecules."
+    },
+    {
+      "question": "12.0g of a mixture of potassium carbonate and potassium chloride were dissolved in a 250cm³ standard flask. 25cm³ of this solution required 40.00cm³ of 0.1M HCl for neutralization. What is the percentage by weight of K₂CO₃ in the mixture? (K = 39, O = 16, C = 12)",
+      "options": ["60", "72", "82", "92"],
+      "answer_index": 3,
+      "explanation": "Moles of HCl = 0.004. Since K₂CO₃ + 2HCl → 2KCl + H₂O + CO₂, moles of K₂CO₃ in 25cm³ = 0.002. In 250cm³ = 0.02 moles. Mass of K₂CO₃ = 0.02 × 138 = 2.76g. Percentage = (2.76/3) × 100 = 92%."
+    },
+    {
+      "question": "Which of the following groups of physical properties increases from left to right of the Periodic Table? 1. Ionization energy 2. Atomic radius 3. Electronegativity 4. Electron affinity",
+      "options": ["1 and 2", "1, 2 and 3", "3 and 4", "1, 2, 3 and 4"],
+      "answer_index": 2,
+      "explanation": "Ionization energy and electronegativity increase left to right. Atomic radius decreases left to right. Electron affinity generally increases left to right (3 and 4 increase)."
+    },
+    {
+      "question": "An element Z, contained 90% of ⁸₁₆Z and 10% of ⁸₁₈Z. Its relative atomic mass is",
+      "options": ["16.0", "16.2", "17.0", "17.8"],
+      "answer_index": 1,
+      "explanation": "RAM = (0.90 × 16) + (0.10 × 18) = 14.4 + 1.8 = 16.2."
+    },
+    {
+      "question": "What are the possible oxidation numbers for an element if its atomic number is 17?",
+      "options": ["-1 and 7", "-1 and 6", "-3 and 5", "-2 and 6"],
+      "answer_index": 0,
+      "explanation": "Atomic number 17 = Chlorine. It can gain 1 electron (oxidation state -1) or lose up to 7 electrons (oxidation state +7)."
+    },
+    {
+      "question": "How many valence electrons are contained in the element represented by ³¹₁₅P?",
+      "options": ["3", "5", "15", "31"],
+      "answer_index": 1,
+      "explanation": "Phosphorus (P) has atomic number 15. Its electron configuration is 1s² 2s² 2p⁶ 3s² 3p³, giving 5 valence electrons in the outer shell."
+    },
+    {
+      "question": "10.0 dm³ of air containing H₂S as an impurity was passed through a solution of Pb(NO₃)₂ until all the H₂S had reacted. The precipitate of PbS was found to weigh 5.02 g. The percentage by volume of hydrogen sulphide in the air is",
+      "options": ["50.2", "47.0", "4.70", "0.47"],
+      "answer_index": 2,
+      "explanation": "Molar mass of PbS = 239. Moles of PbS = 5.02/239 = 0.021. Volume of H₂S at STP = 0.021 × 22.4 L = 0.47 dm³. Percentage = (0.47/10) × 100 = 4.70%."
+    },
+    {
+      "question": "A quantity of air was passed through a weighed amount of alkaline pyrogallol. An increase in the weight of the pyrogallol would result from the absorption of",
+      "options": ["nitrogen", "neon", "argon", "oxygen"],
+      "answer_index": 3,
+      "explanation": "Alkaline pyrogallol is an oxygen absorber. It reacts with and absorbs oxygen gas, causing an increase in weight."
+    },
+    {
+      "question": "Water for town supply is chlorinated to make it free from",
+      "options": [
+        "bad odour",
+        "bacteria",
+        "temporary hardness",
+        "permanent hardness"
+      ],
+      "answer_index": 1,
+      "explanation": "Chlorination of water is a disinfection process that kills pathogenic bacteria and microorganisms."
+    },
+    {
+      "question": "4.0 g of sodium hydroxide in 250cm³ of solution contains",
+      "options": [
+        "0.40 moles per dm³",
+        "0.10 moles per dm³",
+        "0.04 moles per dm³",
+        "0.02 moles per dm³"
+      ],
+      "answer_index": 0,
+      "explanation": "Molar mass of NaOH = 40. Moles = 4.0/40 = 0.1 moles. Concentration = 0.1/(250/1000) = 0.1/0.25 = 0.40 mol dm⁻³."
+    },
+    {
+      "question": "A major effect of oil pollution in coastal waters is the",
+      "options": [
+        "destruction of marine life",
+        "desalination of the water",
+        "increase in the acidity of the water",
+        "detoxification of the water"
+      ],
+      "answer_index": 2,
+      "explanation": "Oil pollution increases water acidity through oxidation of hydrocarbons, creating acidic compounds and damaging marine ecosystems."
+    },
+    {
+      "question": "In general, an increase in temperature increases the solubility of a solute in water because",
+      "options": [
+        "more solute molecules collide with each other",
+        "most solutes dissolve with the evolution of heat",
+        "more solute molecules dissociate at higher temperatures",
+        "most solutes dissolve with absorption of heat"
+      ],
+      "answer_index": 2,
+      "explanation": "Higher temperatures provide more kinetic energy, causing more solute molecules to dissociate and remain dissolved in solution."
+    },
+    {
+      "question": "The relatively high boiling points of alkanols are due to",
+      "options": [
+        "ionic bonding",
+        "aromatic character",
+        "covalent bonding",
+        "hydrogen bonding"
+      ],
+      "answer_index": 3,
+      "explanation": "Alkanols contain -OH groups that form hydrogen bonds between molecules, requiring more energy to break and thus higher boiling points."
+    },
+    {
+      "question": "Given that 15.00cm³ of H₂SO₄ was required to completely neutralize 25.00cm³ of 0.125 mol dm⁻³ NaOH, calculate the molar concentration of the acid solution",
+      "options": [
+        "0.925 mol dm³",
+        "0.156 mol dm³",
+        "0.104 mol dm³",
+        "0.023 mol dm³"
+      ],
+      "answer_index": 2,
+      "explanation": "Moles of NaOH = 0.025 × 0.125 = 0.003125. H₂SO₄ + 2NaOH → Na₂SO₄ + H₂O. Moles of H₂SO₄ = 0.003125/2 = 0.0015625. Concentration = 0.0015625/0.015 = 0.104 mol dm⁻³."
+    },
+    {
+      "question": "What volume of 0.1 mol dm⁻³ solution of tetraoxosulphate (VI) acid would be needed to dissolve 2.86g of sodium trioxocarbonate (IV) decahydrate crystals? [H = 1, C = 12, O = 16, S= 32, Na = 23]",
+      "options": ["20cm³", "40cm³", "80cm³", "100cm³"],
+      "answer_index": 3,
+      "explanation": "Molar mass of Na₂CO₃·10H₂O = 286. Moles = 2.86/286 = 0.01. H₂SO₄ + Na₂CO₃ → Na₂SO₄ + H₂O + CO₂. Volume of 0.1M H₂SO₄ = 0.01/0.1 = 0.1 dm³ = 100cm³."
+    },
+    {
+      "question": "The solution with the lowest pH value is",
+      "options": [
+        "5 ml of M/10 HCl",
+        "10 ml of M/10 HCl",
+        "15 ml of M/5 HCl",
+        "20 ml of M/8 HCl"
+      ],
+      "answer_index": 3,
+      "explanation": "M/8 HCl has the highest concentration. 20 ml of M/8 is more concentrated than the others, giving the lowest pH (highest [H⁺])."
+    },
+    {
+      "question": "In which order are the following salts sensitive to light?",
+      "options": [
+        "AgI > AgCl > AgBr",
+        "AgCl > AgI > AgBr",
+        "AgBr > AgCl > AgI",
+        "AgCl > AgBr > AgI"
+      ],
+      "answer_index": 3,
+      "explanation": "Silver halide sensitivity to light: AgCl is most sensitive (used in photography), followed by AgBr, then AgI which is least sensitive."
+    },
+    {
+      "question": "A metal M displaces Zinc from Zinc chloride solution. This shows that",
+      "options": [
+        "M is more electronegative than Zinc",
+        "Zinc is above hydrogen in the series",
+        "M is more electropositive than zinc",
+        "electrons flow from zinc to M"
+      ],
+      "answer_index": 2,
+      "explanation": "If M displaces Zn from ZnCl₂, M is more reactive. More electropositive metals are more easily oxidized and appear higher in the reactivity series."
+    },
+    {
+      "question": "Steam changes the colour of anhydrous cobalt (II) chloride from",
+      "options": [
+        "blue to pink",
+        "white to red",
+        "white to green",
+        "blue to white"
+      ],
+      "answer_index": 0,
+      "explanation": "Anhydrous CoCl₂ is blue. When steam (water) is added, it becomes hydrated to form CoCl₂·6H₂O (pink)."
+    },
+    {
+      "question": "When at equilibrium, which of the reactions below will shift to the right if the pressure is increased and the temperature is kept constant?",
+      "options": [
+        "2SO₃(g) ⇌ 2SO₂(g) + O₂(g)",
+        "2CO₂(g) ⇌ 2CO(g) + O₂(g)",
+        "2H₂(g) + O₂(g) ⇌ 2H₂O(g)",
+        "2NO(g) ⇌ N₂(g) + O₂(g)"
+      ],
+      "answer_index": 2,
+      "explanation": "By Le Chatelier's principle, increasing pressure favors the reaction with fewer gas molecules. 2H₂ + O₂ (3 molecules) → 2H₂O (2 molecules)."
+    },
+    {
+      "question": "2CO(g) + O₂(g) → 2CO₂(g). Given that ΔH [CO] is -110.4 kJmol⁻¹ and ΔH [CO₂] is -393.0 kJmol⁻¹, the energy change for the reaction above is",
+      "options": ["-503.7 kJ", "-282.6 kJ", "+282.6 kJ", "+503.7 kJ"],
+      "answer_index": 1,
+      "explanation": "ΔH_rxn = 2(-393.0) - 2(-110.4) = -786 + 220.8 = -565.2 kJ per 2 moles CO, or -282.6 kJ per mole."
+    },
+    {
+      "question": "Which of these properties gives a solid its definite shape?",
+      "options": [
+        "Strong intermolecular attraction",
+        "High melting point",
+        "High boiling point",
+        "Weak intermolecular attraction"
+      ],
+      "answer_index": 0,
+      "explanation": "Strong intermolecular attractions hold molecules/atoms in fixed positions, giving solids their definite shape and volume."
+    },
+    {
+      "question": "When a crystal was added to the clear solution of its salt, the crystal did not dissolve and the solution remained unchanged. This showed that the solution was",
+      "options": ["supersaturated", "concentrated", "unsaturated", "saturated"],
+      "answer_index": 3,
+      "explanation": "A saturated solution cannot dissolve more solute. The crystal remains undissolved because the solution already contains the maximum amount of dissolved salt."
+    },
+    {
+      "question": "If the electron configuration of an element is 1s² 2s² 2p⁵, how many unpaired electrons are there?",
+      "options": ["2", "5", "1", "4"],
+      "answer_index": 2,
+      "explanation": "The 2p orbital has 5 electrons. With 3 p-orbitals, filling follows: ↑↓ ↑ ↑. One electron remains unpaired."
+    },
+    {
+      "question": "The substance that is used in the steel industry for the removal of carbon, sulphur and phosphorus impurities from pig iron is",
+      "options": ["oxygen", "chlorine", "nitrogen", "hydrogen"],
+      "answer_index": 0,
+      "explanation": "Oxygen is blown through molten pig iron in the steel-making process to oxidize and remove carbon, sulfur, and phosphorus impurities."
+    },
+    {
+      "question": "Hydrogen sulphide gas can act as",
+      "options": [
+        "an oxidizing agent",
+        "a dehydrating agent",
+        "a bleaching agent",
+        "a precipitating agent"
+      ],
+      "answer_index": 3,
+      "explanation": "H₂S forms insoluble sulfides with many heavy metal ions, precipitating them from solution."
+    },
+    {
+      "question": "Which of the following is used as a rocket fuel?",
+      "options": ["HNO₃", "CH₃COOH", "H₂SO₄", "HCl"],
+      "answer_index": 0,
+      "explanation": "Nitric acid (HNO₃) is a strong oxidizing agent used as a rocket fuel oxidizer and as a fuel component in aerospace applications."
+    },
+    {
+      "question": "The bleaching action of chlorine is effective due to the presence of",
+      "options": ["Hydrogen chloride", "Water", "Air", "Oxygen"],
+      "answer_index": 1,
+      "explanation": "Chlorine bleaches through oxidation in the presence of water: Cl₂ + H₂O → HCl + HClO. The hypochlorous acid (HClO) is the bleaching agent."
+    },
+    {
+      "question": "Mineral acids are usually added to commercial hydrogen peroxide to",
+      "options": [
+        "Oxidize it",
+        "decompose it",
+        "minimize its decomposition",
+        "reduce it to water and oxygen"
+      ],
+      "answer_index": 2,
+      "explanation": "Mineral acids increase the stability of H₂O₂ by suppressing decomposition and maintaining its shelf-life."
+    },
+    {
+      "question": "Aluminium containers are frequently used to transport trioxonitrate (V) acid because aluminium",
+      "options": [
+        "has a low density",
+        "does not react with the acid",
+        "does not corrode",
+        "has a silvery-white appearance"
+      ],
+      "answer_index": 1,
+      "explanation": "Aluminium forms a passive oxide layer that protects it from reacting with dilute nitric acid, making it suitable for transport containers."
+    },
+    {
+      "question": "Ethyne is passed through a hot tube containing organo-nickel catalyst to produce",
+      "options": ["Isoprene", "polythene", "ethanol", "benzene"],
+      "answer_index": 3,
+      "explanation": "Three ethyne molecules undergo cyclization with a nickel catalyst to form benzene (C₆H₆) through Würtz-like coupling."
+    },
+    {
+      "question": "The process of converting starch to ethanol is",
+      "options": ["cracking", "distillation", "fermentation", "oxidation"],
+      "answer_index": 2,
+      "explanation": "Fermentation is the metabolic process where microorganisms (like yeast) convert starch/glucose to ethanol and CO₂."
+    },
+    {
+      "question": "An endothermic reaction is one during which heat is ____ and can be represented by the symbol ____.",
+      "options": [
+        "liberated -ΔH",
+        "liberated +ΔH",
+        "absorbed -ΔH",
+        "absorbed +ΔH"
+      ],
+      "answer_index": 3,
+      "explanation": "Endothermic reactions absorb heat from surroundings. This is represented by a positive ΔH value."
+    },
+    {
+      "question": "Consider the exothermic reaction 2SO₂(g) + O₂(g) ⇌ 2SO₃(g). If the temperature of the reaction is reduced from 800°C to 500°C, and no other change takes place, then",
+      "options": [
+        "the reaction rate increases",
+        "concentration of SO₂ decreases",
+        "concentration of SO₂ increases",
+        "SO₂ gas becomes unreactive"
+      ],
+      "answer_index": 2,
+      "explanation": "For exothermic reactions, decreasing temperature shifts equilibrium to the right (toward products), increasing SO₃ and decreasing SO₂."
+    }
+  ]
+}

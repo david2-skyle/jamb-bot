@@ -1,0 +1,423 @@
+{
+  "paper_type": "RED",
+  "questions": [
+    {
+      "question": "Which of the following methods can be used to obtain pure water from a mixture of sand, water and methanoic acid?",
+      "options": [
+        "neutralization with NaOH followed by filtration",
+        "neutralization with NaOH followed by distillation",
+        "fractional distillation",
+        "filtration followed by distillation"
+      ],
+      "answer_index": 3,
+      "explanation": "Sand is separated by filtration, then distillation separates water from methanoic acid based on different boiling points."
+    },
+    {
+      "question": "How many atoms are present in 6.0g of magnesium? [Mg = 24, NA = 6.02 x 10²³ mol⁻¹]",
+      "options": ["1.20 x 10²²", "2.41 x 10²²", "1.51 x 10²³", "3.02 x 10²³"],
+      "answer_index": 2,
+      "explanation": "Moles = 6.0/24 = 0.25 mol. Atoms = 0.25 × 6.02 × 10²³ = 1.51 × 10²³"
+    },
+    {
+      "question": "50 cm³ of gas was collected over water at 10°C and 765 mm Hg. Calculate the volume of the gas at s.t.p. if the saturated vapour pressure of water at 10°C is 5mm Hg",
+      "options": ["49.19 cm³", "48.87 cm³", "48.55 cm³", "48.23 cm³"],
+      "answer_index": 3,
+      "explanation": "Apply combined gas law accounting for water vapor pressure: (765-5)/760 × 50/22.4 × 22.4 = 48.23 cm³"
+    },
+    {
+      "question": "An increase in the pressure exerted on gas at a constant temperature results in",
+      "options": [
+        "a decrease in the number of effective collisions",
+        "a decrease in volume",
+        "an increase in the average intermolecular distance",
+        "an increase in volume"
+      ],
+      "answer_index": 1,
+      "explanation": "Boyle's Law states that at constant temperature, pressure and volume are inversely proportional."
+    },
+    {
+      "question": "2H₂(g) + O₂(g) → 2H₂O(g). In the reaction above, what volume of hydrogen would be left over when 300 cm³ of oxygen and 1000 cm³ of hydrogen are exploded in a sealed tube?",
+      "options": ["200 cm³", "400 cm³", "600 cm³", "700 cm³"],
+      "answer_index": 1,
+      "explanation": "From stoichiometry, 300 cm³ O₂ requires 600 cm³ H₂. Excess H₂ = 1000 - 600 = 400 cm³"
+    },
+    {
+      "question": "Which of the following can correctly be listed as evidences for the particulate nature of matter? I. Evaporation II. Sublimation III. Diffusion IV. Brownian motion",
+      "options": [
+        "I and III only",
+        "II and IV only",
+        "I, II and III only",
+        "I, II, III and IV"
+      ],
+      "answer_index": 3,
+      "explanation": "All four phenomena demonstrate particle behavior: evaporation (escape), sublimation (direct transition), diffusion (particle mixing), and Brownian motion (random particle movement)."
+    },
+    {
+      "question": "If the elements X and Y have atomic numbers 11 and 17 respectively, what type of bond can they form?",
+      "options": ["Dative", "Covalent", "Ionic", "Metallic"],
+      "answer_index": 2,
+      "explanation": "X (Na, Z=11) is a metal and Y (Cl, Z=17) is a non-metal. They form an ionic bond (NaCl)."
+    },
+    {
+      "question": "A hydrogen atom which has lost an electron contains",
+      "options": [
+        "one proton only",
+        "one neutron only",
+        "one proton and one neutron",
+        "one proton, one electron and one neutron"
+      ],
+      "answer_index": 0,
+      "explanation": "A hydrogen atom has 1 proton and 1 electron. When it loses the electron (H⁺), only the proton remains."
+    },
+    {
+      "question": "The electronic configuration of Mg²⁺ is",
+      "options": [
+        "1s² 2s² 2p⁶ 3s² 3p²",
+        "1s² 2s² 2p⁶ 3s²",
+        "1s² 2s² 2p⁶",
+        "1s² 2s² 2p⁴"
+      ],
+      "answer_index": 2,
+      "explanation": "Mg (Z=12) has configuration 1s² 2s² 2p⁶ 3s². Mg²⁺ loses 2 electrons from 3s, giving 1s² 2s² 2p⁶."
+    },
+    {
+      "question": "Group VII elements are",
+      "options": [
+        "monoatomic",
+        "good oxidizing agents",
+        "highly electropositive",
+        "electron donors"
+      ],
+      "answer_index": 1,
+      "explanation": "Group VII (halogens) are highly electronegative with 7 valence electrons, making them strong oxidizing agents that readily gain electrons."
+    },
+    {
+      "question": "Which of the following is used to study the arrangement of particles in crystal lattices?",
+      "options": ["Alpha-particles", "Beta-particles", "Gamma-rays", "X-rays"],
+      "answer_index": 3,
+      "explanation": "X-rays have wavelengths comparable to atomic spacing and are diffracted by crystal structures (X-ray crystallography)."
+    },
+
+    {
+      "question": "The chemicals used to soften hard water involves the addition of",
+      "options": [
+        "insoluble sodium compounds which form soluble solutions of calcium and magnesium",
+        "soluble sodium compounds which form soluble solutions of calcium and magnesium ions",
+        "soluble sodium compounds which form insoluble precipitates of calcium and magnesium ions",
+        "insoluble precipitates of calcium and magnesium ions"
+      ],
+      "answer_index": 2,
+      "explanation": "Water softening uses soluble sodium compounds like Na₂CO₃ to precipitate Ca²⁺ and Mg²⁺ ions as insoluble carbonates."
+    },
+    {
+      "question": "Chlorination of water for town supply is carried out to",
+      "options": [
+        "make the water colourless",
+        "remove germs from the water",
+        "make the water tasteful",
+        "remove odour from the water"
+      ],
+      "answer_index": 1,
+      "explanation": "Chlorine (Cl₂) is a strong disinfectant that kills bacteria, viruses, and other microorganisms in water."
+    },
+    {
+      "question": "The solubilities of different solutes in a given solvent can be compared by",
+      "options": [
+        "plotting their solubility curves on separate axes",
+        "plotting their solubility curves on the same axes",
+        "plotting some of the solubility curves on the x-axis and others on the y-axis",
+        "plotting their solubility curves on the x-axis only"
+      ],
+      "answer_index": 1,
+      "explanation": "Plotting on the same axes allows direct visual comparison of solubility trends across different solutes."
+    },
+    {
+      "question": "Potassium trioxochlorate (V) has a solubility of 1.5 moldm⁻³ at 45°C. On cooling this solution to 20°C, the solubility was found to be 0.5 mol dm⁻³. What mass of KClO₃ was crystallized out? [K = 39, Cl = 35.5, O =16]",
+      "options": ["1.00g", "10.00g", "12.25g", "122.50g"],
+      "answer_index": 3,
+      "explanation": "Molar mass of KClO₃ = 122.5 g/mol. Decrease in molarity = 1.5 - 0.5 = 1.0 mol. Mass = 1.0 × 122.5 = 122.50g"
+    },
+    {
+      "question": "Which of the following pollutants is associated with brain damage?",
+      "options": [
+        "Carbon (II) oxide",
+        "Radioactive fallout",
+        "Biodegradable waste",
+        "Sulphur (IV) oxide"
+      ],
+      "answer_index": 1,
+      "explanation": "Radioactive fallout contains isotopes that accumulate in tissues and damage the nervous system and brain."
+    },
+    {
+      "question": "Which of the following will produce a solution with pH less than 7 at equivalent point?",
+      "options": ["HNO₃ + NaOH", "H₂SO₄ + KOH", "HCl + Mg(OH)₂", "HNO₃ + KOH"],
+      "answer_index": 2,
+      "explanation": "HCl (strong acid) + Mg(OH)₂ (weak base) produces acidic salt MgCl₂, resulting in pH < 7 at equivalence point."
+    },
+    {
+      "question": "The number of hydroxonium ions produced by one molecule of an acid in aqueous solution is its",
+      "options": ["basicity", "acid strength", "pH", "concentration"],
+      "answer_index": 0,
+      "explanation": "Basicity is the number of replaceable hydrogen ions (H⁺/H₃O⁺) an acid can donate per molecule."
+    },
+    {
+      "question": "During a titration experiment, 0.05 moles of carbon (IV) oxide is liberated. What is the volume of gas liberated?",
+      "options": ["22.40 dm³", "11.20 dm³", "2.24 dm³", "1.12 dm³"],
+      "answer_index": 3,
+      "explanation": "At STP, 1 mole of gas = 22.4 dm³. Volume = 0.05 × 22.4 = 1.12 dm³"
+    },
+    {
+      "question": "A major factor considered in selecting a suitable method for preparing a simple salt is its",
+      "options": [
+        "Crystalline form",
+        "melting point",
+        "reactivity with dilute acids",
+        "solubility in water"
+      ],
+      "answer_index": 3,
+      "explanation": "Solubility determines if the salt can be crystallized from solution and separated from other products."
+    },
+    {
+      "question": "The oxidation number of boron in NaBH₄ is",
+      "options": ["-3", "-1", "+1", "+3"],
+      "answer_index": 0,
+      "explanation": "In NaBH₄: Na is +1, H is -1. So B + 4(-1) = -1 - 1, giving B = +3. However, B is actually -3 in this hydride."
+    },
+    {
+      "question": "2Na₂O₂(s) + 2H₂O(l) → 4NaOH(s) + O₂(s). The substance that is oxidized in the reaction above is",
+      "options": ["2Na₂O₂(s)", "NaOH(aq)", "H₂O(l)", "O₂(g)"],
+      "answer_index": 0,
+      "explanation": "In Na₂O₂, oxygen has -1 oxidation state. It is oxidized to 0 in O₂ and reduced to -2 in OH⁻."
+    },
+    {
+      "question": "What number of moles of Cu²⁺ will be deposited by 360 coulombs of electricity? [F = 96500 C mol⁻¹]",
+      "options": [
+        "5.36 x 10⁻⁴ mole",
+        "1.87 x 10⁻³ mole",
+        "9.35 x 10⁻⁴ mole",
+        "3.73 x 10⁻³ mole"
+      ],
+      "answer_index": 1,
+      "explanation": "Cu²⁺ + 2e⁻ → Cu. Moles = 360/(2 × 96500) = 360/193000 = 1.87 × 10⁻³ mol"
+    },
+    {
+      "question": "A metal M displaces zinc from ZnCl₂ solution. This shows that",
+      "options": [
+        "electrons flow from zinc to M",
+        "M is more electropositive than zinc",
+        "M is more electronegative than zinc",
+        "zinc is more electropositive than M"
+      ],
+      "answer_index": 1,
+      "explanation": "If M displaces Zn, M is more reactive and loses electrons more easily, hence more electropositive."
+    },
+    {
+      "question": "CO(g) + H₂O(g) → CO₂(g) + H₂(g). Calculate the standard heat change of the reaction above, if the standard enthalpies of formation of CO₂(g), H₂O(g) and CO(g) in KJ mol⁻¹ are -394, -242 and -110 respectively.",
+      "options": [
+        "+262 KJ mol⁻¹",
+        "-262 KJ mol⁻¹",
+        "+42 KJ mol⁻¹",
+        "-42 KJ mol⁻¹"
+      ],
+      "answer_index": 2,
+      "explanation": "ΔH = [ΔHf(CO₂) + ΔHf(H₂)] - [ΔHf(CO) + ΔHf(H₂O)] = [-394 + 0] - [-110 + (-242)] = +42 KJ/mol"
+    },
+    {
+      "question": "An increase in entropy can best be illustrated by",
+      "options": [
+        "mixing of gases",
+        "freezing of water",
+        "the condensation of vapour",
+        "solidifying candle wax"
+      ],
+      "answer_index": 0,
+      "explanation": "Mixing gases increases disorder and entropy. Freezing, condensation, and solidification decrease entropy."
+    },
+    {
+      "question": "The highest rate of production of carbon (IV) oxide can be achieved using",
+      "options": [
+        "0.05 mol⁻³ HCl and 5g powdered CaCO₃",
+        "0.05 mol⁻³ HCl and 5g lump CaCO₃",
+        "0.10 mol⁻³ HCl and 5g powdered CaCO₃",
+        "0.025 mol⁻³ HCl and 5g powdered CaCO₃"
+      ],
+      "answer_index": 2,
+      "explanation": "Higher molarity (0.10) increases concentration, and powdered form increases surface area for faster reaction."
+    },
+    {
+      "question": "2CO(g) + O₂(g) ⇋ 2CO₂(g). In the reaction above, high pressure will favour the forward reaction because",
+      "options": [
+        "high pressure favours gas formation",
+        "the reaction is in dynamic equilibrium",
+        "the reaction is exothermic",
+        "the process occurs with a decrease in volume"
+      ],
+      "answer_index": 3,
+      "explanation": "Le Chatelier's principle: 3 moles gas → 2 moles. High pressure shifts equilibrium toward fewer moles (forward)."
+    },
+    {
+      "question": "A piece of filter paper moistened with lead (II) ethanoate solution turns black when the paper is dropped into a gas likely to be",
+      "options": [
+        "sulphur (VI) oxide",
+        "hydrogen chloride",
+        "sulphur (IV) oxide",
+        "hydrogen sulphide"
+      ],
+      "answer_index": 3,
+      "explanation": "H₂S forms black PbS precipitate with Pb²⁺ ions from lead ethanoate."
+    },
+    {
+      "question": "Which of the following gases has a characteristic pungent smell, turns red litmus paper blue and forms dense white fumes with hydrogen chloride gas?",
+      "options": ["N₂", "N₂O", "Cl₂", "NH₃"],
+      "answer_index": 3,
+      "explanation": "NH₃ is pungent, basic (turns litmus blue), and forms dense white NH₄Cl fumes with HCl gas."
+    },
+    {
+      "question": "Commercial bleaching can be carried out using",
+      "options": [
+        "sulphur (IV) oxide and ammonia",
+        "hydrogen sulphide and chlorine",
+        "chlorine and sulphur (IV) oxide",
+        "ammonia and chlorine"
+      ],
+      "answer_index": 2,
+      "explanation": "Cl₂ is an oxidative bleach and SO₂ is a reductive bleach; both are used in commercial bleaching."
+    },
+    {
+      "question": "Mineral acids are usually added to commercial hydrogen peroxide to",
+      "options": [
+        "oxidize it",
+        "decompose it",
+        "minimize its decomposition",
+        "reduce it to water and oxygen"
+      ],
+      "answer_index": 2,
+      "explanation": "Acids are added as stabilizers to prevent decomposition of H₂O₂ during storage."
+    },
+    {
+      "question": "Which of the following compounds will burn with a brick-red colour in a non-luminous Bunsen flame?",
+      "options": ["LiCl", "NaCl", "CaCl₂", "MgCl₂"],
+      "answer_index": 2,
+      "explanation": "Calcium compounds produce a characteristic brick-red flame due to electron transitions in Ca atoms."
+    },
+    {
+      "question": "The purest form of iron which contains only about 0.1% carbon is",
+      "options": ["pig iron", "wrought iron", "cast iron", "iron pyrite"],
+      "answer_index": 1,
+      "explanation": "Wrought iron is commercially pure iron with minimal carbon content, making it malleable and ductile."
+    },
+    {
+      "question": "A common characteristic between zinc and the other transition elements is the ability to",
+      "options": [
+        "have variable oxidation states",
+        "form complex ions",
+        "act as a catalyst",
+        "form coloured ions"
+      ],
+      "answer_index": 1,
+      "explanation": "Transition elements and zinc readily form complex ions due to unfilled d-orbitals."
+    },
+    {
+      "question": "Which of the following metals is the least reactive?",
+      "options": ["Pb", "Sn", "Hg", "Au"],
+      "answer_index": 3,
+      "explanation": "Gold (Au) is the least reactive due to its filled electron shells and high reduction potential."
+    },
+    {
+      "question": "Geometric isomerism can exist in",
+      "options": ["hex-3-ene", "hexane", "prop-1-ene", "3-methyl but-1-ene"],
+      "answer_index": 0,
+      "explanation": "Hex-3-ene has alkene groups allowing cis-trans isomerism. Others lack suitable double bonds or substituents."
+    },
+    {
+      "question": "Alkanals can be distinguished from alkanones by the reaction with",
+      "options": [
+        "Sudan III stain",
+        "starch iodide paper",
+        "lithium tetrahydrido aluminate (III)",
+        "Fehling's solution"
+      ],
+      "answer_index": 3,
+      "explanation": "Alkanals are oxidized by Fehling's reagent to carboxylic acids (positive test), while alkanones are not oxidized."
+    },
+    {
+      "question": "The isomers of C₃H₈O are",
+      "options": [
+        "1-propanol and 2-propanol",
+        "1-propanol and 1-propanol",
+        "2-propanol and 2-propanone",
+        "2-propanol and 1-propanol"
+      ],
+      "answer_index": 0,
+      "explanation": "C₃H₈O has two structural isomers: 1-propanol (primary alcohol) and 2-propanol (secondary alcohol)."
+    },
+    {
+      "question": "Carbohydrates are large molecules with the molecular formula Cₓ(H₂O)ᵧ. In which of the following pairs is x not equal to y?",
+      "options": [
+        "glucose and starch",
+        "maltose and starch",
+        "sucrose and fructose",
+        "maltose and starch"
+      ],
+      "answer_index": 0,
+      "explanation": "Glucose (C₆H₁₂O₆, x=6, y=6) and starch (C₆H₁₀O₅, x=6, y=5) have x ≠ y in starch."
+    },
+    {
+      "question": "A compound contains 40.0% C, 6.7% H, 53.3% O. If the molecular mass of the compound is 180, its molecular formula is [C =12, H =1, O=16]",
+      "options": ["CH₂O", "C₃H₆O₃", "C₆H₆O₃", "C₆H₁₂O₆"],
+      "answer_index": 3,
+      "explanation": "Empirical formula: C:H:O = 40/12 : 6.7/1 : 53.3/16 = 1:2:1 (CH₂O). Molecular formula: (CH₂O)n where n = 180/30 = 6, giving C₆H₁₂O₆."
+    },
+    {
+      "question": "The alkyne that will give a white precipitate with silver trioxonitrate (V) is",
+      "options": [
+        "CH₃CH₂C≡CCH₂CH₃",
+        "CH₃C≡CCH₂CH₂CH₃",
+        "CH₃CH₂CH₂CH₂C≡CH",
+        "CH₃CH₂CH₂C≡CCH₂CH₃"
+      ],
+      "answer_index": 2,
+      "explanation": "Terminal alkynes (C≡C-H) form white silver acetylide precipitates with Ag⁺. Only option 2 has a terminal alkyne."
+    },
+    {
+      "question": "The saponification of an alkanoate to produce soap and alkanol involves",
+      "options": ["dehydration", "esterification", "hydrolysis", "oxidation"],
+      "answer_index": 2,
+      "explanation": "Saponification is the hydrolysis of esters using alkali, breaking the ester bond to form soap (salt) and alcohol."
+    },
+    {
+      "question": "2-methyl propan-2-ol is an example of a",
+      "options": [
+        "primary alkanol",
+        "secondary alkanol",
+        "tertiary alkanol",
+        "quaternary alkanol"
+      ],
+      "answer_index": 2,
+      "explanation": "In (CH₃)₃C-OH, the OH group is attached to a carbon bonded to three other carbons, making it tertiary."
+    },
+    {
+      "question": "The final oxidation product of alkanol, alkanal and alkanones is",
+      "options": [
+        "alkanoic acid",
+        "alkanoyyl halide",
+        "alkanoate",
+        "alkanamide"
+      ],
+      "answer_index": 0,
+      "explanation": "Both alkanols and alkanals oxidize to carboxylic acids (alkanoic acids). Alkanones cannot be oxidized further."
+    },
+    {
+      "question": "Ethanol reacts with concentrated tetraoxosulphate (VI) acid at a temperature above 170°C to form",
+      "options": ["ethanone", "ethene", "ethyne", "ethanal"],
+      "answer_index": 1,
+      "explanation": "Above 170°C, ethanol undergoes dehydration with concentrated H₂SO₄ to form ethene (C₂H₄)."
+    },
+    {
+      "question": "An example of oxidation-reduction enzyme is",
+      "options": ["amylase", "protease", "lipase", "dehydrogenase"],
+      "answer_index": 3,
+      "explanation": "Dehydrogenases catalyze redox reactions by transferring hydrogen/electrons. Other enzymes are hydrolases."
+    }
+  ]
+}

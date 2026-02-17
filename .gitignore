@@ -1,0 +1,8 @@
+node_modules/
+.wwebjs_auth/
+.wwebjs_cache/
+data/permissions.json
+data/quiz_config.json
+.env
+*.log
+somedata.txt

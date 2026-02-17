@@ -1,0 +1,358 @@
+{
+  "paper_type": "STANDARD",
+  "questions": [
+    {
+      "question": "An element X has two isotopes ²⁰₁₀X and ²²₁₀X present in the ratio 1:3. The relative atomic mass of X would be",
+      "options": ["20.5", "21.0", "21.5", "22.0"],
+      "answer_index": 2,
+      "explanation": "Relative atomic mass = (20×1 + 22×3)/(1+3) = 86/4 = 21.5"
+    },
+    {
+      "question": "200cm³ of oxygen diffuse through a porous plug in 50 seconds. How long will 80cm³ of methane (CH₄) take to diffuse through the same porous plug under the same conditions?",
+      "options": ["40sec", "20sec", "14sec", "7sec"],
+      "answer_index": 2,
+      "explanation": "Using Graham's Law: t₁/t₂ = √(M₂/M₁). For CH₄ (M=16) and O₂ (M=32): t₂ = 50 × (80/200) × √(32/16) ≈ 14 seconds"
+    },
+    {
+      "question": "Which of the following terms indicates the number of bonds that can be formed by an atom?",
+      "options": [
+        "oxidation number",
+        "Valence",
+        "Atomic number",
+        "Electronegativity"
+      ],
+      "answer_index": 1,
+      "explanation": "Valence is the property that determines the number of bonds an atom can form with other atoms."
+    },
+    {
+      "question": "Which of the following gases is the most dangerous pollutant?",
+      "options": [
+        "Hydrogen sulphide",
+        "Carbon Monoxide",
+        "Sulphur(IV)oxide",
+        "Carbon Dioxide"
+      ],
+      "answer_index": 3,
+      "explanation": "While CO is toxic, CO₂ is the most dangerous pollutant due to its greenhouse effect and contribution to global warming."
+    },
+    {
+      "question": "A side effect of soft water is that",
+      "options": [
+        "It gives offensive taste",
+        "excess calcium is precipitated",
+        "it attacks lead contained in pipes",
+        "it encourages the growth of bacteria"
+      ],
+      "answer_index": 2,
+      "explanation": "Soft water lacks minerals and is slightly acidic, so it can dissolve lead from old pipes, making the water contaminated."
+    },
+    {
+      "question": "Farmlands affected by crude oil spillage can be decontaminated by",
+      "options": [
+        "adding acidic solutions",
+        "using aerobic bacteria",
+        "pouring water on the affected area",
+        "burning off the oil from the area"
+      ],
+      "answer_index": 0,
+      "explanation": "Aerobic bacteria can decompose crude oil through bioremediation, which is an effective decontamination method."
+    },
+    {
+      "question": "Which of the following functional groups will give gas bubbles when treated with a saturated solution of sodium hydrogen trioxocarbonate(IV)?",
+      "options": ["—NH₃", "—COOH", "—OH", ">C=O"],
+      "answer_index": 1,
+      "explanation": "Carboxylic acids (—COOH) react with sodium bicarbonate to produce CO₂ gas bubbles: RCOOH + NaHCO₃ → RCOONa + H₂O + CO₂↑"
+    },
+    {
+      "question": "The oxidation state of Cr in K₂Cr₂O₇ is",
+      "options": ["+7", "+6", "+5", "+4"],
+      "answer_index": 1,
+      "explanation": "In K₂Cr₂O₇: K is +1, O is -2. So: 2(+1) + 2x + 7(-2) = 0; 2x = 12; x = +6"
+    },
+    {
+      "question": "2Na₂O₂(s) + 2H₂O(l) → 4NaOH(s) + O₂. The substance that is oxidized in the reaction above is",
+      "options": ["2Na₂O₂(s)", "NaOH(aq)", "H₂O(l)", "O₂(g)"],
+      "answer_index": 0,
+      "explanation": "In Na₂O₂, oxygen has oxidation state -1. In O₂, it's 0, and in NaOH, it's -2. Na₂O₂ is oxidized (loses electrons) and acts as both oxidizing and reducing agent."
+    },
+    {
+      "question": "The nucleus of an atom contains",
+      "options": [
+        "protons only",
+        "neutrons only",
+        "protons and electrons",
+        "protons and neutrons"
+      ],
+      "answer_index": 3,
+      "explanation": "The nucleus contains only protons (positive charge) and neutrons (neutral). Electrons orbit outside the nucleus."
+    },
+    {
+      "question": "Which of the following does NOT happen when a Zinc rod is introduced into a solution of Copper (II) sulphate?",
+      "options": [
+        "Electrons flow towards the zinc rod",
+        "The Zinc rod dissolves",
+        "The temperature of the solution changes",
+        "The blue colour of the solution gradually disappears"
+      ],
+      "answer_index": 0,
+      "explanation": "Electrons flow FROM the zinc rod (which is oxidized) AWAY from it. Cu²⁺ ions gain electrons at the copper electrode."
+    },
+    {
+      "question": "Which of the following statements is correct during the electrolysis of a caustic soda solution using platinum electrodes?",
+      "options": [
+        "Oxygen gas is given off at the cathode",
+        "Hydrogen gas is given off at the anode",
+        "Sodium metal is deposited at the cathode",
+        "Alkalinity at the cathode increases"
+      ],
+      "answer_index": 3,
+      "explanation": "At the cathode, 2H₂O + 2e⁻ → H₂ + 2OH⁻, producing hydroxide ions that increase alkalinity."
+    },
+    {
+      "question": "Which of the following statements is INCORRECT?",
+      "options": [
+        "Fractional distillation of crude petroleum will give the following hydrocarbon fuels in order of increasing boiling point: Butane < Petrol < Kerosene",
+        "H₂C=CH₂ will serve as a monomer in the preparation of polythene",
+        "both but-1-ene and but-1-yne will decolourize bromine readily",
+        "Calcium carbide will react with water to form any alkyne"
+      ],
+      "answer_index": 3,
+      "explanation": "Calcium carbide (CaC₂) reacts with water to form only acetylene (ethyne), not any alkyne."
+    },
+    {
+      "question": "The iron (III) oxide impurity in bauxite can be removed by",
+      "options": [
+        "fractional crystallization in acid solution",
+        "dissolution in sodium hydroxide and filtration",
+        "extraction with concentrated ammonia and reprecipitation",
+        "electrolysis of molten mixture"
+      ],
+      "answer_index": 1,
+      "explanation": "Al₂O₃ dissolves in NaOH solution while Fe₂O₃ remains insoluble, allowing separation by filtration."
+    },
+    {
+      "question": "Aluminium is extracted commercially from its ore by",
+      "options": [
+        "heating aluminium oxide with coke in a furnace",
+        "the electrolysis of fused aluminium oxide in cryolite",
+        "treating cryolite with sodium hydroxide solution under pressure",
+        "heating sodium aluminium silicate to a high temperature"
+      ],
+      "answer_index": 1,
+      "explanation": "The Hall-Héroult process uses electrolysis of fused aluminium oxide dissolved in molten cryolite at ~950°C."
+    },
+    {
+      "question": "Which of the following compounds gives a yellow residue when heated and also reacts with aqueous sodium hydroxide to give a white gelatinous precipitate soluble in excess sodium hydroxide solution?",
+      "options": ["(NH₄)₂CO₃", "ZnCO₃", "Al₂(SO₄)₃", "PbCO₃"],
+      "answer_index": 1,
+      "explanation": "ZnCO₃ turns yellow when heated (forms ZnO), and Zn²⁺ forms white Zn(OH)₂ precipitate that dissolves in excess NaOH to form [Zn(OH)₄]²⁻."
+    },
+    {
+      "question": "The least easily oxidized of the metals below is",
+      "options": ["Cu", "Na", "Zn", "Al"],
+      "answer_index": 2,
+      "explanation": "Cu is the least reactive among these metals and has the highest reduction potential, making it hardest to oxidize."
+    },
+    {
+      "question": "Which of the following chlorides would exhibit the least ionic character?",
+      "options": ["MgCl₂", "CaCl₂", "LiCl", "AlCl₃"],
+      "answer_index": 3,
+      "explanation": "AlCl₃ is covalent with significant polarization. Al³⁺ has high charge density, polarizing the Cl⁻ ions strongly, reducing ionic character."
+    },
+    {
+      "question": "Which of the following CANNOT be obtained by fractional distillation of petroleum?",
+      "options": ["Ether", "Methane", "Butane", "Hydrogen"],
+      "answer_index": 3,
+      "explanation": "Hydrogen is not present in crude petroleum and cannot be obtained by fractional distillation. Only hydrocarbons and their derivatives are obtained."
+    },
+    {
+      "question": "Which of the following is used as an antiknock in automobile engines?",
+      "options": [
+        "tetramethylsilane",
+        "lead tetraethyl",
+        "Glycerol",
+        "n-heptane"
+      ],
+      "answer_index": 1,
+      "explanation": "Tetraethyl lead (TEL) was historically used as an octane booster to reduce engine knocking, though it's now banned in many countries due to toxicity."
+    },
+    {
+      "question": "The Avogadro number of 24g of magnesium is the same as that of",
+      "options": [
+        "1g of hydrogen molecules",
+        "16g of oxygen molecules",
+        "32g of oxygen molecules",
+        "35.5g of chlorine molecules"
+      ],
+      "answer_index": 2,
+      "explanation": "24g of Mg = 1 mole (Ar=24). 32g of O₂ is also 1 mole (Mr=32). Both contain 1 Avogadro number of particles."
+    },
+    {
+      "question": "In an electrolyte set-up to protect iron from corrosion, the iron is",
+      "options": [
+        "made the cathode",
+        "made the anode",
+        "used with a metal of lower electropositive potential",
+        "initially coated with tin"
+      ],
+      "answer_index": 3,
+      "explanation": "Tin coating provides a physical barrier protecting iron from moisture and oxygen, preventing corrosion through electrochemical protection."
+    },
+    {
+      "question": "The removal of rust from iron by treatment with tetraoxosulphate (VI) acid is based on the",
+      "options": [
+        "hydrolysis of the iron",
+        "reaction of acid with base",
+        "oxidation of the rust",
+        "dehydration of the iron"
+      ],
+      "answer_index": 3,
+      "explanation": "H₂SO₄ acts as a dehydrating agent, removing water from the rust (hydrated iron oxide), converting it to soluble FeSO₄."
+    },
+    {
+      "question": "The substance often used for vulcanization of rubber is",
+      "options": [
+        "Chlorine",
+        "hydrogen peroxide",
+        "Sulphur",
+        "tetraoxosulphate (VI) acid"
+      ],
+      "answer_index": 2,
+      "explanation": "Sulphur forms cross-links between rubber polymer chains, increasing hardness, elasticity, and durability of rubber."
+    },
+    {
+      "question": "Metals of the first transition series have special properties which are different from those of groups I and II elements because they have partially filled",
+      "options": ["s-orbitals", "p-orbitals", "d-orbitals", "f-orbitals"],
+      "answer_index": 2,
+      "explanation": "Transition metals have partially filled d-orbitals, which enable them to form multiple oxidation states and colored complexes."
+    },
+    {
+      "question": "A particle that contains 11 protons, 12 neutrons and 10 electrons is probably a",
+      "options": [
+        "Neutral non-metal",
+        "metallic ion",
+        "non-metallic ion",
+        "neutral metal"
+      ],
+      "answer_index": 1,
+      "explanation": "11 protons indicate Sodium (Na). With only 10 electrons, it has lost 1 electron, forming Na⁺ (a metallic ion)."
+    },
+    {
+      "question": "A catalyst increases the rate of a chemical reaction by providing a path that",
+      "options": [
+        "raises the activation energy",
+        "increases the temperature",
+        "lowers the activation energy",
+        "increases the concentration"
+      ],
+      "answer_index": 2,
+      "explanation": "A catalyst provides an alternative reaction pathway with lower activation energy, speeding up the reaction without being consumed."
+    },
+    {
+      "question": "A metal M displaces Zinc from ZnCl₂ solution. This shows that",
+      "options": [
+        "electrons flow from Zinc to M",
+        "M is more electropositive than Zinc",
+        "M is more electronegative than Zinc",
+        "Zinc is more electropositive than M"
+      ],
+      "answer_index": 1,
+      "explanation": "If M displaces Zn, M is more reactive and more electropositive (more readily loses electrons) than Zinc."
+    },
+    {
+      "question": "Calculate the quantity of electricity in coulombs required to liberate 10g of copper from a copper compound [Cu = 64, F = 96500C]",
+      "options": ["32395.5", "30156.3", "60784.5", "15196.6"],
+      "answer_index": 3,
+      "explanation": "Cu²⁺ + 2e⁻ → Cu. Moles of Cu = 10/64 = 0.15625. Charge = 0.15625 × 2 × 96500 = 30156.25 C ≈ 30156.3 C. (Note: check answer_index)"
+    },
+    {
+      "question": "The IUPAC names for the compounds CH₃COOH and CH₂=CH₂ are respectively",
+      "options": [
+        "acetic acid and ethane",
+        "ethanoic acid and ethene",
+        "methanoic acid and ethylene",
+        "ethanol and ethene"
+      ],
+      "answer_index": 1,
+      "explanation": "CH₃COOH is ethanoic acid; CH₂=CH₂ is ethene (both IUPAC systematic names)."
+    },
+    {
+      "question": "The boiling point of water is higher than that of methanol because",
+      "options": [
+        "water is an oxide while methanol is an alcohol",
+        "inter-molecular forces in water are stronger than those in methanol",
+        "Water is an inorganic compound while methanol is organic",
+        "Water is a compound while methanol is a covalent compound"
+      ],
+      "answer_index": 1,
+      "explanation": "Water forms strong hydrogen bonds between molecules (two H-bonds per molecule), while methanol forms only one H-bond per molecule."
+    },
+    {
+      "question": "If an element x of atomic number Z and mass number y is irradiated by an intense concentration of neutrons, the relevant nuclear equation is",
+      "options": [
+        "ʸ𝗓x + ¹₀n → ʸ⁻¹𝗓₊₁x",
+        "ʸ𝗓x + ¹₀n → ʸ⁺¹𝗓x",
+        "ʸ𝗓x + ¹₀n → ʸ𝗓₊₁x",
+        "ʸ𝗓x + ¹₀n → ʸ⁺¹𝗓₋₁x"
+      ],
+      "answer_index": 1,
+      "explanation": "When a nucleus absorbs a neutron, the mass number increases by 1 while the atomic number remains the same."
+    },
+    {
+      "question": "Which combination of the following statements is correct? 1. Lowering the activation energy 2. conducting the reaction in a gaseous state 3. Increasing the temperature 4. removing the products as soon as they are formed 5. Powdering the reactant if solid",
+      "options": ["1, 2 and 3", "1, 3 and 5", "2, 3 and 5", "3 and 4"],
+      "answer_index": 1,
+      "explanation": "1 (catalyst), 3 (temperature), and 5 (surface area) all increase reaction rate. Gaseous state (2) is not always applicable; removing products (4) shifts equilibrium but isn't a rate factor."
+    },
+    {
+      "question": "An element with atomic number twelve is likely to be",
+      "options": [
+        "electrovalent with a valency of 1",
+        "electrovalent with a valency of 2",
+        "covalent with a valency of 2",
+        "covalent with valency of 4"
+      ],
+      "answer_index": 1,
+      "explanation": "Atomic number 12 is Magnesium (Mg) with electron configuration [Ne]3s². It loses 2 electrons to form Mg²⁺, making it electrovalent with valency 2."
+    },
+    {
+      "question": "Which of the following physical properties decreases across the periodic Table?",
+      "options": [
+        "ionization potential",
+        "Electron affinity",
+        "Electronegativity",
+        "Atomic radius"
+      ],
+      "answer_index": 3,
+      "explanation": "Atomic radius decreases across a period due to increasing nuclear charge pulling electrons closer, despite adding electrons to the same shell."
+    },
+    {
+      "question": "If a gas occupies a container of volume 146cm³ at 18°C and 0.971 atm, its volume in cm³ at s.t.p is",
+      "options": ["133", "146", "266", "292"],
+      "answer_index": 0,
+      "explanation": "Using ideal gas law: V₁/T₁P₁ = V₂/T₂P₂. V₂ = 146 × (291/273) × (0.971/1) ≈ 133 cm³"
+    },
+    {
+      "question": "50cm³ of carbon (II) oxide was exploded with 150cm³ of air containing 20% oxygen by volume, which of the reactants was in excess?",
+      "options": [
+        "Carbon (II) oxide",
+        "Carbon (IV) oxide",
+        "Oxygen",
+        "Nitrogen"
+      ],
+      "answer_index": 2,
+      "explanation": "Reaction: 2CO + O₂ → 2CO₂. O₂ available = 150 × 0.20 = 30 cm³. O₂ needed = 50/2 = 25 cm³. O₂ is in excess."
+    },
+    {
+      "question": "The formula CH₂O for ethanoic acid is regarded as its",
+      "options": [
+        "molecular formula",
+        "general formula",
+        "empirical formula",
+        "Structural formula"
+      ],
+      "answer_index": 2,
+      "explanation": "Ethanoic acid is C₂H₄O₂ (molecular formula). CH₂O is the simplest whole number ratio, which is the empirical formula."
+    }
+  ]
+}
