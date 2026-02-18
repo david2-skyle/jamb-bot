@@ -22,7 +22,7 @@ const CONFIG = {
     dataDirectory: "./data",
     permissionsFile: "./data/permissions.json",
     configFile: "./data/quiz_config.json",
-    subjects: ["chemistry"],
+    subjects: ["chemistry", "physics"],
     years: [
       "2010",
       "2011",

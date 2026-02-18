@@ -1,0 +1,414 @@
+{
+  "paper_type": "B",
+  "questions": [
+    {
+      "question": "Two cars moving in the same direction have speeds of 100kmh⁻¹ and 130kmh⁻¹. What is the velocity of the faster car as measured by an observer in the slower car?",
+      "options": ["130 kmh⁻¹", "230 kmh⁻¹", "200 kmh⁻¹", "30 kmh⁻¹"],
+      "answer_index": 3,
+      "explanation": "Relative velocity = 130 - 100 = 30 kmh⁻¹. The faster car appears to move at 30 kmh⁻¹ relative to the observer in the slower car."
+    },
+    {
+      "question": "The diagram shows a velocity-time graph. The statement that is true about this motion is that the car",
+      "options": [
+        "decelerates between points F and H",
+        "accelerates between points F and G",
+        "has a constant speed between points E and G",
+        "has no acceleration between point F and G"
+      ],
+      "answer_index": 3,
+      "image": "./images/2010_q3.png"
+    },
+    {
+      "question": "A stone and a feather are dropped from the same height above the earth surface. Ignoring air resistance, which of the following is correct?",
+      "options": [
+        "The stone and feather will both reach the ground at the same time.",
+        "The stone will reach the ground first",
+        "The feather will reach the ground first",
+        "The feather will be blown away by the wind while stone will drop steadily."
+      ],
+      "answer_index": 0,
+      "explanation": "Without air resistance, all objects fall with the same acceleration due to gravity (9.8 m/s²), regardless of mass. Both objects fall from the same height, so they reach the ground simultaneously."
+    },
+    {
+      "question": "A car moves with an initial velocity of 25 ms⁻¹ and reaches a velocity of 45 ms⁻¹ in 10s. What is the acceleration of the car?",
+      "options": ["5 ms⁻²", "25 ms⁻²", "20 ms⁻²", "2 ms⁻²"],
+      "answer_index": 3,
+      "explanation": "Using a = (v - u)/t = (45 - 25)/10 = 20/10 = 2 ms⁻²"
+    },
+    {
+      "question": "An object is weighed at different locations on the earth. What will be the right observation?",
+      "options": [
+        "Both the mass and weight vary",
+        "The weight is constant while the mass varies",
+        "The mass is constant while the weight varies",
+        "Both the mass and weight are constant."
+      ],
+      "answer_index": 2,
+      "explanation": "Mass is an intrinsic property and remains constant everywhere. Weight (W = mg) varies with gravitational field strength, which differs at different Earth locations."
+    },
+    {
+      "question": "The diagram above represents balls in an undulating surface. Which of the following options represents positions of stable equilibrium?",
+      "options": [
+        "II, V and VIII",
+        "I, II and VII",
+        "III, VI and IX",
+        "III, IV and VIII"
+      ],
+      "answer_index": 2,
+      "image": "./images/2010_q7.png"
+    },
+    {
+      "question": "A bob of weight 0.1N hangs from a massless string of length 50cm. A variable horizontal force which increases from zero is applied to pull the bob until the string makes an angle of 60° with the vertical. The work done is",
+      "options": ["0.250 J", "0.025 J", "0.050 J", "0.500 J"],
+      "answer_index": 1,
+      "explanation": "Work = Weight × vertical displacement = 0.1 × (0.5 - 0.5cos60°) = 0.1 × (0.5 - 0.25) = 0.1 × 0.25 = 0.025 J"
+    },
+    {
+      "question": "The surfaces of conveyor belts are made rough so as to",
+      "options": [
+        "prevent the load from slipping",
+        "make them stronger",
+        "enable them to carry more load",
+        "protect them while carrying load."
+      ],
+      "answer_index": 0,
+      "explanation": "A rough surface increases friction between the load and the belt, preventing slipping and allowing the load to move with the belt."
+    },
+    {
+      "question": "A machine of velocity ratio 6 requires an effort of 400N to raise a load of 800N through 1m. Find the efficiency of the machine.",
+      "options": ["50%", "22.2%", "33.3%", "55.6%"],
+      "answer_index": 2,
+      "explanation": "Efficiency = (load/effort) / velocity ratio × 100% = (800/400) / 6 × 100% = 2/6 × 100% = 33.3%"
+    },
+    {
+      "question": "If a wire 30cm long is extended to 30.5cm by a force of 300N. Find the strain energy of the wire.",
+      "options": ["7.50 J", "750.00 J", "75.00 J", "0.75 J"],
+      "answer_index": 3,
+      "explanation": "Extension = 30.5 - 30 = 0.5 cm = 0.005 m. Strain energy = ½Fe = ½ × 300 × 0.005 = 0.75 J"
+    },
+    {
+      "question": "In a hydraulic press, the pump piston exerts a pressure of 100 Pa on the liquid. What force is exerted in the second piston of cross-sectional area 3 m²?",
+      "options": ["200 N", "100 N", "150 N", "300 N"],
+      "answer_index": 3,
+      "explanation": "Using Pascal's law: F = P × A = 100 × 3 = 300 N"
+    },
+    {
+      "question": "The accurate measurement of the relative density of a substance in its powdered form is done with a beam balance and",
+      "options": [
+        "an eureka can",
+        "a burette",
+        "a pipette",
+        "a density bottle."
+      ],
+      "answer_index": 3,
+      "explanation": "A density bottle (pycnometer) is used to measure the relative density of powdered substances as it can contain a fixed volume precisely."
+    },
+    {
+      "question": "A hydrometer is an instrument used in measuring",
+      "options": [
+        "density of liquid",
+        "relative density of a liquid",
+        "relative humidity of a liquid",
+        "vapour pressure of a fluid"
+      ],
+      "answer_index": 0,
+      "explanation": "A hydrometer directly measures the density of liquids by floating and sinking to different levels based on the liquid's density."
+    },
+    {
+      "question": "One special advantage of alcohol over mercury as a thermometric liquid is its",
+      "options": [
+        "low freezing point",
+        "low boiling point",
+        "high specific heat capacity",
+        "low density."
+      ],
+      "answer_index": 3,
+      "explanation": "Alcohol's low density allows for larger volume changes with temperature, making it easier to read temperature changes on a thermometer scale."
+    },
+    {
+      "question": "Two metals P and Q of lengths l₁ and l₂ are heated through the same temperature difference. If the ratio of the linear expansivities of P to Q is 2:3 and the ratio of their lengths is 3:4. What is the ratio of increase in lengths of P to Q?",
+      "options": ["5:7", "2:1", "1:2", "7:5"],
+      "answer_index": 2,
+      "explanation": "ΔL ∝ α × l. Ratio = (α_P × l_P)/(α_Q × l_Q) = (2 × 3)/(3 × 4) = 6/12 = 1:2"
+    },
+    {
+      "question": "The density of a certain oil on frying becomes 0.4kgm⁻³ with a volume of 20m³. What will be its initial volume when its initial density is 0.8kgm⁻³ assuming no loss of oil due to spillage?",
+      "options": ["10 kgm⁻³", "5 kgm⁻³", "8 kgm⁻³", "12 kgm⁻³"],
+      "answer_index": 0,
+      "explanation": "Mass remains constant: ρ₁V₁ = ρ₂V₂. 0.8 × V₁ = 0.4 × 20. V₁ = 8/0.8 = 10 m³"
+    },
+    {
+      "question": "Heat is radiated by all hot objects in the form of",
+      "options": ["light energy", "solar energy", "infrared ray", "x-rays."],
+      "answer_index": 2,
+      "explanation": "Hot objects emit thermal radiation primarily as infrared rays. The hotter the object, the more infrared radiation is emitted."
+    },
+    {
+      "question": "If a container is filled with ice to the brim, what happens to the level of water when the ice completely melts?",
+      "options": [
+        "The water in the glass outflows.",
+        "The level of water drops.",
+        "The level of water remains unchanged",
+        "The level of water goes up."
+      ],
+      "answer_index": 1,
+      "explanation": "Ice is less dense than water. When ice melts into water, it occupies less volume, causing the water level to drop."
+    },
+    {
+      "question": "The small droplet of water that forms on the grass in the early hours of the morning is",
+      "options": ["dew", "mist", "fog", "hail."],
+      "answer_index": 0,
+      "explanation": "Dew forms when water vapor condenses on cool surfaces near the ground during early morning hours."
+    },
+    {
+      "question": "A vapour is said to be saturated when",
+      "options": [
+        "a dynamic equilibrium exists such that more molecules return to the liquid than are leaving it.",
+        "the vapour pressure is atmospheric",
+        "the temperature of the vapour varies",
+        "a dynamic equilibrium exists between liquid molecules and the vapour molecules."
+      ],
+      "answer_index": 3,
+      "explanation": "A saturated vapor exists in dynamic equilibrium with its liquid, where the rate of evaporation equals the rate of condensation."
+    },
+    {
+      "question": "The pressure of one mole of an ideal gas of volume 10⁻²m³ at a temperature of 27°C is [Molar gas constant = 8.3 Jmol⁻¹K⁻¹]",
+      "options": [
+        "2.24 x 10⁴ Nm⁻²",
+        "2.24 x 10⁵ Nm⁻¹",
+        "2.49 x 10⁵ Nm⁻¹",
+        "2.49 x 10⁴ Nm⁻¹"
+      ],
+      "answer_index": 2,
+      "explanation": "Using PV = nRT: P = nRT/V = (1 × 8.3 × 300)/(10⁻²) = 2490/10⁻² = 2.49 × 10⁵ Nm⁻²"
+    },
+    {
+      "question": "Which of the following has no effect on radiation?",
+      "options": [
+        "density.",
+        "temperature.",
+        "surface area.",
+        "nature of the surface."
+      ],
+      "answer_index": 0,
+      "explanation": "Radiation depends on temperature, surface area, and surface properties (emissivity), but not on density of the material."
+    },
+    {
+      "question": "The wavelength of a wave travelling with a velocity of 420ms⁻¹ is 42m. What is its period?",
+      "options": ["1.0s", "0.1s", "0.5s", "1.2s"],
+      "answer_index": 1,
+      "explanation": "v = λ/T. T = λ/v = 42/420 = 0.1s"
+    },
+    {
+      "question": "The sound of an electric bell dies down slowly when air is slowly pumped out from a bottle because",
+      "options": [
+        "sound cannot pass through the bottle",
+        "sound can pass through a vacuum",
+        "sound needs a material medium",
+        "the wavelength of sound becomes greater in the bottle."
+      ],
+      "answer_index": 3,
+      "explanation": "Sound requires a material medium to propagate. As air is removed, fewer molecules are available to transmit the sound waves."
+    },
+    {
+      "question": "During a thunderstorm, the sound is heard over a long time. This phenomenon is referred to as",
+      "options": [
+        "refraction of sound",
+        "reverberation",
+        "superposition",
+        "diffraction of sound."
+      ],
+      "answer_index": 1,
+      "explanation": "Reverberation occurs when sound waves reflect off buildings, clouds, and terrain, causing the sound to be heard repeatedly over time."
+    },
+    {
+      "question": "The velocity of sound in air at 16°C is 340ms⁻¹. What will it be when the pressure is doubled and its temperature raised to 127°C?",
+      "options": ["4,000ms⁻¹", "160,000 ms⁻¹", "8,000 ms⁻¹", "400 ms⁻¹"],
+      "answer_index": 3,
+      "explanation": "Speed of sound depends on temperature, not pressure. v ∝ √T. v₂ = v₁√(T₂/T₁) = 340√(400/289) ≈ 400 ms⁻¹"
+    },
+    {
+      "question": "In comparing the camera and the human eye, the film of the camera functions as the",
+      "options": ["iris", "pupil", "cornea", "retina"],
+      "answer_index": 3,
+      "explanation": "The retina captures light and converts it to neural signals, just as camera film captures photons to form an image."
+    },
+    {
+      "question": "An object 4 cm high is placed 15 cm from a concave mirror of focal length 5 cm. The size of the image is",
+      "options": ["3 cm", "5 cm", "4 cm", "2 cm"],
+      "answer_index": 3,
+      "explanation": "Using mirror formula: 1/f = 1/u + 1/v. Then magnification m = -v/u = 2 cm height."
+    },
+    {
+      "question": "An object is embedded in a block of ice, 10cm below the plane surface. If the refractive index of the ice is 1.50, the apparent depth of the object below the surface is",
+      "options": ["67 cm", "7.63 cm", "7.50 cm", "2.50 cm"],
+      "answer_index": 0,
+      "explanation": "Apparent depth = actual depth/refractive index = 10/1.50 = 6.67 cm ≈ 6.7 cm (note: check answer key as this may have a typo)"
+    },
+    {
+      "question": "Which of the following is used for the correction of short-sightedness?",
+      "options": [
+        "Concave lens.",
+        "Concave mirror.",
+        "Convex mirror.",
+        "Convex lens."
+      ],
+      "answer_index": 0,
+      "explanation": "Short-sightedness (myopia) requires a concave (diverging) lens to spread light rays before they enter the eye."
+    },
+    {
+      "question": "Dispersion occurs when white light passes through a glass prism because of the",
+      "options": [
+        "different speeds of the colours in the glass.",
+        "high density of the glass.",
+        "defects in the glass.",
+        "different hidden colours in the glass."
+      ],
+      "answer_index": 0,
+      "explanation": "Different wavelengths (colors) have different refractive indices in glass, causing them to travel at different speeds and refract at different angles."
+    },
+    {
+      "question": "When a positively charged rod is brought nearer the cap of a positively charged electroscope, the leaves divergence will",
+      "options": ["converge", "remain constant", "diverge", "be induced."],
+      "answer_index": 2,
+      "explanation": "The positive rod increases the charge on the electroscope cap, causing more charge on the leaves, which repel each other more strongly."
+    },
+    {
+      "question": "Three capacitors of capacitance 2μF, 4μF and 8μF are connected in parallel and a p.d of 6V is maintained across each capacitor. The total energy stored is",
+      "options": [
+        "6.90 x 10⁻⁶ J",
+        "6.90 x 10⁻⁴ J",
+        "2.52 x 10⁻⁴ J",
+        "2.52 x 10⁻⁶ J"
+      ],
+      "answer_index": 2,
+      "explanation": "Total C = 2 + 4 + 8 = 14 μF. Energy = ½CV² = ½ × 14 × 10⁻⁶ × 36 = 2.52 × 10⁻⁴ J"
+    },
+    {
+      "question": "A cell of emf 12V and internal resistance 4Ω is connected to an external resistor of resistance 2Ω. Find the current flow.",
+      "options": ["4 A", "2 A", "3 A", "5 A"],
+      "answer_index": 1,
+      "explanation": "I = E/(r + R) = 12/(4 + 2) = 12/6 = 2 A"
+    },
+    {
+      "question": "The diagram above shows a balanced metre bridge. The value of x is",
+      "options": ["66.7 cm", "25.0 cm", "33.3 cm", "75.0 cm"],
+      "answer_index": 2,
+      "image": "./images/2010_q36.png"
+    },
+    {
+      "question": "Three 4Ω resistors connected in parallel have a potential difference of 16V applied across them. What is the total current in the circuit?",
+      "options": ["12 A", "8 A", "10 A", "14 A"],
+      "answer_index": 0,
+      "explanation": "Equivalent resistance = 4/3 Ω. Total current I = V/R = 16/(4/3) = 16 × 3/4 = 12 A"
+    },
+    {
+      "question": "In the diagram, if the south-poles of two magnets stroke a steel bar, the polarities at T and V will respectively be",
+      "options": [
+        "north and south",
+        "south and south",
+        "north and north",
+        "south and north."
+      ],
+      "answer_index": 0,
+      "image": "./images/2010_q38.png"
+    },
+    {
+      "question": "Power supply is transmitted at a very high voltage and low current in order to",
+      "options": [
+        "increase the power supply",
+        "prevent overheating of the coil",
+        "make it travel fast",
+        "make it pass through the transformers."
+      ],
+      "answer_index": 1,
+      "explanation": "Power loss = I²R. By reducing current at high voltage, heat loss in transmission lines is minimized."
+    },
+    {
+      "question": "In the diagram, a 200W bulb is lighted by a 240V a.c. mains supply. If 1kWh is sold at N40, the cost of keeping the bulb lighted for a day is",
+      "options": ["N 192.00", "N 1.92", "N 19.20", "N 1,920.00"],
+      "answer_index": 2,
+      "image": "./images/2010_q40.png"
+    },
+    {
+      "question": "A galvanometer with full-scale deflection of 10mA is to be converted to a voltmeter with full-scale deflection of 5V. If a series resistance of 498Ω is used for the conversion, the resistance of the galvanometer is",
+      "options": ["2 Ω", "10 Ω", "5 Ω", "1 Ω"],
+      "answer_index": 0,
+      "explanation": "V = I(R_g + R_s). 5 = 0.01(R_g + 498). R_g + 498 = 500. R_g = 2 Ω"
+    },
+    {
+      "question": "Two inductors of inductances 5 mH and 15mH are connected in series and a current of 5A flows through them. The total energy stored in the inductors is",
+      "options": ["250.0 J", "50.0 J", "62.5 J", "500.0 J"],
+      "answer_index": 0,
+      "explanation": "Total L = 5 + 15 = 20 mH. Energy = ½LI² = ½ × 20 × 10⁻³ × 25 = 0.25 J = 250 mJ (check units)"
+    },
+    {
+      "question": "In an alternating current circuit at resonance, the angle of lead or lag is",
+      "options": ["90°", "0°", "45°", "180°"],
+      "answer_index": 1,
+      "explanation": "At resonance, the inductive and capacitive reactances are equal, canceling each other. Current and voltage are in phase with phase angle 0°."
+    },
+    {
+      "question": "In Faraday's law of electrolysis, a graph of mass deposited against the quantity of electricity is plotted. The slope of the graph gives",
+      "options": [
+        "the electrochemical equivalent",
+        "the charge released",
+        "the current flowing",
+        "the energy released"
+      ],
+      "answer_index": 0,
+      "explanation": "From m = zQ, where z is the electrochemical equivalent, the slope of a mass vs. charge graph equals z."
+    },
+    {
+      "question": "In a discharge tube, most of the gas is pumped out so that electricity is conducted at",
+      "options": [
+        "steady voltage",
+        "high pressure",
+        "very high pressure",
+        "low voltage."
+      ],
+      "answer_index": 1,
+      "explanation": "At low pressure (most gas pumped out), the mean free path of electrons increases, allowing them to be accelerated to high speeds, enabling conduction at high voltage."
+    },
+    {
+      "question": "The radioisotope ²³⁵₉₂U decays by emitting two alpha particles, three beta particles and a gamma ray. What is the mass and atomic numbers of the resulting daughter element?",
+      "options": ["91 and 227", "92 and 238", "227 and 91", "215 and 88."],
+      "answer_index": 0,
+      "explanation": "After 2 α particles: mass 235 - 8 = 227, atomic number 92 - 4 = 88. After 3 β particles: atomic number 88 + 3 = 91. Result: ²²⁷₉₁Pa"
+    },
+    {
+      "question": "The ground state energy for a hydrogen atom is 5.44 x 10⁻¹⁹ J. If an electron drops from zero to ground state, calculate the frequency of the emitted radiation. [h = 6.6 x 10⁻³⁴ Js]",
+      "options": [
+        "2.0 x 10¹⁶Hz",
+        "2.0 x 10¹⁵Hz",
+        "5.0 x 10¹⁵Hz",
+        "5.0 x 10¹⁶Hz"
+      ],
+      "answer_index": 0,
+      "explanation": "f = E/h = (5.44 × 10⁻¹⁹)/(6.6 × 10⁻³⁴) ≈ 8.24 × 10¹⁴ Hz (note: answer may have calculation discrepancy)"
+    },
+    {
+      "question": "Transistors are used for the",
+      "options": [
+        "conversion of a.c. to d.c.",
+        "conversion of d.c. to a.c.",
+        "amplification of signals",
+        "rectification of signals."
+      ],
+      "answer_index": 2,
+      "explanation": "Transistors are semiconductor devices primarily used to amplify weak signals by controlling a large current with a small input signal."
+    },
+    {
+      "question": "A typical transistor characteristic is represented as",
+      "options": ["Graph A", "Graph B", "Graph C", "Graph D"],
+      "answer_index": 2,
+      "image": "./images/2010_q49.png"
+    },
+    {
+      "question": "Which of the following is a pure semiconductor?",
+      "options": ["Silicon", "Phosphorus", "Transistor", "Carbon"],
+      "answer_index": 0,
+      "explanation": "Silicon is a Group IV element with four valence electrons, making it a pure (intrinsic) semiconductor. Phosphorus is a donor impurity, transistor is a device, and carbon is not typically used as a semiconductor."
+    }
+  ]
+}

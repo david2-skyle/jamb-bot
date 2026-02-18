@@ -1,0 +1,297 @@
+{
+    "paper_type": "STANDARD",
+    "questions": [
+        {
+            "question": "A man walks 1km due east and then 1km due north. His displacement is",
+            "options": ["√2 km N45°E", "1km N30°E", "1km N15°E", "√2 km N60°E"],
+            "answer_index": 0,
+            "explanation": "Using the Pythagorean theorem: displacement = √(1² + 1²) = √2 km. The direction is 45° from east toward north, written as N45°E."
+        },
+        {
+            "question": "The density of 400cm³ of palm oil was 0.9g/cm³ before frying. If the density of the oil was 0.6g/cm³ after frying, assuming no loss of oil to spilling, its new volume was",
+            "options": ["360 cm³", "600 cm³", "240 cm³", "800 cm³"],
+            "answer_index": 1,
+            "explanation": "Mass remains constant: m = 400 × 0.9 = 360g. New volume = mass/new density = 360/0.6 = 600 cm³."
+        },
+        {
+            "question": "Which of the following is true of an electrical charge?",
+            "options": [
+                "Positive charge means deficit of electrons",
+                "Negative charge means excess of electrons",
+                "Electric current means movement of electrons",
+                "All of the above"
+            ],
+            "answer_index": 3,
+            "explanation": "All three statements are correct: positive charge results from electron deficit, negative charge from electron excess, and current is electron movement."
+        },
+        {
+            "question": "Natural radioactivity consists of the emission of",
+            "options": [
+                "α-particles and β-rays",
+                "α-particles and X-rays",
+                "α-particles, β-rays and γ-rays",
+                "γ-rays and X-rays"
+            ],
+            "answer_index": 2,
+            "explanation": "Natural radioactivity emits alpha particles (helium nuclei), beta rays (electrons or positrons), and gamma rays (electromagnetic radiation)."
+        },
+        {
+            "question": "Which of the following does NOT describe the image formed by a plane mirror?",
+            "options": [
+                "Erect",
+                "Laterally inverted",
+                "Same distance from mirror as object",
+                "Magnified"
+            ],
+            "answer_index": 3,
+            "explanation": "Plane mirrors form erect, laterally inverted images at the same distance as the object. They do NOT magnify—the image is the same size as the object."
+        },
+        {
+            "question": "Which of the following best describes the energy changes which take place when a steam engine drives a generator which lights a lamp?",
+            "options": [
+                "Heat → Light → Sound → Kinetic",
+                "Heat → Kinetic → Electricity → Heat and Light",
+                "Kinetic → Light → Heat → Electricity",
+                "Electricity → Kinetic → Heat → Light"
+            ],
+            "answer_index": 1,
+            "explanation": "Steam heat drives the engine (kinetic energy), which turns the generator (electrical energy), powering the lamp (heat and light output)."
+        },
+        {
+            "question": "Cathode rays are",
+            "options": [
+                "High-energy electromagnetic waves",
+                "protons",
+                "neutrons",
+                "streams of electrons"
+            ],
+            "answer_index": 3,
+            "explanation": "Cathode rays are streams of electrons emitted from the cathode in a vacuum tube when high voltage is applied."
+        },
+        {
+            "question": "A narrow beam of white light can be split into different colours by a glass prism. The correct explanation is that",
+            "options": [
+                "white light is an electromagnetic wave",
+                "the prism has all the colours of the white light",
+                "different colours of white light travel with different speeds in glass",
+                "white light has undergone total internal reflection in the prism"
+            ],
+            "answer_index": 2,
+            "explanation": "Different wavelengths (colours) have different refractive indices in glass, causing them to refract at different angles, dispersing the light."
+        },
+        {
+            "question": "What type of reaction is represented by the following scheme? ²₁H + ²₁H → ³₂He + ¹₀n + energy",
+            "options": [
+                "Fusion reaction",
+                "Fission reaction",
+                "Chain reaction",
+                "Radioactive decay"
+            ],
+            "answer_index": 0,
+            "explanation": "Two light nuclei combine to form a heavier nucleus with energy release—this is nuclear fusion."
+        },
+        {
+            "question": "The amount of heat needed to raise the temperature of 10kg of copper by 1K is its",
+            "options": [
+                "specific heat capacity",
+                "latent heat",
+                "heat capacity",
+                "internal energy"
+            ],
+            "answer_index": 2,
+            "explanation": "Heat capacity is the amount of heat required to raise the temperature of a specific amount of substance by 1K. (Specific heat capacity is per unit mass.)"
+        },
+        {
+            "question": "The electrochemical equivalent of silver is 0.0012g/C. If 36.0g of silver is to be deposited by electrolysis on a surface by passing a steady current for 5.0 minutes, the current must be",
+            "options": ["6000A", "100A", "10A", "1A"],
+            "answer_index": 1,
+            "explanation": "Charge needed = 36.0g ÷ 0.0012g/C = 30,000 C. Time = 5.0 min = 300s. Current = Q/t = 30,000/300 = 100A."
+        },
+        {
+            "question": "Shadows and eclipses result from the",
+            "options": [
+                "refraction of light",
+                "reflection of light",
+                "diffraction of light",
+                "rectilinear propagation of light"
+            ],
+            "answer_index": 3,
+            "explanation": "Light travels in straight lines (rectilinear propagation). Objects blocking light create shadows, and celestial bodies block sunlight to create eclipses."
+        },
+        {
+            "question": "Which of the following obeys Ohm's Law?",
+            "options": ["All metals", "Diode only", "All electrolytes", "Glass"],
+            "answer_index": 0,
+            "explanation": "Ohmic conductors (like metals) obey Ohm's Law (V = IR). Diodes, electrolytes, and glass do not obey it under all conditions."
+        },
+        {
+            "question": "Which of the following statements are TRUE OF ISOTOPES? I. Isotopes of an element have the same chemical properties because they have the same number of electrons II. Isotopes of elements are normally separated using physical properties III. Isotopes of an element have the same number of protons in their nuclei.",
+            "options": [
+                "I and II only",
+                "I and III only",
+                "II and III only",
+                "I, II and III"
+            ],
+            "answer_index": 2,
+            "explanation": "Statements II and III are true. Isotopes differ in neutron count (physical separation possible) but have identical proton numbers. Statement I is incomplete—same electrons means similar (not identical) chemical properties."
+        },
+        {
+            "question": "Which of the following may be used to explain a mirage? I. Layers of air near the road surface have varying refractive indices in hot weather II. Road surfaces sometimes become good reflectors in hot weather III. Light from the sky can be reflected upwards after coming close to the road surface.",
+            "options": [
+                "I and III only",
+                "II and III only",
+                "II only",
+                "I, II and III"
+            ],
+            "answer_index": 0,
+            "explanation": "Mirages occur due to varying air density (refractive index) near hot surfaces, causing light refraction. Statement I and III explain this; statement II is incorrect."
+        },
+        {
+            "question": "Which of the following has the lowest internal resistance when new?",
+            "options": [
+                "Leclanche cell",
+                "Daniel cell",
+                "Torch battery",
+                "Accumulator"
+            ],
+            "answer_index": 3,
+            "explanation": "Accumulators (rechargeable batteries) have much lower internal resistance compared to primary cells like Leclanche or Daniel cells."
+        },
+        {
+            "question": "The pitch of an acoustic device can be increased by",
+            "options": [
+                "decreasing the loudness",
+                "increasing the amplitude",
+                "increasing the frequency",
+                "decreasing the intensity"
+            ],
+            "answer_index": 2,
+            "explanation": "Pitch is determined by frequency. Higher frequency means higher pitch. Amplitude affects loudness, not pitch."
+        },
+        {
+            "question": "One of the features of the fission process is that",
+            "options": [
+                "it leads to chain reaction",
+                "its products are not radioactive",
+                "neutrons are not released",
+                "the sum of the masses of the reactants equals the sum of the masses of the products"
+            ],
+            "answer_index": 0,
+            "explanation": "Nuclear fission releases neutrons that can initiate further fission reactions, creating a chain reaction. The other statements are false."
+        },
+        {
+            "question": "The linear expansivity of brass is 2 x 10⁻⁵K⁻¹. If the volume of a piece of brass is 15.00cm³ at 0°C, what is the volume at 100°C?",
+            "options": ["16.03 cm³", "15.09 cm³", "16.00 cm³", "15.03 cm³"],
+            "answer_index": 1,
+            "explanation": "Volume expansivity = 3α = 3 × 2 × 10⁻⁵ = 6 × 10⁻⁵K⁻¹. ΔV = V₀ × γ × ΔT = 15 × 6 × 10⁻⁵ × 100 ≈ 0.09 cm³. New volume ≈ 15.09 cm³."
+        },
+        {
+            "question": "A lead bullet of mass 0.05kg is fired with a velocity of 200ms⁻¹ into a lead block of mass 0.95kg. Given that the lead block can move freely, the final kinetic energy after impact is",
+            "options": ["150J", "100J", "50J", "200J"],
+            "answer_index": 2,
+            "explanation": "Using momentum conservation: 0.05(200) = (0.05 + 0.95)v → v = 10 m/s. KE = ½(1.0)(10²) = 50J."
+        },
+        {
+            "question": "In a series R-L-C circuit at resonance, the voltages across the resistor and the inductor are 20V and 40V respectively. What is the voltage across the capacitor?",
+            "options": ["30V", "70V", "50V", "40V"],
+            "answer_index": 3,
+            "explanation": "At resonance, XL = XC, so voltage across capacitor equals voltage across inductor. VC = VL = 40V."
+        },
+        {
+            "question": "If the fraction of the atoms of a radioactive material left after 120 years is 1/64, what is the half-life of the material?",
+            "options": ["20 years", "10 years", "2 years", "24 years"],
+            "answer_index": 0,
+            "explanation": "1/64 = (1/2)⁶, so 6 half-lives have passed. 120 ÷ 6 = 20 years per half-life."
+        },
+        {
+            "question": "The time rate of loss of heat by a body is proportional to the",
+            "options": [
+                "temperature of its surroundings",
+                "temperature of the body",
+                "difference in temperature between the body and its surroundings",
+                "ratio of the temperature of the body to that of its surroundings"
+            ],
+            "answer_index": 2,
+            "explanation": "Newton's Law of Cooling states that the rate of heat loss is proportional to the temperature difference between the body and its surroundings."
+        },
+        {
+            "question": "A positive charged rod X is brought near an uncharged metal sphere Y and is then touched by a finger with X still in place. When the finger is removed, the result is that Y has",
+            "options": [
+                "no charge and a zero potential",
+                "a positive charge and a zero potential",
+                "a negative charge and a positive potential",
+                "a negative charge and a negative potential"
+            ],
+            "answer_index": 3,
+            "explanation": "Positive rod attracts electrons from finger to Y. When finger (grounded) is removed, Y retains excess electrons (negative charge) and is at negative potential."
+        },
+        {
+            "question": "Electrical appliances in homes are normally earthed so that",
+            "options": [
+                "a person touching the appliances is safe from electric shock",
+                "both the a.c. and d.c. sources can be used",
+                "the appliances are maintained at a higher p.d. than the earth",
+                "the appliances are maintained at a lower p.d. than the earth"
+            ],
+            "answer_index": 0,
+            "explanation": "Earthing provides a safe path for fault current, protecting users from electric shock if they touch faulty equipment."
+        },
+        {
+            "question": "The process whereby a liquid turns spontaneously into vapour is called",
+            "options": ["regelation", "evaporation", "boiling", "sublimation"],
+            "answer_index": 1,
+            "explanation": "Evaporation is the conversion of liquid to vapor at temperatures below the boiling point, occurring spontaneously from the liquid surface."
+        },
+        {
+            "question": "The differences observed in solids, liquids and gases may be accounted for by",
+            "options": [
+                "their relative masses",
+                "their melting points",
+                "the spacing and forces acting between the molecules",
+                "the different molecules in each of them"
+            ],
+            "answer_index": 2,
+            "explanation": "Molecular spacing and intermolecular forces determine physical properties: solids have fixed structure, liquids flow, and gases expand—all due to molecular arrangement."
+        },
+        {
+            "question": "Convex mirrors are used as driving mirrors because images formed are",
+            "options": [
+                "erect, virtual and diminished",
+                "erect, real and diminished",
+                "erect, virtual and magnified",
+                "inverted, virtual and diminished"
+            ],
+            "answer_index": 0,
+            "explanation": "Convex mirrors always form erect, virtual, and diminished images, providing a wider field of view for safe driving."
+        },
+        {
+            "question": "Musical instruments playing the same note can be distinguished from one another owing to the differences in their",
+            "options": ["quality", "pitch", "intensity", "loudness"],
+            "answer_index": 0,
+            "explanation": "Timbre (quality) determines the characteristic sound of an instrument. Pitch is the same note; intensity/loudness relate to amplitude."
+        },
+        {
+            "question": "In homes, electrical appliances and lamps are connected in parallel because",
+            "options": [
+                "less current will be used",
+                "less voltage will be used",
+                "parallel connection does not heat up the wires",
+                "series connection uses high voltage"
+            ],
+            "answer_index": 3,
+            "explanation": "In series connection, appliances would be in high voltage drops and one broken appliance would disconnect all others. Parallel connection provides full voltage to each."
+        },
+        {
+            "question": "An object moves in a circular path of radius 0.5m with a speed of 1ms⁻¹. What is its angular velocity?",
+            "options": ["8 rad s⁻¹", "4 rad s⁻¹", "1 rad s⁻¹", "2 rad s⁻¹"],
+            "answer_index": 3,
+            "explanation": "Angular velocity ω = v/r = 1/0.5 = 2 rad s⁻¹."
+        },
+        {
+            "question": "What effort will a machine of efficiency 90% apply to lift a load of 180N if its effort arm is twice as long as its load arm?",
+            "options": ["100N", "90N", "80N", "120N"],
+            "answer_index": 0,
+            "explanation": "Ideal effort = Load × (Load arm/Effort arm) = 180 × (1/2) = 90N. Actual effort = 90/0.9 = 100N."
+        }
+    ]
+}

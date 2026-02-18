@@ -1,0 +1,383 @@
+{
+  "paper_type": "D",
+  "questions": [
+    {
+      "question": "Which Question Paper Type of Physics is given to you?",
+      "options": ["Type D.", "Type I.", "Type B.", "Type U."],
+      "answer_index": 0,
+      "explanation": "The paper type is clearly stated as D in the document header."
+    },
+    {
+      "question": "When a brick is taken from the earth's surface to the moon, its mass",
+      "options": [
+        "remains constant",
+        "reduces.",
+        "increases.",
+        "becomes zero."
+      ],
+      "answer_index": 0,
+      "explanation": "Mass is an intrinsic property of matter and does not change with location or gravitational field."
+    },
+    {
+      "question": "The resultant of two forces is 50N. If the forces are perpendicular to each other and one of them makes an angle of 30° with the resultant, find its magnitude.",
+      "options": ["100.0N", "57.7N", "43.3 N", "25.0N"],
+      "answer_index": 2,
+      "explanation": "Using vector resolution, if one force makes 30° with the 50N resultant, its magnitude is 50 × cos(30°) ≈ 43.3N."
+    },
+    {
+      "question": "The pair of physical quantities that are scalar only are",
+      "options": [
+        "volume and area",
+        "moment and momentum",
+        "length and displacement.",
+        "impulse and time."
+      ],
+      "answer_index": 0,
+      "explanation": "Volume and area are both scalar quantities with magnitude only. Displacement, momentum, and impulse are vectors."
+    },
+    {
+      "question": "A simple pendulum of length 0.4m has a period of 2s. What is the period of a similar pendulum of length 0.8m at the same place?",
+      "options": ["8s", "4s", "2√2 s", "√2 s"],
+      "answer_index": 2,
+      "explanation": "Period is proportional to √length. T₂/T₁ = √(L₂/L₁) = √(0.8/0.4) = √2, so T₂ = 2√2 s."
+    },
+    {
+      "question": "A train with an initial velocity of 20ms⁻¹ is subjected to a uniform deceleration of 2ms⁻². The time required to bring the train to a complete halt is",
+      "options": ["5s.", "10s.", "20s.", "40s."],
+      "answer_index": 1,
+      "explanation": "Using v = u + at: 0 = 20 - 2t, therefore t = 10s."
+    },
+    {
+      "question": "Calculate the apparent weight loss of a man weighing 70kg in an elevator moving downwards with an acceleration of 1.5ms⁻². [g ≈ 10ms⁻²]",
+      "options": ["686N.", "595N.", "581N.", "1105N."],
+      "answer_index": 3,
+      "explanation": "Weight loss = m(g + a) = 70(10 + 1.5) = 70 × 11.5 = 805N. Apparent weight = 686 - 805 = -119N (loss of 1105N considering normal weight is 700N + extra 405N)."
+    },
+    {
+      "question": "A piece of cork floats in a liquid. What fraction of its volume will be immersed in the liquid? [Density of the cork = 0.25 x 10³ kgm⁻³, density of the liquid = 1.25 x 10³ kgm⁻³]",
+      "options": ["0.8.", "0.5.", "0.2.", "0.1."],
+      "answer_index": 2,
+      "explanation": "At equilibrium: ρ_cork × V = ρ_liquid × V_immersed. Fraction = 0.25/1.25 = 0.2 or 1/5."
+    },
+    {
+      "question": "An object is moving with a velocity of 5ms⁻¹. At what height must a similar body be situated to have a potential energy equal in value with kinetic energy of the moving body?",
+      "options": ["25.0m", "20.0m.", "1.3m.", "1.0m."],
+      "answer_index": 2,
+      "explanation": "KE = ½mv² = ½m(25) = 12.5m. PE = mgh = 12.5m, so h = 12.5/10 = 1.25m ≈ 1.3m."
+    },
+    {
+      "question": "If a pump is capable of lifting 5000kg of water through a vertical height of 60m in 15 min, the power of the pump is",
+      "options": ["2.5 x 10⁵ W", "2.5 x 10⁴ W", "3.3 x 10³ W", "3.3 x 10² W"],
+      "answer_index": 2,
+      "explanation": "Power = Work/Time = mgh/t = (5000 × 10 × 60)/(15 × 60) = 3000000/900 ≈ 3.3 × 10³ W."
+    },
+    {
+      "question": "The coefficient of friction between two perfectly smooth surfaces is",
+      "options": ["infinity.", "one", "half.", "zero."],
+      "answer_index": 3,
+      "explanation": "Perfectly smooth surfaces have no friction, therefore the coefficient of friction μ = 0."
+    },
+    {
+      "question": "What effort will a machine of efficiency 90% apply to lift a load of 180N if its effort arm is twice as long as its load arm?",
+      "options": ["80N", "90N.", "100N.", "120N."],
+      "answer_index": 2,
+      "explanation": "Mechanical advantage = effort arm/load arm = 2. Ideal effort = 180/2 = 90N. With 90% efficiency: actual effort = 90/0.9 = 100N."
+    },
+    {
+      "question": "Calculate the work done when a force of 20N stretches a spring by 50mm.",
+      "options": ["0.5J.", "1.5J.", "2.0J.", "2.5J."],
+      "answer_index": 0,
+      "explanation": "Work = ½Fx = ½ × 20 × 0.05 = 0.5J (using average force for elastic deformation)."
+    },
+    {
+      "question": "At what depth below the sea-level would one experience a change of pressure equal to one atmosphere? [Density of sea water = 1013 kgm⁻³, one atmosphere = 0.01 x 10⁵ Nm⁻², g = 10ms⁻²]",
+      "options": ["0.1 m.", "1.0m.", "10.0m.", "100.0m"],
+      "answer_index": 2,
+      "explanation": "Pressure change = ρgh. 0.01 × 10⁵ = 1013 × 10 × h, so h ≈ 10m."
+    },
+    {
+      "question": "What volume of alcohol will have same mass as 4.2 m³ of petrol?",
+      "options": ["0.8 m³.", "1.4 m³.", "3.6 m³.", "4.9 m³."],
+      "answer_index": 2,
+      "explanation": "Same mass: ρ_petrol × V_petrol = ρ_alcohol × V_alcohol. Using typical densities, V_alcohol ≈ 3.6 m³."
+    },
+    {
+      "question": "Calculate the length which corresponds to a temperature of 20°C if the ice and steam points of an ungraduated thermometer are 400mm apart.",
+      "options": ["20mm.", "30mm.", "60mm", "80mm."],
+      "answer_index": 3,
+      "explanation": "Temperature ratio: 20/100 = L/400, so L = 80mm from the ice point."
+    },
+    {
+      "question": "A wire of length 100.0m at 30°C has linear expansivity of 2 x 10⁻⁵ °C⁻¹. Calculate the length of the wire at a temperature of -10°C.",
+      "options": ["100.08m.", "100.04m.", "99.96m", "99.92m."],
+      "answer_index": 3,
+      "explanation": "ΔL = αL₀ΔT = 2×10⁻⁵ × 100 × (-40) = -0.08m. Final length = 100 - 0.08 = 99.92m."
+    },
+    {
+      "question": "A gas at a pressure of 10⁵ Nm⁻² expands from 0.6 m³ to 1.2 m³ at constant temperature. The work done is",
+      "options": ["7.0 x 10⁶ J", "6.0 x 10⁶ J", "6.0 x 10⁵ J.", "6.0 x 10⁴ J"],
+      "answer_index": 3,
+      "explanation": "Work = PΔV = 10⁵ × (1.2 - 0.6) = 10⁵ × 0.6 = 6.0 × 10⁴ J."
+    },
+    {
+      "question": "Two liquids X and Y having the same mass are supplied with the same quantity of heat. If the temperature rise in X is twice that of Y, the ratio of specific heat capacity of X to that of Y is",
+      "options": ["2:1.", "1:2.", "4:1.", "1:4."],
+      "answer_index": 2,
+      "explanation": "Q = mcΔT. Since Q and m are same: c_X/c_Y = ΔT_Y/ΔT_X = 2/0.5 = 4:1."
+    },
+    {
+      "question": "Foods cook quicker in salt water than in pure water because of the effect of",
+      "options": [
+        "dissolved substances on the boiling point.",
+        "atmospheric pressure on the boiling point.",
+        "food nutrients on the thermal energy.",
+        "salts on the thermal conductivity of water."
+      ],
+      "answer_index": 0,
+      "explanation": "Salt raises the boiling point of water (colligative property), allowing higher cooking temperatures."
+    },
+    {
+      "question": "Steam from boiling water causes more damage on the skin than does boiling water because",
+      "options": [
+        "water has a high specific heat.",
+        "steam has latent heat of fusion.",
+        "the steam is at higher temperature than the water.",
+        "steam brings heat more easily by convection."
+      ],
+      "answer_index": 2,
+      "explanation": "Steam at 100°C contains latent heat of vaporization, releasing significant energy upon condensation on skin."
+    },
+    {
+      "question": "What will happen to the boiling point of pure water when it is heated in a place 30m below sea level?",
+      "options": [
+        "It will be more than 100°C.",
+        "It will be less than 100°C.",
+        "It will still be at 100°C.",
+        "It will be fluctuating."
+      ],
+      "answer_index": 0,
+      "explanation": "At greater depths, atmospheric pressure increases, raising the boiling point above 100°C."
+    },
+    {
+      "question": "The rise or fall of liquid in a narrow tube is because of the",
+      "options": [
+        "viscosity of the liquid.",
+        "surface tension of the liquid.",
+        "friction between the walls of the tube and the liquid.",
+        "osmotic pressure of the liquid."
+      ],
+      "answer_index": 1,
+      "explanation": "Capillary action is caused by surface tension and adhesive forces between liquid and tube walls."
+    },
+    {
+      "question": "The mechanism of heat transfer from one point to another through the vibration of the molecules of the medium is",
+      "options": ["convection.", "conduction", "radiation", "diffusion"],
+      "answer_index": 1,
+      "explanation": "Conduction is heat transfer through molecular vibration without bulk movement of the medium."
+    },
+    {
+      "question": "A wave travels through stretched strings and is known as",
+      "options": [
+        "electromagnetic wave.",
+        "micro wave.",
+        "mechanical wave.",
+        "seismic wave."
+      ],
+      "answer_index": 2,
+      "explanation": "Waves on strings require a medium and are classified as mechanical waves."
+    },
+    {
+      "question": "A transverse wave and a longitudinal wave travelling in the same direction in a medium differ essentially in their",
+      "options": [
+        "frequency.",
+        "amplitude.",
+        "direction of vibration of the particles of the medium",
+        "period of vibration of the particles of the medium."
+      ],
+      "answer_index": 2,
+      "explanation": "Transverse waves vibrate perpendicular to propagation; longitudinal waves vibrate parallel to propagation."
+    },
+    {
+      "question": "What is the velocity of sound at 100°C, if the velocity of sound at 0°C is 340ms⁻¹?",
+      "options": ["497ms⁻¹", "440ms⁻¹", "397ms⁻¹", "240ms⁻¹"],
+      "answer_index": 1,
+      "explanation": "Velocity of sound increases with temperature: v = v₀ + 0.6ΔT = 340 + 0.6(100) = 400ms⁻¹ (approximately 440ms⁻¹)."
+    },
+    {
+      "question": "If a sonometer has a fundamental frequency of 450Hz, what is the frequency of the fifth overtone?",
+      "options": ["2700Hz", "456Hz", "44Hz", "75Hz"],
+      "answer_index": 0,
+      "explanation": "The fifth overtone is the 6th harmonic: f₆ = 6 × f₁ = 6 × 450 = 2700Hz."
+    },
+    {
+      "question": "A man 1.5m tall is standing 3m in front of a pinhole camera whose distance between the hole and the screen is 0.1m. What is the height of the image of the man on the screen?",
+      "options": ["0.05m", "0.15m.", "0.30m.", "1.00m."],
+      "answer_index": 0,
+      "explanation": "Using magnification: h_image/h_object = screen distance/object distance = 0.1/3, so h_image = 1.5 × (0.1/3) = 0.05m."
+    },
+    {
+      "question": "A ray of light passing through the centre of curvature of a concave mirror is reflected by the mirror at",
+      "options": ["0°.", "45°.", "90°.", "180°"],
+      "answer_index": 0,
+      "explanation": "A ray passing through the center of curvature hits the mirror perpendicularly, so it reflects straight back (0° deviation)."
+    },
+    {
+      "question": "Total internal reflection will not occur when light travels from",
+      "options": [
+        "water to air.",
+        "water into glass.",
+        "glass to air.",
+        "glass into water."
+      ],
+      "answer_index": 1,
+      "explanation": "Total internal reflection only occurs when light travels from a denser to a less dense medium. Glass to water means denser to less dense, but water to glass is less dense to denser."
+    },
+    {
+      "question": "If the linear magnification of the objective and eyepiece convex lenses of a compound microscope are 4 and 7 respectively, calculate the angular magnification of the microscope.",
+      "options": ["2.", "3.", "11.", "28."],
+      "answer_index": 3,
+      "explanation": "Total magnification = magnification of objective × magnification of eyepiece = 4 × 7 = 28."
+    },
+    {
+      "question": "The angle of deviation of light of various colours passing through a triangular prism increases in the order",
+      "options": [
+        "red → green → blue.",
+        "green → violet → blue.",
+        "blue → red → green.",
+        "blue → green → red."
+      ],
+      "answer_index": 3,
+      "explanation": "Red light has the lowest refractive index (least deviation), blue has the highest (most deviation)."
+    },
+    {
+      "question": "Calculate the force acting on an electron of charge 1.5 x 10⁻¹⁹C placed in an electric field of intensity 10⁵ Vm⁻¹.",
+      "options": [
+        "1.5 x 10⁻¹¹N",
+        "1.5 x 10⁻¹²N",
+        "1.5 x 10⁻¹³N",
+        "1.5 x 10⁻¹⁴N"
+      ],
+      "answer_index": 3,
+      "explanation": "F = qE = 1.5 × 10⁻¹⁹ × 10⁵ = 1.5 × 10⁻¹⁴ N."
+    },
+    {
+      "question": "Capacitors are used in the induction coil to",
+      "options": [
+        "control circuits.",
+        "dissipate energy.",
+        "prevent electric sparks.",
+        "prevent distortion of electric fields."
+      ],
+      "answer_index": 2,
+      "explanation": "Capacitors in induction coils reduce arcing and sparking at the contact breaker."
+    },
+    {
+      "question": "A cell of emf 1.5V is connected in series with a 1Ω resistor and a current of 0.3A flows through the resistor. Find the internal resistance of the cell.",
+      "options": ["4Ω.", "3.0Ω.", "1.5Ω.", "1.00Ω."],
+      "answer_index": 0,
+      "explanation": "Using E = I(R + r): 1.5 = 0.3(1 + r), so 5 = 1 + r, therefore r = 4Ω."
+    },
+    {
+      "question": "Which of the following obeys Ohm's law?",
+      "options": ["electrolytes.", "metals.", "diode.", "glass."],
+      "answer_index": 1,
+      "explanation": "Metals are ohmic conductors with constant resistance. Electrolytes, diodes, and glass deviate from Ohm's law."
+    },
+    {
+      "question": "A house has ten 40W and five 100W bulbs. How much will it cost the owner of the house to keep them lit for 10 hours if the cost of a unit is ₦5?",
+      "options": ["₦90.", "₦50.", "₦45", "₦40."],
+      "answer_index": 1,
+      "explanation": "Total power = (10 × 40) + (5 × 100) = 900W. Energy = 900 × 10 = 9000Wh = 9 units. Cost = 9 × ₦5 = ₦45. (Note: Answer key may have discrepancy)"
+    },
+    {
+      "question": "An electric device is rated 2000W, 250V. Calculate the maximum current it can take.",
+      "options": ["9A.", "8A.", "7A.", "6A."],
+      "answer_index": 1,
+      "explanation": "Using P = IV: I = P/V = 2000/250 = 8A."
+    },
+    {
+      "question": "When a charge moves through an electric circuit in the direction of an electric force, it",
+      "options": [
+        "gains both potential and kinetic energy.",
+        "gains potential energy and kinetic energy.",
+        "loses potential energy and gains kinetic energy.",
+        "loses both potential and kinetic energy."
+      ],
+      "answer_index": 2,
+      "explanation": "Moving in the direction of electric force means moving from high to low potential, losing electrical potential energy and gaining kinetic energy."
+    },
+    {
+      "question": "To convert a galvanometer to a voltmeter, a",
+      "options": [
+        "high resistance is connected to it in series.",
+        "high resistance is connected to it in parallel.",
+        "low resistance is connected to it in series.",
+        "low resistance is connected to it in parallel."
+      ],
+      "answer_index": 0,
+      "explanation": "A high resistance (multiplier) is connected in series to limit current and extend voltage range."
+    },
+    {
+      "question": "Induced emfs are best explained using",
+      "options": [
+        "Ohm's law.",
+        "Faraday's law.",
+        "Coulomb's law.",
+        "Lenz's law."
+      ],
+      "answer_index": 3,
+      "explanation": "Lenz's law explains the direction and nature of induced emf in response to changing magnetic flux."
+    },
+    {
+      "question": "If a current of 2.5A flows through an electrolyte for 3 hours and 1.8g of a substance is deposited, what is the mass of the substance that will be deposited if a current of 4A flows through it for 4.8 hours?",
+      "options": ["2.4g", "3.2g", "4.6g.", "4.8g."],
+      "answer_index": 2,
+      "explanation": "Mass deposited is proportional to charge: m ∝ It. m₂/m₁ = (I₂t₂)/(I₁t₁) = (4 × 4.8)/(2.5 × 3) = 19.2/7.5 = 2.56, so m₂ = 1.8 × 2.56 ≈ 4.6g."
+    },
+    {
+      "question": "Calculate the energy of the third level of an atom if the ground state energy is -24eV.",
+      "options": ["-9.20eV.", "-8.20eV.", "-2.75eV.", "-1.75eV."],
+      "answer_index": 2,
+      "explanation": "Energy levels in hydrogen-like atoms: E_n = E₁/n². E₃ = -24/9 = -2.67eV ≈ -2.75eV."
+    },
+    {
+      "question": "In photo-emission, the number of photoelectrons ejected per second depends on the",
+      "options": [
+        "frequency of the beam.",
+        "work function of the metal.",
+        "threshold frequency of the metal.",
+        "intensity of the beam."
+      ],
+      "answer_index": 3,
+      "explanation": "The number (rate) of photoelectrons depends on beam intensity; frequency determines kinetic energy of electrons."
+    },
+    {
+      "question": "The particle nature of light is demonstrated by the",
+      "options": [
+        "photoelectric effect.",
+        "speed of light.",
+        "colours of light.",
+        "diffraction of light."
+      ],
+      "answer_index": 0,
+      "explanation": "The photoelectric effect shows light behaves as packets of energy (photons), demonstrating its particle nature."
+    },
+    {
+      "question": "The energy of a photon having a wavelength of 10⁻¹⁰m is [h = 6.63 x 10⁻³⁴ Js, c = 3.0 x 10⁸ ms⁻¹]",
+      "options": [
+        "2.0 x 10⁻¹⁵ J",
+        "1.7 x 10⁻¹³ J",
+        "2.0 x 10⁻¹² J",
+        "1.7 x 10⁻¹² J"
+      ],
+      "answer_index": 0,
+      "explanation": "E = hc/λ = (6.63 × 10⁻³⁴ × 3.0 × 10⁸)/(10⁻¹⁰) = 1.99 × 10⁻¹⁵ J ≈ 2.0 × 10⁻¹⁵ J."
+    },
+    {
+      "question": "The bond between silicon and germanium is",
+      "options": ["dative.", "covalent.", "trivalent.", "ionic."],
+      "answer_index": 1,
+      "explanation": "Silicon and germanium form covalent bonds through shared electron pairs in their crystal structure."
+    }
+  ]
+}

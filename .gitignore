@@ -6,3 +6,4 @@ data/quiz_config.json
 .env
 *.log
 somedata.txt
+txt
