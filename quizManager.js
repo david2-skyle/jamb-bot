@@ -117,9 +117,6 @@ const quizManager = {
     }
 
     state.currentRespondents[userId] = { name: userName, isCorrect };
-    logger.debug(
-      `${userName} → ${answerLetter}: ${isCorrect ? "✓" : "✗"} [${state.chatId}]`,
-    );
     return isCorrect;
   },
 
