@@ -1,0 +1,465 @@
+{
+  "paper_type": "STANDARD",
+  "questions": [
+    {
+      "question": "The fluid that surrounds cells in the body tissues is called",
+      "options": ["Blood plasma", "Lymph", "Tissue fluid", "Serum"],
+      "answer_index": 2,
+      "explanation": "Tissue fluid (interstitial fluid) is the fluid that bathes cells in body tissues. It forms when plasma is filtered out of capillaries and provides cells with oxygen and nutrients while removing waste products."
+    },
+    {
+      "question": "Which of the following organisms is an example of a primary consumer in a grassland ecosystem?",
+      "options": ["Grass", "Hawk", "Grasshopper", "Snake"],
+      "answer_index": 2,
+      "explanation": "Primary consumers are herbivores that feed directly on producers (plants). In a grassland, grasshoppers feed on grass and are primary consumers. Hawks and snakes are higher-level consumers."
+    },
+    {
+      "question": "The type of respiration that occurs in muscles during vigorous exercise when oxygen supply is inadequate is",
+      "options": [
+        "Aerobic respiration",
+        "Anaerobic respiration",
+        "Photosynthesis",
+        "Oxidative phosphorylation"
+      ],
+      "answer_index": 1,
+      "explanation": "During intense exercise, muscles may not receive enough oxygen, so anaerobic respiration occurs. In humans, glucose is converted to lactic acid, releasing a small amount of ATP. Lactic acid causes muscle fatigue."
+    },
+    {
+      "question": "Which of the following is the function of the epiglottis?",
+      "options": [
+        "To produce sound during speech",
+        "To prevent food from entering the trachea",
+        "To filter air entering the lungs",
+        "To connect the mouth to the stomach"
+      ],
+      "answer_index": 1,
+      "explanation": "The epiglottis is a cartilaginous flap at the base of the tongue that closes over the trachea (windpipe) during swallowing to prevent food and liquid from entering the respiratory tract."
+    },
+    {
+      "question": "The hormone that prepares the uterus for implantation of a fertilized egg is",
+      "options": ["Oestrogen", "Testosterone", "Progesterone", "LH"],
+      "answer_index": 2,
+      "explanation": "Progesterone, produced by the corpus luteum after ovulation, prepares and maintains the uterine lining (endometrium) for implantation of a fertilized egg. It also maintains pregnancy."
+    },
+    {
+      "question": "Which of the following correctly describes the function of the guard cells in a leaf?",
+      "options": [
+        "They produce food by photosynthesis",
+        "They regulate the opening and closing of stomata",
+        "They transport water and minerals",
+        "They store food for the plant"
+      ],
+      "answer_index": 1,
+      "explanation": "Guard cells are specialized cells that surround each stoma. When they take up water and become turgid, stomata open; when they lose water and become flaccid, stomata close. This regulates gas exchange and transpiration."
+    },
+    {
+      "question": "Which of the following diseases is caused by a deficiency of Vitamin A?",
+      "options": ["Rickets", "Scurvy", "Night blindness", "Beriberi"],
+      "answer_index": 2,
+      "explanation": "Vitamin A deficiency causes night blindness (nyctalopia), because vitamin A is needed to produce rhodopsin, the visual pigment in rod cells of the retina used for low-light vision."
+    },
+    {
+      "question": "The structure in seeds that develops into the shoot of a new plant is the",
+      "options": ["Radicle", "Testa", "Plumule", "Cotyledon"],
+      "answer_index": 2,
+      "explanation": "The plumule is the embryonic shoot within a seed. During germination, it develops into the shoot, including the stem and first leaves of the young plant."
+    },
+    {
+      "question": "Which of the following is used to measure the rate of transpiration in plants?",
+      "options": ["Potometer", "Manometer", "Respirometer", "Barometer"],
+      "answer_index": 0,
+      "explanation": "A potometer measures the rate of water uptake by a plant, which is used as an indirect measurement of the transpiration rate. As the plant transpires, water is drawn in and the movement of an air bubble is measured."
+    },
+    {
+      "question": "In which of the following would you find the highest concentration of rod cells?",
+      "options": [
+        "Fovea centralis",
+        "Blind spot",
+        "Periphery of the retina",
+        "Cornea"
+      ],
+      "answer_index": 2,
+      "explanation": "Rod cells, which detect light and dark (black and white) and function in low light, are concentrated in the peripheral (outer) areas of the retina. The fovea centralis contains mainly cone cells."
+    },
+    {
+      "question": "Which of the following is the correct description of a hydrophyte?",
+      "options": [
+        "A plant adapted to dry conditions",
+        "A plant adapted to living in or on water",
+        "A plant that lives in salty environments",
+        "A plant that grows on other plants"
+      ],
+      "answer_index": 1,
+      "explanation": "Hydrophytes are aquatic plants adapted to live in water or waterlogged conditions. Examples include water lily and water hyacinth. They have features like air spaces in tissues (aerenchyma) and reduced root systems."
+    },
+    {
+      "question": "Which of the following is the correct term for the study of fungi?",
+      "options": ["Botany", "Mycology", "Phycology", "Bacteriology"],
+      "answer_index": 1,
+      "explanation": "Mycology is the branch of biology that deals with the study of fungi, including their genetic and biochemical properties, taxonomy, and use to humans as sources of food, medicine, and other applications."
+    },
+    {
+      "question": "The structure that connects the two cerebral hemispheres of the brain is the",
+      "options": [
+        "Cerebellum",
+        "Corpus callosum",
+        "Medulla oblongata",
+        "Hypothalamus"
+      ],
+      "answer_index": 1,
+      "explanation": "The corpus callosum is a thick band of nerve fibres that connects and allows communication between the left and right cerebral hemispheres. It coordinates activities between the two sides of the brain."
+    },
+    {
+      "question": "Which of the following is a non-renewable resource?",
+      "options": ["Timber", "Solar energy", "Wind energy", "Coal"],
+      "answer_index": 3,
+      "explanation": "Coal is a fossil fuel formed over millions of years and is a non-renewable resource — once used, it cannot be replaced within a human timescale. Timber, solar, and wind energy are renewable resources."
+    },
+    {
+      "question": "What is the function of the villi in the small intestine?",
+      "options": [
+        "To produce digestive enzymes",
+        "To increase surface area for absorption of digested food",
+        "To propel food along the intestine",
+        "To produce bile"
+      ],
+      "answer_index": 1,
+      "explanation": "Villi are finger-like projections in the small intestine that greatly increase the surface area available for absorption of digested food (nutrients) into the bloodstream and lymph vessels."
+    },
+    {
+      "question": "The scientific name of an organism consists of its",
+      "options": [
+        "Family and genus names",
+        "Genus and species names",
+        "Order and family names",
+        "Kingdom and phylum names"
+      ],
+      "answer_index": 1,
+      "explanation": "Binomial nomenclature (two-name system) was introduced by Carl Linnaeus. Each organism's scientific name consists of the genus name (capitalized) and species name (lowercase), both written in italics."
+    },
+    {
+      "question": "The liquid part of blood after clotting has occurred is called",
+      "options": ["Plasma", "Serum", "Lymph", "Tissue fluid"],
+      "answer_index": 1,
+      "explanation": "Serum is blood plasma from which clotting factors (especially fibrinogen) have been removed. It is the clear fluid that remains after blood has clotted. Plasma still contains all clotting proteins."
+    },
+    {
+      "question": "Which of the following is characteristic of a parasite?",
+      "options": [
+        "It benefits both itself and its host",
+        "It lives on or in a host from which it derives benefit while harming the host",
+        "It lives with its host without causing harm",
+        "It provides nutrients to its host"
+      ],
+      "answer_index": 1,
+      "explanation": "A parasite lives on or inside a host organism, deriving nutrients at the host's expense (causing harm). This is a parasitic relationship. Examples include tapeworms, ticks, and Plasmodium."
+    },
+    {
+      "question": "The movement of ions and molecules against a concentration gradient using energy is called",
+      "options": [
+        "Diffusion",
+        "Osmosis",
+        "Active transport",
+        "Facilitated diffusion"
+      ],
+      "answer_index": 2,
+      "explanation": "Active transport moves substances from low to high concentration (against the gradient), requiring cellular energy (ATP) and carrier proteins. Examples include uptake of glucose in the gut and mineral ions by roots."
+    },
+    {
+      "question": "Which of the following is an example of an excretory organ in insects?",
+      "options": [
+        "Nephron",
+        "Malpighian tubules",
+        "Flame cells",
+        "Contractile vacuole"
+      ],
+      "answer_index": 1,
+      "explanation": "Malpighian tubules are the excretory organs of insects and other arthropods. They absorb nitrogenous wastes from the haemolymph and pass them into the hindgut, where they are excreted as uric acid."
+    },
+    {
+      "question": "The type of nutrition in which organisms feed on other living organisms is called",
+      "options": [
+        "Autotrophic nutrition",
+        "Saprotrophic nutrition",
+        "Holozoic nutrition",
+        "Parasitic nutrition"
+      ],
+      "answer_index": 2,
+      "explanation": "Holozoic nutrition involves ingesting solid food (other organisms or parts of organisms), digesting it internally, and absorbing the nutrients. This is characteristic of animals, including humans."
+    },
+    {
+      "question": "Which of the following is a correct statement about DNA?",
+      "options": [
+        "DNA is single-stranded",
+        "DNA contains the base uracil",
+        "DNA is found mainly in the nucleus",
+        "DNA cannot be replicated"
+      ],
+      "answer_index": 2,
+      "explanation": "DNA is double-stranded and contains the bases adenine, thymine, guanine, and cytosine (not uracil — that's RNA). DNA is found mainly in the nucleus (also in mitochondria and chloroplasts) and can be replicated."
+    },
+    {
+      "question": "Which of the following is an adaptation of a fish to its aquatic habitat?",
+      "options": [
+        "Presence of lungs for breathing air",
+        "Streamlined body shape to reduce water resistance",
+        "Dry, scaly skin to prevent water loss",
+        "Limbs for movement on land"
+      ],
+      "answer_index": 1,
+      "explanation": "Fish have a streamlined (fusiform) body shape that reduces water resistance (drag) and allows efficient movement through water. They also have gills for extracting dissolved oxygen from water."
+    },
+    {
+      "question": "The process of converting glucose to glycogen for storage in the liver is called",
+      "options": ["Glycolysis", "Gluconeogenesis", "Glycogenesis", "Lipolysis"],
+      "answer_index": 2,
+      "explanation": "Glycogenesis is the synthesis of glycogen from glucose, occurring mainly in the liver and muscles. It is stimulated by insulin when blood glucose levels are high, storing excess glucose as glycogen."
+    },
+    {
+      "question": "Which of the following is NOT a method of controlling malaria?",
+      "options": [
+        "Draining stagnant water",
+        "Use of insecticide-treated bed nets",
+        "Vaccination against Plasmodium",
+        "Use of antimalarial drugs"
+      ],
+      "answer_index": 2,
+      "explanation": "At the time of most JAMB exams, no fully effective malaria vaccine was widely available (the first approved vaccine, RTS,S, had limited efficacy). Standard control methods include eliminating breeding sites, insecticide nets, and antimalarial drugs."
+    },
+    {
+      "question": "Which of the following structures produces the male gametes in a flowering plant?",
+      "options": ["Stigma", "Ovule", "Pollen grain", "Sepal"],
+      "answer_index": 2,
+      "explanation": "Pollen grains contain the male gametes (sperm nuclei) of flowering plants. They are produced in the anthers by meiosis and are transferred to the stigma during pollination."
+    },
+    {
+      "question": "The maintenance of constant body temperature in mammals regardless of the environmental temperature is called",
+      "options": [
+        "Osmoregulation",
+        "Thermoregulation",
+        "Homeostasis",
+        "Excretion"
+      ],
+      "answer_index": 1,
+      "explanation": "Thermoregulation is the physiological process by which warm-blooded animals (endotherms/homeotherms) maintain a constant internal body temperature despite changes in the external environment."
+    },
+    {
+      "question": "The total amount of energy fixed by producers in an ecosystem per unit time is called",
+      "options": [
+        "Net primary productivity",
+        "Gross primary productivity",
+        "Secondary productivity",
+        "Biomass"
+      ],
+      "answer_index": 1,
+      "explanation": "Gross Primary Productivity (GPP) is the total rate of photosynthesis (energy fixation) by all producers in an ecosystem. Net Primary Productivity (NPP) = GPP minus energy used in the producers' own respiration."
+    },
+    {
+      "question": "Which of the following is an example of negative feedback in the human body?",
+      "options": [
+        "Uterine contractions increasing during labour",
+        "Blood glucose dropping lower when insulin levels are high",
+        "Insulin secretion decreasing as blood glucose returns to normal",
+        "Adrenaline increasing heart rate continuously"
+      ],
+      "answer_index": 2,
+      "explanation": "Negative feedback is a regulatory mechanism where the response reduces or counteracts the original stimulus. When blood glucose rises, insulin is released to lower it; as glucose normalizes, insulin secretion decreases — a classic negative feedback loop."
+    },
+    {
+      "question": "A cell placed in a hypertonic solution will",
+      "options": [
+        "Swell and may burst",
+        "Remain unchanged",
+        "Shrink due to loss of water by osmosis",
+        "Absorb solutes from the solution"
+      ],
+      "answer_index": 2,
+      "explanation": "A hypertonic solution has a higher solute concentration than the cell. Water moves out of the cell by osmosis (from high water potential to low water potential), causing the cell to shrink (crenation in animal cells; plasmolysis in plant cells)."
+    },
+    {
+      "question": "The bending of roots toward gravity is an example of",
+      "options": [
+        "Positive phototropism",
+        "Negative geotropism",
+        "Positive geotropism",
+        "Negative phototropism"
+      ],
+      "answer_index": 2,
+      "explanation": "Positive geotropism (gravitropism) is growth in the direction of gravity. Roots grow downward (positive geotropism), while shoots grow upward (negative geotropism). Auxin accumulates on the lower side, stimulating root cells to elongate more."
+    },
+    {
+      "question": "Which of the following is a characteristic of osmotic pressure?",
+      "options": [
+        "It decreases as solute concentration increases",
+        "It is the pressure needed to stop osmosis",
+        "It only occurs in plant cells",
+        "It requires energy from ATP"
+      ],
+      "answer_index": 1,
+      "explanation": "Osmotic pressure is the pressure that must be applied to a solution to prevent the inward flow of water by osmosis through a semipermeable membrane. It increases as solute concentration increases."
+    },
+    {
+      "question": "Which of the following is an example of an epiphyte?",
+      "options": [
+        "Dodder",
+        "Mistletoe",
+        "Orchid growing on a tree",
+        "Tapeworm"
+      ],
+      "answer_index": 2,
+      "explanation": "An epiphyte is a plant that grows on another plant (usually a tree) for physical support but does NOT take nutrients from the host. Orchids, mosses, and ferns growing on tree branches are examples. This is different from parasitism."
+    },
+    {
+      "question": "The chemical secreted by a gland that travels in the blood to affect distant target organs is called a",
+      "options": ["Enzyme", "Hormone", "Neurotransmitter", "Antibody"],
+      "answer_index": 1,
+      "explanation": "Hormones are chemical messengers secreted by endocrine glands directly into the bloodstream. They travel to target organs or tissues where they bring about specific physiological responses."
+    },
+    {
+      "question": "Which of the following is the correct description of turgidity in plant cells?",
+      "options": [
+        "The cell has lost water and the membrane has shrunk away from the wall",
+        "The cell is full of water and exerts pressure on the cell wall",
+        "The cell wall has dissolved due to excess water",
+        "The cell has absorbed too many minerals"
+      ],
+      "answer_index": 1,
+      "explanation": "Turgidity occurs when a plant cell absorbs water by osmosis, causing the vacuole to enlarge and the cell contents to press against the cell wall (turgor pressure). This gives plants their rigidity and supports non-woody plants."
+    },
+    {
+      "question": "In which of the following groups are all organisms multicellular?",
+      "options": ["Bacteria", "Fungi", "Protista", "Animalia"],
+      "answer_index": 3,
+      "explanation": "All members of Kingdom Animalia are multicellular (many-celled) organisms. Bacteria are unicellular prokaryotes. Fungi can be unicellular (yeast) or multicellular. Protista includes both unicellular and some multicellular forms."
+    },
+    {
+      "question": "Which of the following is an advantage of sexual reproduction over asexual reproduction?",
+      "options": [
+        "It requires only one parent",
+        "It produces genetically identical offspring",
+        "It introduces genetic variation in offspring",
+        "It is more energy-efficient"
+      ],
+      "answer_index": 2,
+      "explanation": "Sexual reproduction involves the fusion of gametes from two parents, resulting in offspring with new combinations of genes (genetic variation). This variation allows populations to adapt to changing environments through natural selection."
+    },
+    {
+      "question": "The region of a root where active cell division takes place is called the",
+      "options": [
+        "Root cap",
+        "Zone of elongation",
+        "Zone of maturation",
+        "Meristematic zone"
+      ],
+      "answer_index": 3,
+      "explanation": "The meristematic zone (apical meristem) is located just behind the root cap and is the region of rapid cell division in a root. New cells produced here are small, thin-walled, and densely packed."
+    },
+    {
+      "question": "Which of the following is the correct description of the term 'gene'?",
+      "options": [
+        "A segment of DNA that codes for a specific protein or functional RNA",
+        "The entire DNA content of a cell",
+        "A protein that controls cell activity",
+        "A chromosome found only in reproductive cells"
+      ],
+      "answer_index": 0,
+      "explanation": "A gene is a specific sequence of DNA nucleotides that codes for a particular protein (or functional RNA). Genes are the basic units of heredity and are located at specific positions (loci) on chromosomes."
+    },
+    {
+      "question": "Which of the following is a function of the skin in thermoregulation?",
+      "options": [
+        "Producing hormones to control body temperature",
+        "Sweating to cool the body by evaporation",
+        "Increasing metabolic rate when cold",
+        "Producing more red blood cells when hot"
+      ],
+      "answer_index": 1,
+      "explanation": "Sweating is a key thermoregulatory function of the skin. Sweat glands secrete sweat (mainly water) onto the skin surface; as it evaporates, it absorbs heat from the body, cooling it down."
+    },
+    {
+      "question": "Which of the following is NOT a characteristic of living things?",
+      "options": ["Nutrition", "Reproduction", "Combustion", "Excretion"],
+      "answer_index": 2,
+      "explanation": "Combustion (burning) is a chemical reaction between a substance and oxygen that releases heat and light — it is not a characteristic of living organisms. The characteristics of life include nutrition, reproduction, excretion, growth, movement, respiration, and irritability."
+    },
+    {
+      "question": "The green colour of plants is due to the presence of",
+      "options": ["Carotene", "Xanthophyll", "Chlorophyll", "Anthocyanin"],
+      "answer_index": 2,
+      "explanation": "Chlorophyll is the green pigment found in chloroplasts that is responsible for the green colour of plants. It absorbs red and blue light for photosynthesis and reflects green light, which we see."
+    },
+    {
+      "question": "Which of the following is the role of fibrin in blood clotting?",
+      "options": [
+        "It transports oxygen to cells",
+        "It forms a meshwork that traps red blood cells to form a clot",
+        "It destroys foreign microorganisms",
+        "It prevents excessive blood loss by constricting blood vessels"
+      ],
+      "answer_index": 1,
+      "explanation": "Fibrin is an insoluble protein formed from fibrinogen (a soluble plasma protein) by the action of thrombin. Fibrin threads form a meshwork (clot) that traps red blood cells and platelets to seal a wound and stop bleeding."
+    },
+    {
+      "question": "Which of the following is an example of interspecific competition?",
+      "options": [
+        "Two male lions fighting over a female",
+        "Lions and hyenas competing for the same prey",
+        "Trees of the same species competing for sunlight",
+        "Cheetahs competing with each other for territory"
+      ],
+      "answer_index": 1,
+      "explanation": "Interspecific competition occurs between organisms of DIFFERENT species competing for the same resources (food, space, light). Lions and hyenas competing for prey is interspecific. Intraspecific competition is between members of the SAME species."
+    },
+    {
+      "question": "Which of the following correctly describes the role of the placenta during pregnancy?",
+      "options": [
+        "It produces the embryo's red blood cells",
+        "It allows exchange of nutrients, gases, and wastes between mother and fetus",
+        "It forms the amniotic sac that protects the fetus",
+        "It produces digestive enzymes for the fetus"
+      ],
+      "answer_index": 1,
+      "explanation": "The placenta is the organ of exchange between the mother and fetus. Oxygen and nutrients pass from maternal blood to fetal blood, while carbon dioxide and waste products pass from fetal to maternal blood, without direct mixing of blood."
+    },
+    {
+      "question": "Which of the following is the correct term for organisms that can synthesize their own food from inorganic substances?",
+      "options": ["Heterotrophs", "Autotrophs", "Saprophytes", "Parasites"],
+      "answer_index": 1,
+      "explanation": "Autotrophs (self-feeders) produce their own organic food from inorganic raw materials using energy from sunlight (photoautotrophs like plants) or chemical reactions (chemoautotrophs like some bacteria)."
+    },
+    {
+      "question": "The hormone secreted by the islets of Langerhans when blood glucose is too low is",
+      "options": ["Insulin", "Glucagon", "Adrenaline", "Cortisol"],
+      "answer_index": 1,
+      "explanation": "Glucagon is secreted by alpha cells of the islets of Langerhans in the pancreas when blood glucose is too low. It stimulates glycogenolysis (breakdown of glycogen) and gluconeogenesis in the liver, raising blood glucose levels."
+    },
+    {
+      "question": "Which of the following plant tissues provides the main structural support in young herbaceous plants?",
+      "options": ["Xylem", "Phloem", "Parenchyma", "Collenchyma"],
+      "answer_index": 3,
+      "explanation": "Collenchyma tissue provides flexible mechanical support in young, growing plants and organs (like petioles and young stems). Its cells have unevenly thickened primary cell walls and remain alive at maturity."
+    },
+    {
+      "question": "The process by which bacteria convert ammonium ions in the soil to nitrites and nitrates is called",
+      "options": [
+        "Denitrification",
+        "Nitrogen fixation",
+        "Nitrification",
+        "Ammonification"
+      ],
+      "answer_index": 2,
+      "explanation": "Nitrification is carried out by nitrifying bacteria in two steps: Nitrosomonas bacteria oxidize ammonium (NH₄⁺) to nitrite (NO₂⁻), and Nitrobacter bacteria then oxidize nitrite to nitrate (NO₃⁻), which plants can absorb."
+    },
+    {
+      "question": "Which of the following is NOT a symptom of diabetes mellitus?",
+      "options": [
+        "Excessive thirst",
+        "Frequent urination",
+        "Presence of glucose in urine",
+        "Reduced blood glucose levels"
+      ],
+      "answer_index": 3,
+      "explanation": "Diabetes mellitus is characterized by high blood glucose (hyperglycaemia), NOT reduced levels. Symptoms include excessive thirst (polydipsia), frequent urination (polyuria), and glucose in the urine (glycosuria), due to insulin deficiency or resistance."
+    }
+  ]
+}

@@ -1,0 +1,465 @@
+{
+  "paper_type": "STANDARD",
+  "questions": [
+    {
+      "question": "Which of the following is used to describe the variety of organisms living in an ecosystem?",
+      "options": ["Biomass", "Biodiversity", "Biosphere", "Biome"],
+      "answer_index": 1,
+      "explanation": "Biodiversity refers to the variety of living organisms in a given area, including diversity of species, genes, and ecosystems."
+    },
+    {
+      "question": "The enzyme pepsin functions optimally in which of the following pH conditions?",
+      "options": ["pH 7.0", "pH 8.5", "pH 2.0", "pH 6.5"],
+      "answer_index": 2,
+      "explanation": "Pepsin is a protease enzyme secreted in the stomach and works best at an acidic pH of about 2.0, which is provided by hydrochloric acid in gastric juice."
+    },
+    {
+      "question": "Which of the following is the correct description of the process of plasmolysis?",
+      "options": [
+        "Swelling of a cell due to water uptake by osmosis",
+        "Shrinkage of cell contents away from the cell wall due to water loss",
+        "Bursting of a cell due to excessive water intake",
+        "Movement of water into the cell against a concentration gradient"
+      ],
+      "answer_index": 1,
+      "explanation": "Plasmolysis occurs when a plant cell loses water by osmosis to a hypertonic solution, causing the cell membrane and cytoplasm to shrink away from the rigid cell wall."
+    },
+    {
+      "question": "The phenomenon in which the F2 generation of a cross shows a 9:3:3:1 ratio is a demonstration of",
+      "options": [
+        "Law of segregation",
+        "Law of dominance",
+        "Law of independent assortment",
+        "Incomplete dominance"
+      ],
+      "answer_index": 2,
+      "explanation": "The 9:3:3:1 ratio in the F2 generation of a dihybrid cross demonstrates Mendel's Law of Independent Assortment — genes for different traits assort independently during gamete formation."
+    },
+    {
+      "question": "Which of the following structures is responsible for maintaining the shape of a plant cell?",
+      "options": ["Cell membrane", "Vacuole", "Cell wall", "Cytoskeleton"],
+      "answer_index": 2,
+      "explanation": "The cell wall, made of cellulose, provides rigidity and maintains the shape of plant cells. It prevents excessive water uptake and gives structural support."
+    },
+    {
+      "question": "In humans, the sex of an offspring is determined by",
+      "options": [
+        "The age of the mother",
+        "The chromosome contributed by the father",
+        "The chromosome contributed by the mother",
+        "Environmental conditions"
+      ],
+      "answer_index": 1,
+      "explanation": "Human sex is determined by sex chromosomes. Females are XX and males are XY. The father contributes either an X or a Y chromosome, which determines whether the offspring is female (XX) or male (XY)."
+    },
+    {
+      "question": "Which of the following best describes the function of the Golgi apparatus?",
+      "options": [
+        "Site of protein synthesis",
+        "Powerhouse of the cell",
+        "Packaging and secretion of cell products",
+        "Digestion of worn-out organelles"
+      ],
+      "answer_index": 2,
+      "explanation": "The Golgi apparatus (Golgi body) modifies, packages, and distributes proteins and lipids received from the endoplasmic reticulum to their final destinations inside or outside the cell."
+    },
+    {
+      "question": "The phenomenon where an organism shows characteristics intermediate between those of its two parents is called",
+      "options": [
+        "Co-dominance",
+        "Incomplete dominance",
+        "Epistasis",
+        "Pleiotropy"
+      ],
+      "answer_index": 1,
+      "explanation": "Incomplete dominance occurs when neither allele is completely dominant, and the heterozygous phenotype is intermediate between the two homozygous phenotypes. Example: red × white flowers → pink flowers."
+    },
+    {
+      "question": "Which of the following is the main waste product of protein metabolism in humans?",
+      "options": ["Carbon dioxide", "Uric acid", "Urea", "Ammonia"],
+      "answer_index": 2,
+      "explanation": "Urea is the main nitrogenous waste product of protein (amino acid) metabolism in humans. It is produced in the liver and excreted by the kidneys in urine."
+    },
+    {
+      "question": "The portion of the nephron responsible for selective reabsorption of glucose and amino acids is the",
+      "options": [
+        "Loop of Henle",
+        "Proximal convoluted tubule",
+        "Bowman's capsule",
+        "Collecting duct"
+      ],
+      "answer_index": 1,
+      "explanation": "The proximal convoluted tubule (PCT) is the main site of selective reabsorption, where glucose, amino acids, water, and useful ions are reabsorbed from the filtrate back into the blood."
+    },
+    {
+      "question": "The process by which microorganisms convert nitrates in the soil back to atmospheric nitrogen is called",
+      "options": [
+        "Nitrification",
+        "Ammonification",
+        "Denitrification",
+        "Nitrogen fixation"
+      ],
+      "answer_index": 2,
+      "explanation": "Denitrification is carried out by denitrifying bacteria (e.g., Pseudomonas) that convert nitrates (NO₃⁻) in the soil to nitrogen gas (N₂) which is released into the atmosphere."
+    },
+    {
+      "question": "Which of the following hormones stimulates the contraction of the uterus during childbirth?",
+      "options": ["Oestrogen", "Oxytocin", "Progesterone", "Prolactin"],
+      "answer_index": 1,
+      "explanation": "Oxytocin, produced by the posterior pituitary gland, stimulates uterine contractions during labour and also promotes milk ejection during breastfeeding."
+    },
+    {
+      "question": "A cross between a heterozygous tall plant (Tt) and a homozygous short plant (tt) will give a phenotypic ratio of",
+      "options": [
+        "3 tall : 1 short",
+        "1 tall : 1 short",
+        "All tall",
+        "All short"
+      ],
+      "answer_index": 1,
+      "explanation": "A testcross (Tt × tt) produces 50% Tt (tall) and 50% tt (short) offspring, giving a 1:1 phenotypic ratio. This is called a backcross or testcross."
+    },
+    {
+      "question": "Which of the following is a vector-borne disease caused by a protozoan?",
+      "options": [
+        "Yellow fever",
+        "Malaria",
+        "River blindness",
+        "Sleeping sickness"
+      ],
+      "answer_index": 1,
+      "explanation": "Malaria is caused by Plasmodium (a protozoan) and transmitted by the female Anopheles mosquito (a vector). Yellow fever is viral; river blindness is caused by a worm; sleeping sickness is also protozoal (but a different organism)."
+    },
+    {
+      "question": "The contraction of the diaphragm and external intercostal muscles during breathing results in",
+      "options": [
+        "Decrease in thoracic volume and expiration",
+        "Increase in thoracic volume and inspiration",
+        "Increase in air pressure in the lungs",
+        "Passive exhalation of air"
+      ],
+      "answer_index": 1,
+      "explanation": "When the diaphragm contracts (flattens) and external intercostal muscles contract (raising the ribs), the thoracic cavity volume increases, pressure decreases, and air flows in — this is inspiration."
+    },
+    {
+      "question": "Which of the following best explains why enzymes are described as biological catalysts?",
+      "options": [
+        "They are consumed during chemical reactions",
+        "They increase the activation energy of reactions",
+        "They speed up reactions without being permanently altered",
+        "They change the products of reactions"
+      ],
+      "answer_index": 2,
+      "explanation": "Enzymes are biological catalysts — they lower the activation energy needed for reactions and speed them up without being consumed or permanently changed in the process."
+    },
+    {
+      "question": "The type of immunity that is acquired naturally after recovering from a disease is",
+      "options": [
+        "Passive artificial immunity",
+        "Active natural immunity",
+        "Passive natural immunity",
+        "Active artificial immunity"
+      ],
+      "answer_index": 1,
+      "explanation": "Active natural immunity develops when a person is exposed to a pathogen (through infection), and their immune system produces antibodies and memory cells. This immunity is long-lasting."
+    },
+    {
+      "question": "Which of the following structures in the ear is responsible for hearing?",
+      "options": ["Semicircular canals", "Cochlea", "Eustachian tube", "Pinna"],
+      "answer_index": 1,
+      "explanation": "The cochlea, a fluid-filled spiral structure in the inner ear, contains hair cells that convert sound vibrations into nerve impulses sent to the brain via the auditory nerve."
+    },
+    {
+      "question": "In which organelle does anaerobic respiration (glycolysis) take place?",
+      "options": ["Mitochondria", "Nucleus", "Cytoplasm", "Ribosome"],
+      "answer_index": 2,
+      "explanation": "Glycolysis, the first stage of cellular respiration (both aerobic and anaerobic), takes place in the cytoplasm. It converts glucose into pyruvate, producing a small amount of ATP."
+    },
+    {
+      "question": "Which of the following is an example of a conditioned reflex in animals?",
+      "options": [
+        "Withdrawing a hand from a hot object",
+        "Sneezing when dust enters the nose",
+        "A dog salivating at the sound of a bell",
+        "Blinking of the eye when an object approaches"
+      ],
+      "answer_index": 2,
+      "explanation": "A conditioned reflex is a learned response to a neutral stimulus. Pavlov's experiment demonstrated this when dogs learned to salivate (the conditioned response) at the sound of a bell (the conditioned stimulus)."
+    },
+    {
+      "question": "Which of the following is the correct pathway of blood flow through the heart?",
+      "options": [
+        "Right atrium → Right ventricle → Lungs → Left atrium → Left ventricle → Body",
+        "Left atrium → Left ventricle → Lungs → Right atrium → Right ventricle → Body",
+        "Right ventricle → Right atrium → Lungs → Left ventricle → Left atrium → Body",
+        "Left ventricle → Left atrium → Lungs → Right ventricle → Right atrium → Body"
+      ],
+      "answer_index": 0,
+      "explanation": "Deoxygenated blood enters the right atrium, passes to the right ventricle, is pumped to the lungs to pick up oxygen, returns to the left atrium, enters the left ventricle, and is pumped to the body."
+    },
+    {
+      "question": "The condition in which the lens of the eye becomes opaque, causing blurred vision, is called",
+      "options": ["Glaucoma", "Cataract", "Astigmatism", "Colour blindness"],
+      "answer_index": 1,
+      "explanation": "A cataract is the clouding (opacification) of the eye's natural lens, leading to blurred vision. It is the leading cause of blindness worldwide and is treated by surgical removal of the cloudy lens."
+    },
+    {
+      "question": "Which of the following is a characteristic feature of a wind-pollinated flower?",
+      "options": [
+        "Brightly coloured petals",
+        "Production of nectar",
+        "Large feathery stigma",
+        "Sweet scent"
+      ],
+      "answer_index": 2,
+      "explanation": "Wind-pollinated (anemophilous) flowers have large, feathery or branched stigmas to trap airborne pollen. They also have small, inconspicuous petals, no nectar, and produce large amounts of light pollen."
+    },
+    {
+      "question": "Which of the following statements correctly describes the process of osmosis?",
+      "options": [
+        "Movement of solute particles from high to low concentration",
+        "Movement of water through a selectively permeable membrane from dilute to concentrated solution",
+        "Movement of all molecules from high to low concentration",
+        "Active movement of water requiring energy"
+      ],
+      "answer_index": 1,
+      "explanation": "Osmosis is the passive movement of water molecules through a selectively permeable membrane from a region of lower solute concentration (higher water potential) to higher solute concentration (lower water potential)."
+    },
+    {
+      "question": "The accumulation of DDT (a pesticide) in increasing concentrations along a food chain is an example of",
+      "options": [
+        "Eutrophication",
+        "Biological magnification",
+        "Pollution",
+        "Bioaccumulation at producer level"
+      ],
+      "answer_index": 1,
+      "explanation": "Biological magnification (biomagnification) is the increasing concentration of toxic substances like DDT at higher trophic levels in a food chain, because the substance is not broken down and accumulates in fat tissues."
+    },
+    {
+      "question": "Which of the following is responsible for the transmission of nerve impulses across a synapse?",
+      "options": [
+        "Electrical current",
+        "Neurotransmitters",
+        "Hormones",
+        "Blood plasma"
+      ],
+      "answer_index": 1,
+      "explanation": "Neurotransmitters (e.g., acetylcholine, dopamine) are chemical messengers released from synaptic vesicles at the presynaptic membrane. They diffuse across the synaptic cleft and bind to receptors on the postsynaptic membrane."
+    },
+    {
+      "question": "Which blood component is responsible for fighting infection by producing antibodies?",
+      "options": ["Red blood cells", "Platelets", "Lymphocytes", "Neutrophils"],
+      "answer_index": 2,
+      "explanation": "Lymphocytes (a type of white blood cell) are key components of the immune system. B-lymphocytes produce antibodies, while T-lymphocytes destroy infected cells and regulate immune responses."
+    },
+    {
+      "question": "The role of mucus in the respiratory tract is to",
+      "options": [
+        "Carry oxygen to the blood",
+        "Trap dust and microorganisms",
+        "Produce digestive enzymes",
+        "Control the breathing rate"
+      ],
+      "answer_index": 1,
+      "explanation": "Mucus secreted by goblet cells in the respiratory tract traps dust particles, microorganisms, and other foreign particles. Cilia then move the mucus upward toward the throat where it is swallowed or expelled."
+    },
+    {
+      "question": "Which of the following describes a food chain correctly?",
+      "options": [
+        "Grasshopper → Grass → Frog → Snake → Hawk",
+        "Grass → Grasshopper → Frog → Snake → Hawk",
+        "Hawk → Snake → Frog → Grasshopper → Grass",
+        "Grass → Hawk → Snake → Frog → Grasshopper"
+      ],
+      "answer_index": 1,
+      "explanation": "A food chain always starts with a producer (plant) and shows energy flow through trophic levels. Grass (producer) → Grasshopper (primary consumer) → Frog (secondary) → Snake (tertiary) → Hawk (quaternary)."
+    },
+    {
+      "question": "The layer of the skin that contains melanin pigment is the",
+      "options": [
+        "Dermis",
+        "Stratum corneum",
+        "Malpighian layer",
+        "Subcutaneous layer"
+      ],
+      "answer_index": 2,
+      "explanation": "Melanin is produced by melanocytes found in the Malpighian layer (stratum basale/stratum spinosum) of the epidermis. Melanin protects skin from ultraviolet radiation."
+    },
+    {
+      "question": "Which of the following is a function of the liver?",
+      "options": [
+        "Production of red blood cells in adults",
+        "Filtration of urine",
+        "Detoxification of harmful substances",
+        "Production of insulin"
+      ],
+      "answer_index": 2,
+      "explanation": "The liver detoxifies harmful substances such as alcohol, drugs, and ammonia (converted to urea). It also produces bile, stores glycogen, synthesizes plasma proteins, and regulates blood glucose."
+    },
+    {
+      "question": "Kwashiorkor is a nutritional disease caused by deficiency of",
+      "options": ["Carbohydrates", "Proteins", "Vitamins", "Minerals"],
+      "answer_index": 1,
+      "explanation": "Kwashiorkor is a severe form of protein deficiency malnutrition, common in children after weaning. Symptoms include swollen belly (oedema), stunted growth, skin lesions, and hair discoloration."
+    },
+    {
+      "question": "Which of the following is NOT a function of the skeleton?",
+      "options": [
+        "Providing attachment for muscles",
+        "Protecting delicate organs",
+        "Producing hormones",
+        "Storing calcium and phosphorus"
+      ],
+      "answer_index": 2,
+      "explanation": "Hormones are produced by endocrine glands (e.g., thyroid, adrenal glands), not by the skeleton. The skeleton's functions include support, protection, movement, mineral storage, and red blood cell production."
+    },
+    {
+      "question": "A gene that is located on the X chromosome but has no corresponding allele on the Y chromosome is said to be",
+      "options": [
+        "Autosomal dominant",
+        "Sex-limited",
+        "Sex-linked",
+        "Co-dominant"
+      ],
+      "answer_index": 2,
+      "explanation": "Sex-linked genes are located on the sex chromosomes (usually the X chromosome). Males (XY) have only one copy, so X-linked recessive traits like colour blindness and haemophilia are more common in males."
+    },
+    {
+      "question": "The process by which plants respond to the direction of light is called",
+      "options": [
+        "Geotropism",
+        "Hydrotropism",
+        "Phototropism",
+        "Thigmotropism"
+      ],
+      "answer_index": 2,
+      "explanation": "Phototropism is the growth response of a plant toward (positive) or away from (negative) a light source. It is mediated by auxin (IAA), which accumulates on the shaded side causing differential growth."
+    },
+    {
+      "question": "Which of the following is the correct formula for photosynthesis?",
+      "options": [
+        "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy",
+        "6CO₂ + 6H₂O + light energy → C₆H₁₂O₆ + 6O₂",
+        "6CO₂ + 6O₂ → C₆H₁₂O₆ + 6H₂O",
+        "C₆H₁₂O₆ → 6CO₂ + 6H₂O + energy"
+      ],
+      "answer_index": 1,
+      "explanation": "Photosynthesis: 6CO₂ + 6H₂O + light energy → C₆H₁₂O₆ + 6O₂. Carbon dioxide and water are converted into glucose and oxygen using light energy captured by chlorophyll."
+    },
+    {
+      "question": "Which of the following organisms reproduces by binary fission?",
+      "options": ["Amoeba", "Yeast", "Hydra", "Spirogyra"],
+      "answer_index": 0,
+      "explanation": "Amoeba reproduces asexually by binary fission — the organism splits into two equal daughter cells. Yeast reproduces by budding, Hydra by budding, and Spirogyra by fragmentation."
+    },
+    {
+      "question": "The part of the brain that controls hunger, thirst, and body temperature is the",
+      "options": [
+        "Cerebrum",
+        "Cerebellum",
+        "Hypothalamus",
+        "Medulla oblongata"
+      ],
+      "answer_index": 2,
+      "explanation": "The hypothalamus is the main regulatory center for homeostasis. It controls hunger, thirst, body temperature, sleep cycles, and links the nervous system to the endocrine system via the pituitary gland."
+    },
+    {
+      "question": "Which of the following statements about mitosis is correct?",
+      "options": [
+        "It results in four haploid daughter cells",
+        "It occurs only in reproductive organs",
+        "It produces two genetically identical diploid daughter cells",
+        "It involves two rounds of DNA replication"
+      ],
+      "answer_index": 2,
+      "explanation": "Mitosis produces two daughter cells that are genetically identical to the parent cell and to each other. The cells are diploid (2n). Mitosis is used for growth, repair, and asexual reproduction."
+    },
+    {
+      "question": "The movement of food substances through the gut by rhythmic muscular contractions is called",
+      "options": ["Digestion", "Peristalsis", "Absorption", "Egestion"],
+      "answer_index": 1,
+      "explanation": "Peristalsis is the wave-like contraction and relaxation of smooth muscles in the walls of the alimentary canal that propels food along the digestive tract."
+    },
+    {
+      "question": "Which of the following is the correct sequence of events during blood clotting?",
+      "options": [
+        "Thrombin → Fibrinogen → Fibrin → Prothrombin",
+        "Prothrombin → Thrombin → Fibrinogen → Fibrin",
+        "Fibrinogen → Fibrin → Prothrombin → Thrombin",
+        "Prothrombin → Thrombin → Fibrin → Fibrinogen"
+      ],
+      "answer_index": 1,
+      "explanation": "Blood clotting sequence: Platelets release factors → Prothrombin (inactive) is converted to Thrombin (active enzyme) → Thrombin converts soluble Fibrinogen → insoluble Fibrin network that traps blood cells to form a clot."
+    },
+    {
+      "question": "Cretinism is a condition caused by deficiency of which hormone during childhood?",
+      "options": ["Insulin", "Adrenaline", "Thyroxine", "Growth hormone"],
+      "answer_index": 2,
+      "explanation": "Cretinism results from thyroxine (thyroid hormone) deficiency during fetal development or early childhood. It causes stunted physical and mental development, dwarfism, and intellectual disability."
+    },
+    {
+      "question": "The organelle responsible for intracellular digestion of old organelles and foreign particles is the",
+      "options": ["Ribosome", "Lysosome", "Golgi apparatus", "Vacuole"],
+      "answer_index": 1,
+      "explanation": "Lysosomes contain hydrolytic (digestive) enzymes that break down worn-out cell organelles (autophagy), foreign particles (heterophagy), and cellular debris. They are called the cell's 'digestive system.'"
+    },
+    {
+      "question": "Which of the following best defines a species?",
+      "options": [
+        "A group of organisms that look alike",
+        "A group of organisms that live in the same habitat",
+        "A group of organisms that can interbreed to produce fertile offspring",
+        "A group of organisms that share the same food source"
+      ],
+      "answer_index": 2,
+      "explanation": "A species is defined as a group of organisms that share common characteristics, can interbreed naturally, and produce fertile (viable) offspring. This is the biological species concept."
+    },
+    {
+      "question": "Which of the following is a long-term effect of deforestation on an ecosystem?",
+      "options": [
+        "Increased rainfall",
+        "Increased biodiversity",
+        "Soil erosion and desertification",
+        "Reduced atmospheric CO₂"
+      ],
+      "answer_index": 2,
+      "explanation": "Deforestation removes tree cover, exposing soil to erosion by wind and rain. This leads to loss of topsoil, reduced fertility, and can eventually cause desertification. It also increases atmospheric CO₂ and reduces biodiversity."
+    },
+    {
+      "question": "In a flower, the male reproductive organ that produces pollen grains is the",
+      "options": ["Pistil", "Style", "Anther", "Filament"],
+      "answer_index": 2,
+      "explanation": "The anther is the terminal part of the stamen (male reproductive organ) where pollen grains are produced by meiosis. The anther sits atop the filament, together forming the stamen."
+    },
+    {
+      "question": "Which of the following correctly describes the role of ADH (antidiuretic hormone)?",
+      "options": [
+        "Stimulates glucose production in the liver",
+        "Increases water reabsorption in the kidney tubules",
+        "Decreases blood pressure",
+        "Promotes digestion of proteins"
+      ],
+      "answer_index": 1,
+      "explanation": "ADH (antidiuretic hormone / vasopressin), produced by the hypothalamus and released from the posterior pituitary, acts on the collecting ducts and distal tubules of the kidney to increase water reabsorption, reducing urine volume."
+    },
+    {
+      "question": "The condition in which red blood cells become sickle-shaped due to abnormal haemoglobin is called",
+      "options": ["Haemophilia", "Anaemia", "Sickle cell disease", "Leukaemia"],
+      "answer_index": 2,
+      "explanation": "Sickle cell disease is a genetic disorder caused by a mutation in the haemoglobin gene, resulting in abnormal haemoglobin S. Red blood cells become sickle-shaped, blocking blood vessels and reducing oxygen transport."
+    },
+    {
+      "question": "Which of the following is the primary site for lipid digestion?",
+      "options": ["Mouth", "Stomach", "Small intestine", "Large intestine"],
+      "answer_index": 2,
+      "explanation": "Most lipid (fat) digestion occurs in the small intestine (duodenum). Bile from the liver emulsifies fats into smaller droplets, and lipase from the pancreas breaks them down into fatty acids and glycerol."
+    },
+    {
+      "question": "The layer of cells that lines the inner surface of blood vessels is called",
+      "options": ["Epithelium", "Endothelium", "Mesophyll", "Periderm"],
+      "answer_index": 1,
+      "explanation": "The endothelium is a single layer of cells lining the inner (luminal) surface of blood vessels, lymph vessels, and the heart. It regulates blood flow, prevents clotting, and controls exchange of substances."
+    }
+  ]
+}
