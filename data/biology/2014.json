@@ -1,0 +1,445 @@
+{
+  "paper_type": "STANDARD",
+  "questions": [
+    {
+      "question": "Which of the following structures is found in plant cells but NOT in animal cells?",
+      "options": ["Mitochondrion", "Nucleus", "Cell wall", "Ribosome"],
+      "answer_index": 2,
+      "explanation": "Cell walls made of cellulose are found in plant cells but are absent in animal cells. Animal cells have only a cell membrane."
+    },
+    {
+      "question": "The process by which the body produces antibodies against pathogens is called",
+      "options": ["Vaccination", "Immunity", "Inflammation", "Phagocytosis"],
+      "answer_index": 1,
+      "explanation": "Immunity is the body's ability to resist or eliminate potentially harmful foreign substances (antigens) through the production of antibodies and other immune responses."
+    },
+    {
+      "question": "Which of the following hormones is produced by the adrenal gland?",
+      "options": ["Insulin", "Thyroxine", "Adrenaline", "Oestrogen"],
+      "answer_index": 2,
+      "explanation": "Adrenaline (epinephrine) is produced by the adrenal medulla (inner part of the adrenal gland). It prepares the body for 'fight or flight' responses."
+    },
+    {
+      "question": "An organism that feeds on both plants and animals is called",
+      "options": ["Herbivore", "Carnivore", "Omnivore", "Detritivore"],
+      "answer_index": 2,
+      "explanation": "Omnivores consume both plant material (as herbivores do) and animal material (as carnivores do). Examples include humans, pigs, and bears."
+    },
+    {
+      "question": "The transfer of pollen from the anther of one flower to the stigma of another flower on a different plant is called",
+      "options": [
+        "Self-pollination",
+        "Cross-pollination",
+        "Fertilization",
+        "Germination"
+      ],
+      "answer_index": 1,
+      "explanation": "Cross-pollination (allogamy) involves transfer of pollen between flowers of different plants of the same species. It promotes genetic variation."
+    },
+    {
+      "question": "Which of the following is responsible for the clotting of blood?",
+      "options": [
+        "Red blood cells",
+        "Platelets",
+        "White blood cells",
+        "Plasma"
+      ],
+      "answer_index": 1,
+      "explanation": "Platelets (thrombocytes) are cell fragments that initiate the blood clotting process by releasing clotting factors and aggregating at the site of injury."
+    },
+    {
+      "question": "The hormone that controls the development of secondary sexual characteristics in males is",
+      "options": ["Oestrogen", "Progesterone", "Testosterone", "FSH"],
+      "answer_index": 2,
+      "explanation": "Testosterone, produced by the testes, is the primary male sex hormone. It controls development of secondary sexual characteristics such as facial hair, deepening voice, and muscle development."
+    },
+    {
+      "question": "Which of the following is an example of vestigial structures in humans?",
+      "options": ["Thumb", "Ear ossicles", "Appendix", "Kidney"],
+      "answer_index": 2,
+      "explanation": "The appendix is a vestigial structure in humans — it is a remnant of a larger caecum used by ancestors to digest plant matter. It has little or no function in modern humans."
+    },
+    {
+      "question": "The type of cell division that produces gametes is",
+      "options": ["Mitosis", "Binary fission", "Meiosis", "Budding"],
+      "answer_index": 2,
+      "explanation": "Meiosis is the type of cell division that produces gametes (eggs and sperm). It involves two divisions resulting in four haploid cells from one diploid cell."
+    },
+    {
+      "question": "Which of the following diseases is caused by a virus?",
+      "options": ["Tuberculosis", "Malaria", "Measles", "Cholera"],
+      "answer_index": 2,
+      "explanation": "Measles is caused by the Measles virus (Morbillivirus). Tuberculosis is caused by bacteria, malaria by a protozoan (Plasmodium), and cholera by bacteria (Vibrio cholerae)."
+    },
+    {
+      "question": "The water-conducting tissue in vascular plants is called",
+      "options": ["Phloem", "Xylem", "Cortex", "Epidermis"],
+      "answer_index": 1,
+      "explanation": "Xylem tissue conducts water and dissolved mineral salts from the roots upward to the leaves. It consists of tracheids and vessel elements that form hollow tubes."
+    },
+    {
+      "question": "Which of the following is a saprophyte?",
+      "options": ["Mistletoe", "Mushroom", "Venus flytrap", "Dodder"],
+      "answer_index": 1,
+      "explanation": "Mushrooms (fungi) are saprophytes — they obtain nutrients by secreting enzymes onto dead organic matter and absorbing the digested products. This is also called saprotrophic nutrition."
+    },
+    {
+      "question": "In a monohybrid cross between a tall plant (TT) and a short plant (tt), what will be the phenotype of the F1 generation?",
+      "options": [
+        "All tall",
+        "All short",
+        "3 tall : 1 short",
+        "1 tall : 1 short"
+      ],
+      "answer_index": 0,
+      "explanation": "When TT is crossed with tt, all F1 offspring will be Tt (heterozygous). Since T (tall) is dominant over t (short), all F1 plants will be tall."
+    },
+    {
+      "question": "Which of the following is the function of the stomata in leaves?",
+      "options": [
+        "Absorb sunlight for photosynthesis",
+        "Manufacture food",
+        "Allow gaseous exchange",
+        "Absorb water from the soil"
+      ],
+      "answer_index": 2,
+      "explanation": "Stomata are tiny pores on the leaf surface that allow gaseous exchange — CO₂ enters for photosynthesis and O₂ exits. They also control water vapor loss during transpiration."
+    },
+    {
+      "question": "The scientific study of heredity and variation is called",
+      "options": ["Ecology", "Genetics", "Evolution", "Physiology"],
+      "answer_index": 1,
+      "explanation": "Genetics is the branch of biology that studies heredity (how traits are passed from parents to offspring) and variation (differences between individuals)."
+    },
+    {
+      "question": "Which of the following is produced during anaerobic respiration in yeast?",
+      "options": [
+        "Carbon dioxide and water",
+        "Ethanol and carbon dioxide",
+        "Lactic acid and oxygen",
+        "Glucose and oxygen"
+      ],
+      "answer_index": 1,
+      "explanation": "During anaerobic respiration (fermentation) in yeast: Glucose → Ethanol + Carbon dioxide + small amount of energy. This is exploited in brewing and baking."
+    },
+    {
+      "question": "Which of the following is the correct order of ecological organization from smallest to largest?",
+      "options": [
+        "Organism → Population → Community → Ecosystem → Biosphere",
+        "Population → Organism → Community → Ecosystem → Biosphere",
+        "Organism → Community → Population → Ecosystem → Biosphere",
+        "Organism → Population → Ecosystem → Community → Biosphere"
+      ],
+      "answer_index": 0,
+      "explanation": "The hierarchy of ecological organization: Organism → Population (same species) → Community (different species) → Ecosystem (biotic + abiotic) → Biosphere (all ecosystems on Earth)."
+    },
+    {
+      "question": "The role of decomposers in an ecosystem is to",
+      "options": [
+        "Fix atmospheric nitrogen",
+        "Produce food from sunlight",
+        "Break down dead organic matter",
+        "Consume primary producers"
+      ],
+      "answer_index": 2,
+      "explanation": "Decomposers (fungi and bacteria) break down dead organic matter into simpler inorganic compounds, recycling nutrients back into the ecosystem."
+    },
+    {
+      "question": "Which of the following is NOT a method of vegetative propagation?",
+      "options": ["Budding", "Grafting", "Cutting", "Pollination"],
+      "answer_index": 3,
+      "explanation": "Pollination is a reproductive process involving pollen transfer, not vegetative propagation. Budding, grafting, and cuttings are all methods of vegetative (asexual) propagation."
+    },
+    {
+      "question": "The condition in which an individual has three copies of a particular chromosome instead of the usual two is called",
+      "options": ["Monosomy", "Trisomy", "Polyploidy", "Haploidy"],
+      "answer_index": 1,
+      "explanation": "Trisomy is the presence of three copies of a chromosome (2n+1). Down syndrome (trisomy 21) is a well-known example, caused by an extra chromosome 21."
+    },
+    {
+      "question": "In the ABO blood group system, a person with blood group AB has",
+      "options": [
+        "Antigen A only on red blood cells",
+        "Antigen B only on red blood cells",
+        "Both antigen A and B on red blood cells",
+        "No antigens on red blood cells"
+      ],
+      "answer_index": 2,
+      "explanation": "Blood group AB individuals have both A and B antigens on their red blood cells and neither anti-A nor anti-B antibodies in plasma. They are the universal recipients."
+    },
+    {
+      "question": "Which of the following best describes natural selection?",
+      "options": [
+        "Organisms with favorable traits survive and reproduce more",
+        "All organisms have equal chances of survival",
+        "Humans selectively breed organisms for desired traits",
+        "Random changes in allele frequencies in a population"
+      ],
+      "answer_index": 0,
+      "explanation": "Natural selection is the process by which organisms with favorable heritable traits (adaptations) tend to survive and reproduce more successfully, passing on their traits to offspring."
+    },
+    {
+      "question": "The main function of the cuticle on a leaf is to",
+      "options": [
+        "Absorb sunlight",
+        "Reduce water loss",
+        "Allow gaseous exchange",
+        "Absorb carbon dioxide"
+      ],
+      "answer_index": 1,
+      "explanation": "The waxy cuticle on the leaf surface is an adaptation to reduce water loss through evaporation. It acts as a waterproof layer covering the epidermis."
+    },
+    {
+      "question": "Which of the following is a characteristic of mammals?",
+      "options": [
+        "They lay eggs and have scales",
+        "They breathe through gills",
+        "They are warm-blooded and suckle their young",
+        "They have a three-chambered heart"
+      ],
+      "answer_index": 2,
+      "explanation": "Mammals are characterized by: being endothermic (warm-blooded), having mammary glands (to nurse young with milk), hair/fur, and giving birth to live young (most species)."
+    },
+    {
+      "question": "The process by which plants lose water through their leaves is",
+      "options": ["Perspiration", "Secretion", "Transpiration", "Guttation"],
+      "answer_index": 2,
+      "explanation": "Transpiration is the evaporation of water from plant surfaces, mainly through stomata in the leaves. It drives the upward movement of water (transpiration stream) in the xylem."
+    },
+    {
+      "question": "The deficiency of Vitamin C causes",
+      "options": ["Rickets", "Night blindness", "Scurvy", "Beriberi"],
+      "answer_index": 2,
+      "explanation": "Vitamin C (ascorbic acid) deficiency causes scurvy, characterized by swollen and bleeding gums, poor wound healing, and fatigue. Vitamin C is essential for collagen synthesis."
+    },
+    {
+      "question": "A population refers to",
+      "options": [
+        "All organisms in a given area",
+        "All members of the same species living in the same area",
+        "All members of different species in the same area",
+        "The non-living components of an ecosystem"
+      ],
+      "answer_index": 1,
+      "explanation": "A population is a group of individuals of the same species living in the same geographic area at the same time, who can interbreed and share a gene pool."
+    },
+    {
+      "question": "Which of the following is a recessive trait in humans according to Mendelian genetics?",
+      "options": [
+        "Dark skin",
+        "Free earlobe",
+        "Attached earlobe",
+        "Tongue rolling"
+      ],
+      "answer_index": 2,
+      "explanation": "Attached earlobes are a recessive trait. Free earlobes (F) are dominant over attached earlobes (f). An individual must be homozygous recessive (ff) to have attached earlobes."
+    },
+    {
+      "question": "The function of the spleen in the human body is to",
+      "options": [
+        "Produce insulin",
+        "Filter blood and destroy old red blood cells",
+        "Produce digestive enzymes",
+        "Regulate body temperature"
+      ],
+      "answer_index": 1,
+      "explanation": "The spleen filters blood by removing old, damaged, and abnormal red blood cells, stores platelets, and plays a role in immune responses against blood-borne pathogens."
+    },
+    {
+      "question": "Which of the following adaptations helps desert plants survive in dry conditions?",
+      "options": [
+        "Broad leaves to maximize water absorption",
+        "Shallow roots to absorb dew",
+        "Reduced leaves and deep roots to conserve water",
+        "Large stomata to allow faster gas exchange"
+      ],
+      "answer_index": 2,
+      "explanation": "Desert plants (xerophytes like cacti) have reduced or absent leaves (to minimize transpiration), thick waxy cuticles, sunken stomata, and deep or extensive roots to survive drought."
+    },
+    {
+      "question": "The term 'biodiversity' refers to",
+      "options": [
+        "The number of individuals in a population",
+        "The variety of life forms in a given area",
+        "The total biomass of an ecosystem",
+        "The rate of reproduction of organisms"
+      ],
+      "answer_index": 1,
+      "explanation": "Biodiversity refers to the variety and variability of life on Earth, including diversity within species (genetic diversity), between species (species diversity), and of ecosystems."
+    },
+    {
+      "question": "The part of the kidney where ultrafiltration occurs is the",
+      "options": [
+        "Loop of Henle",
+        "Collecting duct",
+        "Bowman's capsule",
+        "Distal convoluted tubule"
+      ],
+      "answer_index": 2,
+      "explanation": "Ultrafiltration occurs in the Bowman's capsule (glomerular capsule), where high blood pressure forces water, salts, glucose, and urea from the glomerulus into the nephron tubule."
+    },
+    {
+      "question": "Which of the following is an example of a food web component that receives energy from more than one source?",
+      "options": ["Producer", "Primary consumer", "Decomposer", "Omnivore"],
+      "answer_index": 3,
+      "explanation": "Omnivores feed on both plants and animals, receiving energy from more than one trophic level. This makes them part of multiple food chains within a food web."
+    },
+    {
+      "question": "During germination of seeds, the first structure to emerge from the seed is usually the",
+      "options": ["Plumule", "Cotyledon", "Radicle", "Testa"],
+      "answer_index": 2,
+      "explanation": "The radicle (embryonic root) is the first structure to emerge during seed germination. It anchors the seedling and absorbs water and nutrients."
+    },
+    {
+      "question": "Which of the following is the correct definition of a dominant gene?",
+      "options": [
+        "A gene that is only expressed in females",
+        "A gene whose effect is expressed even when only one copy is present",
+        "A gene that is carried on the Y chromosome",
+        "A gene that skips a generation"
+      ],
+      "answer_index": 1,
+      "explanation": "A dominant allele is one whose phenotypic effect is expressed even when only one copy is present (in heterozygous individuals). It masks the effect of the recessive allele."
+    },
+    {
+      "question": "The active transport of substances across a cell membrane requires",
+      "options": [
+        "A concentration gradient only",
+        "Energy in the form of ATP",
+        "A semi-permeable membrane only",
+        "Sunlight energy"
+      ],
+      "answer_index": 1,
+      "explanation": "Active transport moves substances against their concentration gradient (from low to high concentration) and requires energy in the form of ATP, along with specific carrier proteins."
+    },
+    {
+      "question": "Which of the following is an example of asexual reproduction in plants?",
+      "options": [
+        "Seed formation",
+        "Spore formation in ferns",
+        "Vegetative propagation by stem tubers",
+        "Cross-pollination"
+      ],
+      "answer_index": 2,
+      "explanation": "Vegetative propagation through stem tubers (e.g., potato) is asexual reproduction — new plants develop from the vegetative parts of the parent plant without fertilization."
+    },
+    {
+      "question": "Which of the following carbohydrates is the storage form in plants?",
+      "options": ["Glucose", "Starch", "Glycogen", "Cellulose"],
+      "answer_index": 1,
+      "explanation": "Starch is the storage polysaccharide in plants, found in chloroplasts and amyloplasts. Glycogen is the storage form in animals. Cellulose forms plant cell walls."
+    },
+    {
+      "question": "The absorption of digested food occurs mainly in the",
+      "options": [
+        "Stomach",
+        "Large intestine",
+        "Small intestine",
+        "Oesophagus"
+      ],
+      "answer_index": 2,
+      "explanation": "The small intestine (particularly the ileum) is the main site of food absorption. Its wall is folded into villi and microvilli, greatly increasing the surface area for absorption."
+    },
+    {
+      "question": "The theory of evolution by natural selection was proposed by",
+      "options": [
+        "Gregor Mendel",
+        "Louis Pasteur",
+        "Charles Darwin",
+        "Jean-Baptiste Lamarck"
+      ],
+      "answer_index": 2,
+      "explanation": "Charles Darwin proposed the theory of evolution by natural selection in his 1859 book 'On the Origin of Species.' He argued that favorable inherited traits increase survival and reproductive success."
+    },
+    {
+      "question": "Which of the following is the primary function of the urethra?",
+      "options": [
+        "Filter blood",
+        "Store urine",
+        "Carry urine from the bladder to the outside",
+        "Reabsorb water from urine"
+      ],
+      "answer_index": 2,
+      "explanation": "The urethra is the tube that carries urine from the urinary bladder to the outside of the body during urination. In males, it also carries semen."
+    },
+    {
+      "question": "Which nitrogen base is found in RNA but NOT in DNA?",
+      "options": ["Adenine", "Guanine", "Uracil", "Cytosine"],
+      "answer_index": 2,
+      "explanation": "Uracil is found in RNA and pairs with Adenine. In DNA, Thymine plays the same role and pairs with Adenine. RNA contains Adenine, Guanine, Cytosine, and Uracil."
+    },
+    {
+      "question": "The hardening of arteries due to deposits of fat is called",
+      "options": ["Hypertension", "Atherosclerosis", "Anaemia", "Thrombosis"],
+      "answer_index": 1,
+      "explanation": "Atherosclerosis is the buildup of plaques (fatty deposits, including cholesterol) within arterial walls, causing hardening and narrowing of arteries and increasing cardiovascular disease risk."
+    },
+    {
+      "question": "Which of the following best describes a niche?",
+      "options": [
+        "The geographical location of an organism",
+        "The role and position of an organism in its ecosystem",
+        "The food an organism eats",
+        "The habitat where an organism lives"
+      ],
+      "answer_index": 1,
+      "explanation": "An ecological niche describes the role an organism plays in its ecosystem, including its habitat, feeding habits, interactions, and all biotic and abiotic conditions it requires."
+    },
+    {
+      "question": "In which of the following groups are organisms that lack a cell nucleus?",
+      "options": ["Fungi", "Algae", "Bacteria", "Protozoa"],
+      "answer_index": 2,
+      "explanation": "Bacteria are prokaryotes — they lack a membrane-bound nucleus. Their genetic material (DNA) is located in the nucleoid region of the cytoplasm. All other options are eukaryotes."
+    },
+    {
+      "question": "The pigment responsible for the red color in ripe tomatoes is",
+      "options": ["Chlorophyll", "Carotene", "Lycopene", "Anthocyanin"],
+      "answer_index": 2,
+      "explanation": "Lycopene is the carotenoid pigment responsible for the red color in ripe tomatoes and watermelons. It is also a powerful antioxidant."
+    },
+    {
+      "question": "Parthenogenesis is defined as",
+      "options": [
+        "Development of a new organism from an unfertilized egg",
+        "Development of an organism from a fertilized egg",
+        "Asexual reproduction by binary fission",
+        "Sexual reproduction involving two parents"
+      ],
+      "answer_index": 0,
+      "explanation": "Parthenogenesis is the development of an organism from an unfertilized egg. It occurs naturally in bees, wasps, and some reptiles, and produces haploid or diploid offspring."
+    },
+    {
+      "question": "Which of the following is the function of tendons?",
+      "options": [
+        "Connecting bone to bone",
+        "Connecting muscle to bone",
+        "Protecting joints",
+        "Producing red blood cells"
+      ],
+      "answer_index": 1,
+      "explanation": "Tendons are tough connective tissue bands that connect muscles to bones, allowing muscles to move the skeleton when they contract. Ligaments connect bone to bone."
+    },
+    {
+      "question": "The process by which organisms of the same species compete for the same limited resources is called",
+      "options": [
+        "Interspecific competition",
+        "Intraspecific competition",
+        "Predation",
+        "Commensalism"
+      ],
+      "answer_index": 1,
+      "explanation": "Intraspecific competition occurs between individuals of the same species competing for the same limited resources (food, mates, territory). It is often intense because needs are identical."
+    },
+    {
+      "question": "Which of the following is the correct function of the pancreas?",
+      "options": [
+        "Produces bile for fat digestion",
+        "Produces insulin and digestive enzymes",
+        "Filters toxins from the blood",
+        "Stores glycogen"
+      ],
+      "answer_index": 1,
+      "explanation": "The pancreas has two functions: endocrine (producing insulin and glucagon to regulate blood sugar) and exocrine (producing digestive enzymes like amylase, lipase, and proteases)."
+    }
+  ]
+}

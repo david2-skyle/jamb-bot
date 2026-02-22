@@ -1,0 +1,426 @@
+{
+  "paper_type": "STANDARD",
+  "questions": [
+    {
+      "question": "Which of the following is the basic unit of life?",
+      "options": ["Tissue", "Organ", "Cell", "Organism"],
+      "answer_index": 2,
+      "explanation": "The cell is the basic structural and functional unit of all living organisms, as established by the cell theory."
+    },
+    {
+      "question": "The organelle responsible for the production of energy in a cell is the",
+      "options": ["Ribosome", "Nucleus", "Mitochondrion", "Lysosome"],
+      "answer_index": 2,
+      "explanation": "The mitochondrion is the site of aerobic respiration and ATP production, earning it the name 'powerhouse of the cell'."
+    },
+    {
+      "question": "Which of the following is NOT a function of the cell membrane?",
+      "options": [
+        "Controlling the passage of materials in and out of the cell",
+        "Providing mechanical support to the cell",
+        "Protein synthesis",
+        "Cell recognition"
+      ],
+      "answer_index": 2,
+      "explanation": "Protein synthesis occurs at ribosomes, not the cell membrane. The cell membrane functions in transport, support, and cell recognition."
+    },
+    {
+      "question": "The process by which water moves from a region of high water potential to a region of low water potential through a semi-permeable membrane is",
+      "options": ["Diffusion", "Osmosis", "Active transport", "Plasmolysis"],
+      "answer_index": 1,
+      "explanation": "Osmosis is the movement of water molecules from a region of higher water potential (dilute solution) to a region of lower water potential (concentrated solution) across a semi-permeable membrane."
+    },
+    {
+      "question": "In which part of the chloroplast does the dark reaction of photosynthesis occur?",
+      "options": ["Thylakoid", "Grana", "Stroma", "Outer membrane"],
+      "answer_index": 2,
+      "explanation": "The dark reaction (Calvin cycle) occurs in the stroma of the chloroplast, where CO₂ is fixed into organic compounds using ATP and NADPH from the light reaction."
+    },
+    {
+      "question": "Which of the following blood groups is described as the universal donor?",
+      "options": ["AB", "B", "A", "O"],
+      "answer_index": 3,
+      "explanation": "Blood group O has no A or B antigens on red blood cells, so it can be donated to individuals of all blood groups without triggering an immune response."
+    },
+    {
+      "question": "The part of the brain responsible for maintaining balance and coordination of movement is the",
+      "options": ["Cerebrum", "Medulla oblongata", "Cerebellum", "Hypothalamus"],
+      "answer_index": 2,
+      "explanation": "The cerebellum coordinates voluntary movements, maintains posture, and controls balance."
+    },
+    {
+      "question": "Which of the following is an example of a mutualistic relationship?",
+      "options": [
+        "Tapeworm and human",
+        "Bacteria in the root nodules of legumes and the plant",
+        "Tick and cattle",
+        "Mistletoe and orange tree"
+      ],
+      "answer_index": 1,
+      "explanation": "Rhizobium bacteria in legume root nodules fix atmospheric nitrogen for the plant while receiving carbohydrates from the plant — both organisms benefit (mutualism)."
+    },
+    {
+      "question": "The photosynthetic pigment that absorbs light energy is",
+      "options": ["Carotene", "Chlorophyll", "Xanthophyll", "Anthocyanin"],
+      "answer_index": 1,
+      "explanation": "Chlorophyll is the primary photosynthetic pigment that absorbs red and blue light for photosynthesis, while reflecting green light."
+    },
+    {
+      "question": "Which of the following is the correct sequence of the alimentary canal?",
+      "options": [
+        "Mouth → Oesophagus → Stomach → Small intestine → Large intestine",
+        "Mouth → Stomach → Oesophagus → Small intestine → Large intestine",
+        "Mouth → Oesophagus → Small intestine → Stomach → Large intestine",
+        "Mouth → Oesophagus → Stomach → Large intestine → Small intestine"
+      ],
+      "answer_index": 0,
+      "explanation": "Food passes through: Mouth → Oesophagus → Stomach → Small intestine (duodenum, jejunum, ileum) → Large intestine → Rectum → Anus."
+    },
+    {
+      "question": "The enzyme that converts starch to maltose is",
+      "options": ["Lipase", "Amylase", "Pepsin", "Trypsin"],
+      "answer_index": 1,
+      "explanation": "Amylase (salivary and pancreatic) catalyzes the hydrolysis of starch into maltose. It is the carbohydrase enzyme specific to starch digestion."
+    },
+    {
+      "question": "Which of the following is NOT a characteristic of living organisms?",
+      "options": ["Reproduction", "Irritability", "Crystallization", "Excretion"],
+      "answer_index": 2,
+      "explanation": "Crystallization is a physical process, not a characteristic of living organisms. The characteristics of life include MR NIGER D: Movement, Respiration, Nutrition, Irritability, Growth, Excretion, Reproduction, Death."
+    },
+    {
+      "question": "The removal of metabolic waste products from the body is called",
+      "options": ["Secretion", "Excretion", "Egestion", "Defecation"],
+      "answer_index": 1,
+      "explanation": "Excretion is the removal of metabolic waste products (e.g., urea, CO₂) produced by chemical reactions in cells. Egestion is the removal of undigested food."
+    },
+    {
+      "question": "A plant that obtains nutrients by digesting insects is classified as",
+      "options": [
+        "Saprophyte",
+        "Parasite",
+        "Insectivorous plant",
+        "Epiphyte"
+      ],
+      "answer_index": 2,
+      "explanation": "Insectivorous (carnivorous) plants like Venus flytrap, sundew, and pitcher plants trap and digest insects to supplement nutrients, especially nitrogen, from poor soils."
+    },
+    {
+      "question": "The type of reproduction that involves only one parent is",
+      "options": [
+        "Sexual reproduction",
+        "Fertilization",
+        "Asexual reproduction",
+        "Conjugation"
+      ],
+      "answer_index": 2,
+      "explanation": "Asexual reproduction involves a single parent producing offspring that are genetically identical to the parent. Examples include binary fission, budding, and spore formation."
+    },
+    {
+      "question": "Which of the following is the functional unit of the kidney?",
+      "options": ["Ureter", "Nephron", "Renal cortex", "Collecting duct"],
+      "answer_index": 1,
+      "explanation": "The nephron is the structural and functional unit of the kidney. Each kidney contains about one million nephrons that carry out filtration, reabsorption, and secretion."
+    },
+    {
+      "question": "In a food chain, organisms that feed on producers are called",
+      "options": [
+        "Decomposers",
+        "Primary consumers",
+        "Secondary consumers",
+        "Tertiary consumers"
+      ],
+      "answer_index": 1,
+      "explanation": "Primary consumers (herbivores) feed directly on producers (plants). They are the first level of consumers in a food chain."
+    },
+    {
+      "question": "The process by which green plants manufacture their own food using sunlight is",
+      "options": ["Respiration", "Transpiration", "Photosynthesis", "Translocation"],
+      "answer_index": 2,
+      "explanation": "Photosynthesis is the process by which plants use sunlight energy, CO₂, and water to manufacture glucose. The equation is: 6CO₂ + 6H₂O + light energy → C₆H₁₂O₆ + 6O₂."
+    },
+    {
+      "question": "Which of the following structures carries oxygenated blood from the lungs to the heart?",
+      "options": ["Pulmonary artery", "Aorta", "Pulmonary vein", "Vena cava"],
+      "answer_index": 2,
+      "explanation": "The pulmonary vein carries oxygenated blood from the lungs to the left atrium of the heart. This is an exception to the rule that veins carry deoxygenated blood."
+    },
+    {
+      "question": "The condition in which the blood lacks sufficient haemoglobin is known as",
+      "options": ["Leukemia", "Anaemia", "Haemophilia", "Sickle cell disease"],
+      "answer_index": 1,
+      "explanation": "Anaemia is a condition characterized by insufficient haemoglobin or red blood cells, leading to reduced oxygen-carrying capacity of the blood."
+    },
+    {
+      "question": "Which of the following is an example of a reflex action?",
+      "options": [
+        "Writing a letter",
+        "Withdrawing a hand from a hot surface",
+        "Riding a bicycle",
+        "Reading a book"
+      ],
+      "answer_index": 1,
+      "explanation": "Withdrawing a hand from a hot surface is a reflex action — an automatic, involuntary response to a stimulus that does not involve conscious thought."
+    },
+    {
+      "question": "Malaria is caused by",
+      "options": ["Bacteria", "Virus", "Protozoan", "Fungus"],
+      "answer_index": 2,
+      "explanation": "Malaria is caused by Plasmodium species, which are protozoan parasites. The parasite is transmitted to humans through the bite of infected female Anopheles mosquitoes."
+    },
+    {
+      "question": "Which of the following is responsible for transmitting malaria?",
+      "options": [
+        "Male Anopheles mosquito",
+        "Female Anopheles mosquito",
+        "Female Culex mosquito",
+        "Male Culex mosquito"
+      ],
+      "answer_index": 1,
+      "explanation": "Only the female Anopheles mosquito transmits malaria because only females feed on blood (for egg development), and Plasmodium completes part of its life cycle in Anopheles mosquitoes."
+    },
+    {
+      "question": "The part of the flower that receives pollen grains during pollination is the",
+      "options": ["Anther", "Filament", "Stigma", "Style"],
+      "answer_index": 2,
+      "explanation": "The stigma is the sticky top of the female reproductive structure (pistil) that receives pollen grains during pollination."
+    },
+    {
+      "question": "Which of the following is a vector in the transmission of sleeping sickness?",
+      "options": ["Housefly", "Tsetse fly", "Sandfly", "Blackfly"],
+      "answer_index": 1,
+      "explanation": "Sleeping sickness (African trypanosomiasis) is caused by Trypanosoma brucei and transmitted by the tsetse fly (Glossina species)."
+    },
+    {
+      "question": "The exchange of gases in the lungs occurs at the",
+      "options": ["Bronchi", "Trachea", "Alveoli", "Bronchioles"],
+      "answer_index": 2,
+      "explanation": "The alveoli are tiny air sacs in the lungs with thin walls and rich blood supply, providing a large surface area for efficient gas exchange (O₂ and CO₂)."
+    },
+    {
+      "question": "Which of the following vitamins is produced when the skin is exposed to sunlight?",
+      "options": ["Vitamin A", "Vitamin B", "Vitamin C", "Vitamin D"],
+      "answer_index": 3,
+      "explanation": "Vitamin D is synthesized in the skin when ultraviolet (UV) radiation from sunlight converts 7-dehydrocholesterol to cholecalciferol (Vitamin D₃)."
+    },
+    {
+      "question": "The movement of materials from leaves to other parts of the plant through the phloem is called",
+      "options": ["Transpiration", "Translocation", "Osmosis", "Absorption"],
+      "answer_index": 1,
+      "explanation": "Translocation is the movement of organic food materials (mainly sucrose) from the leaves (source) to other parts of the plant (sink) through the phloem."
+    },
+    {
+      "question": "Which of the following is a characteristic of arthropods?",
+      "options": [
+        "Soft, unsegmented body",
+        "Jointed appendages and exoskeleton",
+        "Presence of notochord",
+        "Moist permeable skin"
+      ],
+      "answer_index": 1,
+      "explanation": "Arthropods are characterized by jointed appendages, a hard exoskeleton (cuticle) made of chitin, and a segmented body. Examples include insects, crabs, and spiders."
+    },
+    {
+      "question": "The loss of water from plants through tiny pores in the leaves is called",
+      "options": ["Guttation", "Exudation", "Transpiration", "Evaporation"],
+      "answer_index": 2,
+      "explanation": "Transpiration is the process by which water vapor is lost from the aerial parts of plants, primarily through stomata in the leaves. It drives the transpiration stream."
+    },
+    {
+      "question": "Which of the following is NOT a function of the skeleton?",
+      "options": [
+        "Support",
+        "Protection",
+        "Production of heat",
+        "Blood cell production"
+      ],
+      "answer_index": 2,
+      "explanation": "The skeleton does not produce heat. Its main functions are support, protection of organs, movement (with muscles), red blood cell production (in bone marrow), and mineral storage."
+    },
+    {
+      "question": "Which of the following is the correct definition of ecology?",
+      "options": [
+        "The study of cells and their functions",
+        "The study of organisms and their interaction with the environment",
+        "The study of plants and animals",
+        "The study of fossils"
+      ],
+      "answer_index": 1,
+      "explanation": "Ecology is the scientific study of relationships between organisms and their environment, including both biotic (living) and abiotic (non-living) factors."
+    },
+    {
+      "question": "The genetic material of a cell is found in the",
+      "options": ["Cytoplasm", "Cell membrane", "Nucleus", "Ribosome"],
+      "answer_index": 2,
+      "explanation": "DNA (deoxyribonucleic acid), the genetic material, is housed in the nucleus of eukaryotic cells, organized into chromosomes."
+    },
+    {
+      "question": "Which of the following is an example of innate behavior in animals?",
+      "options": [
+        "A rat learning to press a lever for food",
+        "A dog responding to its name",
+        "A spider spinning a web",
+        "A horse learning to jump obstacles"
+      ],
+      "answer_index": 2,
+      "explanation": "Spinning a web is innate (instinctive) behavior — it is inherited, not learned. Spiders spin webs without ever seeing another spider do it."
+    },
+    {
+      "question": "Homeostasis is the process by which",
+      "options": [
+        "Organisms grow and develop",
+        "The internal environment of an organism is kept constant",
+        "Organisms reproduce",
+        "Energy is produced from food"
+      ],
+      "answer_index": 1,
+      "explanation": "Homeostasis is the maintenance of a relatively stable internal environment (e.g., body temperature, blood glucose, pH) despite changes in the external environment."
+    },
+    {
+      "question": "The organism that causes cholera is",
+      "options": [
+        "Vibrio cholerae",
+        "Salmonella typhi",
+        "Mycobacterium tuberculosis",
+        "Clostridium tetani"
+      ],
+      "answer_index": 0,
+      "explanation": "Cholera is caused by the bacterium Vibrio cholerae, transmitted through contaminated water or food. It causes severe watery diarrhea and dehydration."
+    },
+    {
+      "question": "Which of the following is the correct equation for aerobic respiration?",
+      "options": [
+        "C₆H₁₂O₆ → 2C₂H₅OH + 2CO₂ + energy",
+        "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy",
+        "6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂",
+        "C₆H₁₂O₆ + 6H₂O → 6CO₂ + energy"
+      ],
+      "answer_index": 1,
+      "explanation": "Aerobic respiration: C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy (ATP). Glucose is completely oxidized in the presence of oxygen to release energy."
+    },
+    {
+      "question": "Which of the following is an example of chemosymbiosis?",
+      "options": [
+        "Lichen formation between algae and fungi",
+        "Rhizobium and legumes",
+        "Mycorrhiza between fungi and plant roots",
+        "Termites and cellulose-digesting microbes in their gut"
+      ],
+      "answer_index": 3,
+      "explanation": "Termites harbor cellulose-digesting microorganisms (protozoa and bacteria) in their gut, enabling them to digest wood. This is a classic example of mutualistic symbiosis."
+    },
+    {
+      "question": "The process of meiosis is important because it",
+      "options": [
+        "Produces cells with the same chromosome number as the parent",
+        "Results in the production of gametes with half the chromosome number",
+        "Allows the repair of damaged tissues",
+        "Produces identical cells for growth"
+      ],
+      "answer_index": 1,
+      "explanation": "Meiosis reduces the chromosome number by half (from diploid 2n to haploid n), producing gametes (eggs and sperm). This ensures that fertilization restores the normal diploid number."
+    },
+    {
+      "question": "Which of the following hormones regulates blood sugar level?",
+      "options": ["Adrenaline", "Insulin", "Thyroxine", "Progesterone"],
+      "answer_index": 1,
+      "explanation": "Insulin, produced by the beta cells of the pancreatic islets of Langerhans, lowers blood glucose by promoting glucose uptake by cells and glycogen synthesis in the liver."
+    },
+    {
+      "question": "The type of feeding relationship in which one organism benefits while the other is harmed is",
+      "options": ["Mutualism", "Commensalism", "Parasitism", "Predation"],
+      "answer_index": 2,
+      "explanation": "Parasitism is a relationship where one organism (parasite) benefits at the expense of the other (host), which is harmed but usually not killed immediately."
+    },
+    {
+      "question": "Which of the following is NOT an abiotic factor in an ecosystem?",
+      "options": ["Temperature", "Light intensity", "Decomposers", "Rainfall"],
+      "answer_index": 2,
+      "explanation": "Abiotic factors are non-living physical and chemical components of an ecosystem. Decomposers are living organisms (biotic factor). Temperature, light, and rainfall are abiotic."
+    },
+    {
+      "question": "The biological process by which nitrogen is converted from atmospheric N₂ to ammonia is called",
+      "options": [
+        "Denitrification",
+        "Nitrification",
+        "Nitrogen fixation",
+        "Ammonification"
+      ],
+      "answer_index": 2,
+      "explanation": "Nitrogen fixation is the conversion of atmospheric nitrogen (N₂) into ammonia (NH₃) or related compounds by nitrogen-fixing bacteria such as Rhizobium and Azotobacter."
+    },
+    {
+      "question": "Which of the following is the site for photosynthesis?",
+      "options": ["Mitochondrion", "Ribosome", "Chloroplast", "Golgi body"],
+      "answer_index": 2,
+      "explanation": "Photosynthesis occurs in the chloroplast. The light reactions occur in the thylakoid membranes while the Calvin cycle (dark reactions) occurs in the stroma."
+    },
+    {
+      "question": "Which of the following best describes eutrophication?",
+      "options": [
+        "Increase in biodiversity due to nutrient availability",
+        "Excessive growth of algae due to nutrient enrichment leading to oxygen depletion",
+        "Purification of water by natural processes",
+        "Reduction of water pollution by human activities"
+      ],
+      "answer_index": 1,
+      "explanation": "Eutrophication is the over-enrichment of water bodies with nutrients (especially nitrogen and phosphorus), causing excessive algal growth (algal bloom), oxygen depletion, and death of aquatic organisms."
+    },
+    {
+      "question": "In Mendelian genetics, the law of segregation states that",
+      "options": [
+        "Genes for different traits assort independently",
+        "Pairs of alleles separate during gamete formation",
+        "Dominant alleles always mask recessive alleles",
+        "Offspring inherit one gene from each parent"
+      ],
+      "answer_index": 1,
+      "explanation": "Mendel's Law of Segregation states that during gamete formation, the two alleles of a gene separate (segregate) so that each gamete receives only one allele."
+    },
+    {
+      "question": "Which of the following is a characteristic of viruses?",
+      "options": [
+        "They can reproduce independently outside a host",
+        "They contain both DNA and RNA",
+        "They are obligate intracellular parasites",
+        "They have a cell wall made of peptidoglycan"
+      ],
+      "answer_index": 2,
+      "explanation": "Viruses are obligate intracellular parasites — they can only replicate inside a living host cell. They are not cells and cannot carry out metabolic activities on their own."
+    },
+    {
+      "question": "The primary function of the large intestine is to",
+      "options": [
+        "Digest proteins",
+        "Absorb digested food",
+        "Absorb water and form faeces",
+        "Secrete digestive enzymes"
+      ],
+      "answer_index": 2,
+      "explanation": "The large intestine (colon) primarily absorbs water and electrolytes from indigestible food matter, converting it into solid faeces for elimination."
+    },
+    {
+      "question": "Which of the following animals is an example of a cold-blooded (ectothermic) organism?",
+      "options": ["Bat", "Whale", "Lizard", "Eagle"],
+      "answer_index": 2,
+      "explanation": "Lizards are ectothermic (cold-blooded) — their body temperature depends on the external environment. They bask in the sun to warm up. Bats, whales, and eagles are endothermic (warm-blooded)."
+    },
+    {
+      "question": "The organelle responsible for protein synthesis in a cell is the",
+      "options": ["Nucleus", "Ribosome", "Lysosome", "Vacuole"],
+      "answer_index": 1,
+      "explanation": "Ribosomes are the sites of protein synthesis (translation). They read mRNA sequences and assemble amino acids into proteins."
+    },
+    {
+      "question": "Which of the following is a function of the lymphatic system?",
+      "options": [
+        "Transport of oxygen",
+        "Production of red blood cells",
+        "Return of tissue fluid to the blood",
+        "Digestion of fats"
+      ],
+      "answer_index": 2,
+      "explanation": "The lymphatic system collects excess interstitial fluid (tissue fluid) and returns it to the bloodstream via lymph capillaries and lymphatic vessels."
+    }
+  ]
+}
