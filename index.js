@@ -1,3 +1,4 @@
+require("dotenv").config();
 const qrcode = require("qrcode-terminal");
 const qrcodeLib = require("qrcode");
 const http = require("http");
@@ -16,8 +17,6 @@ utils.setClient(client);
 // ==========================================
 // 🌐 QR CODE HTTP SERVER
 // ==========================================
-// Railway needs a port to stay alive, and this lets you scan the QR
-// by visiting your Railway app URL in the browser.
 let currentQR = null;
 let isAuthenticated = false;
 
@@ -33,7 +32,6 @@ const server = http.createServer(async (req, res) => {
       `);
       return;
     }
-
     if (!currentQR) {
       res.writeHead(200, { "Content-Type": "text/html" });
       res.end(`
@@ -45,7 +43,6 @@ const server = http.createServer(async (req, res) => {
       `);
       return;
     }
-
     try {
       const qrImage = await qrcodeLib.toDataURL(currentQR);
       res.writeHead(200, { "Content-Type": "text/html" });
@@ -64,22 +61,24 @@ const server = http.createServer(async (req, res) => {
     }
     return;
   }
-
-  // Health check endpoint (Railway uses this)
   if (req.url === "/health") {
     res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ status: "ok", authenticated: isAuthenticated }));
+    res.end(
+      JSON.stringify({
+        status: "ok",
+        authenticated: isAuthenticated,
+        version: CONFIG.bot.version, // V3: expose version
+        ai: !!CONFIG.ai.apiKey, // V3: expose AI status
+      }),
+    );
     return;
   }
-
   res.writeHead(404);
   res.end("Not found");
 });
 
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-  logger.info(`QR server running on port ${PORT}`);
-});
+server.listen(PORT, () => logger.info(`QR server running on port ${PORT}`));
 
 // ==========================================
 // 📡 CLIENT EVENT HANDLERS
@@ -95,6 +94,8 @@ client.on("ready", () => {
   isAuthenticated = true;
   currentQR = null;
   logger.success(`${CONFIG.bot.name} v${CONFIG.bot.version} is ready!`);
+  // V3: Start daily question scheduler after bot is ready
+  startDailyScheduler();
 });
 
 client.on("authenticated", () => {
@@ -118,6 +119,61 @@ client.on("message_create", async (msg) => {
 });
 
 // ==========================================
+// 📅 V3: DAILY QUESTION SCHEDULER
+// ==========================================
+// Uses a simple polling interval — checks every minute if it's time
+// to fire daily questions. No external cron needed.
+
+let _dailyFiredToday = false;
+let _lastFiredDate = null;
+
+function startDailyScheduler() {
+  if (!CONFIG.ai.features.dailyQuestion) {
+    logger.info("Daily question scheduler: disabled via config");
+    return;
+  }
+
+  logger.info(
+    `Daily question scheduler started (fires at ${CONFIG.daily.hour}:00 WAT)`,
+  );
+
+  setInterval(async () => {
+    try {
+      // WAT = UTC+1
+      const now = new Date(Date.now() + 60 * 60 * 1000); // shift to WAT
+      const todayStr = now.toISOString().slice(0, 10);
+      const currentHour = now.getUTCHours();
+
+      // Fire once per day at the configured hour
+      if (currentHour === CONFIG.daily.hour && _lastFiredDate !== todayStr) {
+        _lastFiredDate = todayStr;
+        await fireDailyQuestions();
+      }
+    } catch (e) {
+      logger.error("Daily scheduler error:", e.message);
+    }
+  }, 60 * 1000); // check every minute
+}
+
+async function fireDailyQuestions() {
+  if (!isAuthenticated) {
+    logger.warn("Daily: bot not authenticated, skipping");
+    return;
+  }
+
+  const dailyChats = await commandHandler._loadDailyChats();
+  if (dailyChats.length === 0) return;
+
+  logger.info(`Daily: sending questions to ${dailyChats.length} chat(s)`);
+
+  for (const chatId of dailyChats) {
+    // Small delay between chats to avoid rate-limiting
+    await utils.sleep(2000);
+    await commandHandler.sendDailyQuestion(chatId);
+  }
+}
+
+// ==========================================
 // 🚀 INITIALIZATION & SHUTDOWN
 // ==========================================
 async function initializeBot() {
@@ -126,6 +182,9 @@ async function initializeBot() {
 
   logger.info(`Prefix: ${CONFIG.bot.prefix}`);
   logger.info(`Owners: ${CONFIG.bot.owners.length}`);
+  logger.info(
+    `AI: ${CONFIG.ai.apiKey ? `enabled (${CONFIG.ai.model})` : "disabled (no XAI_API_KEY)"}`,
+  );
 
   const adminCount = Object.values(storage.permissions.botAdmins).flat().length;
   const modCount = Object.values(storage.permissions.moderators).flat().length;

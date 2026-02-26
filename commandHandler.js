@@ -8,12 +8,13 @@ const quizManager = require("./quizManager");
 const messageFormatter = require("./messageFormatter");
 const { getOrCreateState, activeQuizzes } = require("./state");
 const client = require("./client");
+const aiService = require("./Aiservice"); // V3
 
 // ==========================================
-// 🎮 COMMAND HANDLER
+// 🎮 COMMAND HANDLER — v3.0.0
 // ==========================================
 
-// Helper: check if an error is a Puppeteer/browser crash error
+// ── Browser crash detection ───────────────────────────────────────
 function isBrowserError(error) {
   const msg = error?.message || "";
   return (
@@ -26,7 +27,7 @@ function isBrowserError(error) {
   );
 }
 
-// Helper: safe message send — won't throw on browser errors
+// ── Safe send — never throws on browser crash ─────────────────────
 async function safeSend(chatId, text) {
   try {
     return await client.sendMessage(chatId, text);
@@ -34,6 +35,12 @@ async function safeSend(chatId, text) {
     if (!isBrowserError(e)) logger.error("safeSend error:", e.message);
     return null;
   }
+}
+
+// ── V3: Detect private (DM) vs group chat ────────────────────────
+function isPrivateChat(chatId) {
+  // Group chats end with @g.us, private chats end with @c.us or @lid
+  return chatId.endsWith("@c.us") || chatId.endsWith("@lid");
 }
 
 const commandHandler = {
@@ -45,14 +52,15 @@ const commandHandler = {
       const chatId = msg.from;
       const isOwner = permissions.isOwner(msg);
       const isBotAdmin = await permissions.isBotAdmin(msg);
+      const isDM = isPrivateChat(chatId);
 
-      // ── Global disable: only Owner can act ─────────────────────────
+      // ── Global disable: only Owner can act ───────────────────────
       if (storage.isGloballyDisabled() && !isOwner) return;
 
-      // ── Per-chat disable check ──────────────────────────────────────
+      // ── Per-chat disable check ────────────────────────────────────
       const chatDisabled = storage.isChatDisabled(chatId);
 
-      // ── Quiz answer detection (A/B/C/D in any message) ─────────────
+      // ── Quiz answer detection (A/B/C/D) ──────────────────────────
       if (!chatDisabled) {
         const upperTrimmed = trimmed.toUpperCase();
         if (/^[A-D]$/.test(upperTrimmed)) {
@@ -68,7 +76,12 @@ const commandHandler = {
         .replace(new RegExp(`^\\${prefix}\\s*`), "")
         .trim();
       const [cmd, ...argParts] = withoutPrefix.toLowerCase().split(/\s+/);
+      // Preserve original casing for AI chat text
+      const rawArgs = trimmed
+        .replace(new RegExp(`^\\${prefix}\\s*\\S+\\s*`), "")
+        .trim();
 
+      // ── Commands that always work (even when chat is disabled) ────
       const configOnlyCmds = new Set([
         "setinterval",
         "setdelay",
@@ -92,6 +105,9 @@ const commandHandler = {
         "allstaff",
         "clearstaff",
         "whoami",
+        // V3 additions that should always be available:
+        "ai",
+        "daily",
       ]);
 
       if (chatDisabled && !isBotAdmin && !configOnlyCmds.has(cmd)) return;
@@ -104,6 +120,7 @@ const commandHandler = {
           "question",
           "subjects",
           "years",
+          "genq", // V3
         ]);
         if (blockedWhenDisabled.has(cmd)) {
           await msg.reply(
@@ -175,11 +192,19 @@ const commandHandler = {
         case "whoami":
           await msg.reply(permissions.getUserId(msg));
           break;
+
+        // ── V3: New commands ────────────────────────────────────────
+        case "ai":
+          return await this.handleAiChat(msg, rawArgs);
+        case "genq":
+          return await this.handleGenerateQuestions(msg, argParts);
+        case "daily":
+          return await this.handleDailyToggle(msg);
+
         default:
           break;
       }
     } catch (error) {
-      // Suppress noisy browser-crash errors from the top-level handler
       if (isBrowserError(error)) {
         logger.warn(
           `Browser error in handle() for ${msg?.from}: ${error.message}`,
@@ -195,7 +220,433 @@ const commandHandler = {
     }
   },
 
-  // ── PING ─────────────────────────────────────────────────────────
+  // ─────────────────────────────────────────────────────────────────
+  // V3: AI CHAT — .ai [question or topic]
+  // Works in both groups and DMs
+  // ─────────────────────────────────────────────────────────────────
+  async handleAiChat(msg, text) {
+    const { emojis } = CONFIG.messages;
+
+    if (!CONFIG.ai.features.aiChat) {
+      await msg.reply(`${emojis.ai} AI chat is currently disabled.`);
+      return;
+    }
+    if (!CONFIG.ai.apiKey) {
+      await msg.reply(
+        `${emojis.ai} AI is not configured yet. Ask the owner to set XAI_API_KEY.`,
+      );
+      return;
+    }
+    if (!text || text.length < 2) {
+      await msg.reply(
+        `${emojis.ai} *AI Assistant*\n\nUsage: ${CONFIG.bot.prefix}ai [your question]\n\n` +
+          `Example: _${CONFIG.bot.prefix}ai explain osmosis_`,
+      );
+      return;
+    }
+    if (text.length > 500) {
+      await msg.reply(
+        `${emojis.warning} Message too long. Keep it under 500 characters.`,
+      );
+      return;
+    }
+
+    // Show typing indicator by sending a placeholder first
+    const thinking = await msg.reply(`${emojis.ai} _Thinking..._`);
+
+    try {
+      const response = await aiService.freeChat(text);
+      if (!response) {
+        await thinking.edit(
+          `${emojis.error} AI is unavailable right now. Try again later.`,
+        );
+        return;
+      }
+      await thinking.edit(`${emojis.ai} *AI Answer*\n\n${response}`);
+    } catch (e) {
+      logger.error("handleAiChat error:", e.message);
+      try {
+        await thinking.edit(`${emojis.error} AI request failed.`);
+      } catch {}
+    }
+  },
+
+  // ─────────────────────────────────────────────────────────────────
+  // V3: GENERATE QUESTIONS — .genq [subject] [topic] [count?]
+  // Admin only — generates questions via AI and saves to a temp file
+  // ─────────────────────────────────────────────────────────────────
+  async handleGenerateQuestions(msg, args) {
+    const { emojis } = CONFIG.messages;
+
+    if (!(await permissions.isBotAdmin(msg))) {
+      await msg.reply(
+        "⛔ Only Bot Admins or the Owner can generate questions.",
+      );
+      return;
+    }
+    if (!CONFIG.ai.features.generateQuestions) {
+      await msg.reply(`${emojis.ai} Question generation is disabled.`);
+      return;
+    }
+    if (!CONFIG.ai.apiKey) {
+      await msg.reply(`${emojis.ai} AI is not configured. Set XAI_API_KEY.`);
+      return;
+    }
+    if (args.length < 2) {
+      await msg.reply(
+        `${emojis.error} Usage: ${CONFIG.bot.prefix}genq [subject] [topic] [count]\n\n` +
+          `Example: _${CONFIG.bot.prefix}genq biology cell division 5_\n` +
+          `Count is optional (default: 5, max: 10)`,
+      );
+      return;
+    }
+
+    const subject = args[0];
+    const countArg = parseInt(args[args.length - 1]);
+    const hasCount = !isNaN(countArg) && countArg > 0;
+    const count = Math.min(hasCount ? countArg : 5, 10);
+    const topic = hasCount
+      ? args.slice(1, -1).join(" ")
+      : args.slice(1).join(" ");
+
+    if (!topic) {
+      await msg.reply(`${emojis.error} Please provide a topic.`);
+      return;
+    }
+
+    const status = await msg.reply(
+      `${emojis.ai} Generating ${count} questions on *${topic}* (${subject})...\n_This may take 10-15 seconds._`,
+    );
+
+    try {
+      const questions = await aiService.generateQuestions(
+        subject,
+        topic,
+        count,
+      );
+
+      if (!questions || questions.length === 0) {
+        await status.edit(
+          `${emojis.error} Failed to generate questions. Try a more specific topic.`,
+        );
+        return;
+      }
+
+      // Format preview for the admin
+      const preview = questions
+        .slice(0, 3)
+        .map((q, i) => {
+          const opts = q.options
+            .map((o, j) => `${utils.indexToLetter(j)}. ${o}`)
+            .join("\n");
+          const answer = utils.indexToLetter(q.answer_index);
+          return `*Q${i + 1}.* ${q.question}\n${opts}\n✅ Answer: ${answer}`;
+        })
+        .join("\n\n");
+
+      const moreText =
+        questions.length > 3
+          ? `\n\n_...and ${questions.length - 3} more question(s)_`
+          : "";
+
+      await status.edit(
+        `${emojis.ai} *Generated ${questions.length} questions for ${subject.toUpperCase()} — "${topic}"*\n\n` +
+          `${preview}${moreText}\n\n` +
+          `💾 To use these in a quiz, reply with *yes* within 30s to save, or ignore to discard.`,
+      );
+
+      // Wait for admin to confirm save
+      const filter = (response) =>
+        response.from === msg.from &&
+        (response.author === permissions.getUserId(msg) ||
+          response.from === permissions.getUserId(msg)) &&
+        response.body?.trim().toLowerCase() === "yes";
+
+      const collected = await this._waitForReply(
+        msg.from,
+        permissions.getUserId(msg),
+        30000,
+      );
+
+      if (!collected) {
+        await safeSend(
+          msg.from,
+          `${emojis.info} Questions discarded (no confirmation).`,
+        );
+        return;
+      }
+
+      // Save to a generated questions file
+      const fs = require("fs").promises;
+      const path = require("path");
+      const timestamp = Date.now();
+      const filename = `ai_${subject}_${timestamp}.json`;
+      const filePath = path.join(CONFIG.data.dataDirectory, subject, filename);
+
+      const fileData = {
+        paper_type: "AI_GENERATED",
+        topic,
+        generated_at: new Date().toISOString(),
+        questions,
+      };
+
+      await fs.mkdir(path.join(CONFIG.data.dataDirectory, subject), {
+        recursive: true,
+      });
+      await fs.writeFile(filePath, JSON.stringify(fileData, null, 2), "utf-8");
+
+      await safeSend(
+        msg.from,
+        `${emojis.success} Saved ${questions.length} questions!\n` +
+          `📁 File: \`${filename}\`\n` +
+          `▶️ Use: _${CONFIG.bot.prefix}start ${subject} ai_${subject}_${timestamp}_`,
+      );
+    } catch (e) {
+      logger.error("handleGenerateQuestions error:", e.message);
+      try {
+        await status.edit(
+          `${emojis.error} Question generation failed: ${e.message}`,
+        );
+      } catch {}
+    }
+  },
+
+  // ─────────────────────────────────────────────────────────────────
+  // V3: DAILY QUESTION TOGGLE — .daily
+  // Mods can subscribe/unsubscribe their chat to daily practice questions
+  // ─────────────────────────────────────────────────────────────────
+  async handleDailyToggle(msg) {
+    const { emojis } = CONFIG.messages;
+
+    if (!(await permissions.isModerator(msg))) {
+      await msg.reply(
+        "⛔ Only Moderators or above can toggle daily questions.",
+      );
+      return;
+    }
+
+    const chatId = msg.from;
+    const dailyChats = await this._loadDailyChats();
+
+    if (dailyChats.includes(chatId)) {
+      const updated = dailyChats.filter((id) => id !== chatId);
+      await this._saveDailyChats(updated);
+      await msg.reply(
+        `${emojis.daily} *Daily questions disabled* for this chat.\n` +
+          `Use ${CONFIG.bot.prefix}daily again to re-enable.`,
+      );
+    } else {
+      dailyChats.push(chatId);
+      await this._saveDailyChats(dailyChats);
+      await msg.reply(
+        `${emojis.daily} *Daily questions enabled!* 🎉\n` +
+          `You'll receive a practice question every day at ${CONFIG.daily.hour}:00 WAT.\n\n` +
+          `_${CONFIG.bot.prefix}daily again to disable._`,
+      );
+    }
+  },
+
+  // ─────────────────────────────────────────────────────────────────
+  // V3: SEND DAILY QUESTION — called by the scheduler in index.js
+  // ─────────────────────────────────────────────────────────────────
+  async sendDailyQuestion(chatId) {
+    try {
+      const subjects = await dataManager.getAvailableSubjects();
+      if (subjects.length === 0) return;
+
+      // Pick a random subject + year
+      const subject = subjects[Math.floor(Math.random() * subjects.length)];
+      const years = await dataManager.getAvailableYears(subject);
+      if (years.length === 0) return;
+      const year = years[Math.floor(Math.random() * years.length)];
+
+      const result = await dataManager.getRandomQuestion(subject, year);
+      if (!result) return;
+
+      const { question } = result;
+      const text =
+        `${CONFIG.messages.emojis.daily} *Daily Practice Question*\n` +
+        `📖 ${subject.toUpperCase()} ${year}\n\n` +
+        messageFormatter.formatQuestion({ ...question, year }, 0) +
+        `\n\n_Reply A, B, C, or D — answer revealed in 5 minutes!_`;
+
+      const sent = await safeSend(chatId, text);
+      if (!sent) return;
+
+      // V3: Optional AI hint
+      if (CONFIG.ai.features.dailyQuestion && CONFIG.ai.apiKey) {
+        const hint = await aiService.generateDailyHint(
+          question.question,
+          subject,
+        );
+        if (hint) {
+          await utils.sleep(3000);
+          await safeSend(chatId, `💡 *Hint:* ${hint}`);
+        }
+      }
+
+      // Reveal answer after 5 minutes
+      await utils.sleep(5 * 60 * 1000);
+
+      const answer = utils.indexToLetter(question.answer_index);
+      let revealText =
+        `${CONFIG.messages.emojis.success} *Daily Answer: ${answer}*\n\n` +
+        `${question.explanation || "No explanation available."}`;
+
+      // V3: Enhanced explanation from AI
+      if (CONFIG.ai.features.answerExplanation && CONFIG.ai.apiKey) {
+        const correctOption = question.options[question.answer_index];
+        const aiExplain = await aiService.explainAnswer(
+          question.question,
+          `${answer}. ${correctOption}`,
+          subject,
+          year,
+        );
+        if (aiExplain) {
+          revealText += `\n\n${CONFIG.messages.emojis.ai} *AI Insight:* ${aiExplain}`;
+        }
+      }
+
+      await safeSend(chatId, revealText);
+      logger.info(`Daily question sent to ${chatId} (${subject} ${year})`);
+    } catch (e) {
+      logger.error(`sendDailyQuestion error for ${chatId}:`, e.message);
+    }
+  },
+
+  // ─────────────────────────────────────────────────────────────────
+  // V3: AI-ENHANCED processQuestionEnd
+  // Adds optional AI explanation after the standard explanation
+  // ─────────────────────────────────────────────────────────────────
+  async processQuestionEnd(chatId) {
+    const { emojis } = CONFIG.messages;
+    const state = getOrCreateState(chatId);
+    if (!state.isActive) return;
+
+    const correctAnswer = quizManager.getCurrentAnswerLetter(state);
+    const correctList = Object.entries(state.currentRespondents)
+      .filter(([, d]) => d.isCorrect)
+      .map(([, d]) => d.name);
+
+    let resultsMsg = `${emojis.timer} *Time's Up!*\n\n${emojis.success} *Answer: ${correctAnswer}*\n\n`;
+    resultsMsg += quizManager.getCurrentQuestionExplanation(state) + "\n\n";
+    resultsMsg += `${emojis.success} *Correct (${correctList.length}):*\n`;
+    resultsMsg += correctList.length > 0 ? correctList.join(", ") : "No one";
+
+    const sent = await safeSend(chatId, resultsMsg);
+    if (!sent) {
+      logger.warn(
+        `processQuestionEnd: failed to send results in ${chatId}, stopping quiz.`,
+      );
+      quizManager.stop(chatId);
+      return;
+    }
+
+    // V3: AI-enhanced explanation (non-blocking, best-effort)
+    if (CONFIG.ai.features.answerExplanation && CONFIG.ai.apiKey) {
+      const currentQ = quizManager.getCurrentQuestion(state);
+      if (currentQ) {
+        // Fire and forget — don't let AI failure stop the quiz
+        aiService
+          .explainAnswer(
+            currentQ.question,
+            `${correctAnswer}. ${currentQ.options[currentQ.answer_index]}`,
+            state.subject,
+            state.year,
+          )
+          .then((explanation) => {
+            if (explanation) {
+              safeSend(chatId, `${emojis.ai} *AI Insight:* ${explanation}`);
+            }
+          })
+          .catch((e) => logger.warn("AI explanation error:", e.message));
+      }
+    }
+
+    const chatCfg = storage.getQuizConfig(chatId);
+    const nextQ = quizManager.nextQuestion(state);
+    state.currentRespondents = {};
+
+    if (nextQ) {
+      await utils.sleep(chatCfg.delayBeforeNextQuestion);
+      const s = getOrCreateState(chatId);
+      if (!s.isActive) return;
+      const sentMsg = await this.sendQuestionMessage(
+        chatId,
+        messageFormatter.formatQuestion(nextQ, s.currentQuestionIndex),
+        nextQ.image,
+      );
+      if (!sentMsg) {
+        logger.warn(
+          `processQuestionEnd: failed to send question in ${chatId}, stopping quiz.`,
+        );
+        quizManager.stop(chatId);
+        return;
+      }
+      s.lastQuestionMsgId = sentMsg?.id?._serialized || null;
+      s.questionSentAt = Date.now();
+      await this.startQuizInterval(chatId);
+    } else {
+      await utils.sleep(CONFIG.quiz.delayBeforeResults);
+      await this.sendFinalResults(chatId);
+      quizManager.stop(chatId);
+    }
+  },
+
+  // ─────────────────────────────────────────────────────────────────
+  // INTERNAL HELPERS
+  // ─────────────────────────────────────────────────────────────────
+
+  // V3: Wait for a specific user to reply with a given text
+  async _waitForReply(chatId, userId, timeoutMs) {
+    return new Promise((resolve) => {
+      const timer = setTimeout(() => {
+        client.removeListener("message_create", handler);
+        resolve(null);
+      }, timeoutMs);
+
+      const handler = async (m) => {
+        if (
+          m.from === chatId &&
+          (m.author === userId || m.from === userId) &&
+          m.body?.trim().toLowerCase() === "yes"
+        ) {
+          clearTimeout(timer);
+          client.removeListener("message_create", handler);
+          resolve(m);
+        }
+      };
+
+      client.on("message_create", handler);
+    });
+  },
+
+  // V3: Load daily chats list from disk
+  async _loadDailyChats() {
+    const fs = require("fs").promises;
+    try {
+      const raw = await fs.readFile("./data/daily_chats.json", "utf-8");
+      return JSON.parse(raw);
+    } catch {
+      return [];
+    }
+  },
+
+  // V3: Save daily chats list to disk
+  async _saveDailyChats(chats) {
+    const fs = require("fs").promises;
+    await fs.mkdir("./data", { recursive: true });
+    await fs.writeFile(
+      "./data/daily_chats.json",
+      JSON.stringify(chats, null, 2),
+      "utf-8",
+    );
+  },
+
+  // ─────────────────────────────────────────────────────────────────
+  // ALL ORIGINAL METHODS BELOW — unchanged from v2
+  // ─────────────────────────────────────────────────────────────────
+
   async handlePing(msg) {
     const t = Date.now();
     const reply = await msg.reply(`${CONFIG.messages.emojis.info} Pong!`);
@@ -204,12 +655,10 @@ const commandHandler = {
     );
   },
 
-  // ── HELP ─────────────────────────────────────────────────────────
   async handleHelp(msg) {
     await msg.reply(await messageFormatter.formatHelp(msg.from, msg));
   },
 
-  // ── MY ROLE ──────────────────────────────────────────────────────
   async handleMyRole(msg) {
     const role = await permissions.getRoleName(msg);
     await msg.reply(
@@ -217,7 +666,6 @@ const commandHandler = {
     );
   },
 
-  // ── SUBJECTS ─────────────────────────────────────────────────────
   async handleSubjects(msg) {
     const subjects = await dataManager.getAvailableSubjects();
     await msg.reply(
@@ -226,7 +674,6 @@ const commandHandler = {
     );
   },
 
-  // ── YEARS ────────────────────────────────────────────────────────
   async handleYears(msg, args) {
     if (args.length < 1) {
       await msg.reply(
@@ -243,7 +690,6 @@ const commandHandler = {
     );
   },
 
-  // ── PRACTICE QUESTION ────────────────────────────────────────────
   async handleQuestion(msg, args) {
     if (args.length < 2) {
       await msg.reply(
@@ -269,7 +715,6 @@ const commandHandler = {
     await this.sendQuestionMessage(msg.from, text, result.question.image, msg);
   },
 
-  // ── START QUIZ ───────────────────────────────────────────────────
   async handleStartQuiz(msg, args) {
     const { emojis } = CONFIG.messages;
     if (!(await permissions.isModerator(msg))) {
@@ -322,8 +767,6 @@ const commandHandler = {
     if (welcome) await safeSend(chatId, welcome);
 
     await utils.sleep(chatCfg.delayBeforeFirstQuestion);
-
-    // Re-check that quiz is still active (might have been stopped during delay)
     const s = getOrCreateState(chatId);
     if (!s.isActive) return;
 
@@ -343,7 +786,6 @@ const commandHandler = {
     await this.startQuizInterval(chatId);
   },
 
-  // ── QUIZ INTERVAL ────────────────────────────────────────────────
   async startQuizInterval(chatId) {
     const state = getOrCreateState(chatId);
     if (state.interval) {
@@ -368,7 +810,6 @@ const commandHandler = {
         }
       } catch (error) {
         if (isBrowserError(error)) {
-          // Browser crashed — stop the quiz cleanly without spamming errors
           logger.warn(
             `Browser disconnected during quiz in ${chatId} — stopping quiz.`,
           );
@@ -383,62 +824,6 @@ const commandHandler = {
         }
       }
     }, 1000);
-  },
-
-  async processQuestionEnd(chatId) {
-    const { emojis } = CONFIG.messages;
-    const state = getOrCreateState(chatId);
-    if (!state.isActive) return;
-
-    const correctAnswer = quizManager.getCurrentAnswerLetter(state);
-    const correctList = Object.entries(state.currentRespondents)
-      .filter(([, d]) => d.isCorrect)
-      .map(([, d]) => d.name);
-
-    let resultsMsg = `${emojis.timer} *Time's Up!*\n\n${emojis.success} *Answer: ${correctAnswer}*\n\n`;
-    resultsMsg += quizManager.getCurrentQuestionExplanation(state) + "\n\n";
-    resultsMsg += `${emojis.success} *Correct (${correctList.length}):*\n`;
-    resultsMsg += correctList.length > 0 ? correctList.join(", ") : "No one";
-
-    const sent = await safeSend(chatId, resultsMsg);
-    // If send failed due to browser error, abort — don't continue the quiz
-    if (!sent) {
-      logger.warn(
-        `processQuestionEnd: failed to send results in ${chatId}, stopping quiz.`,
-      );
-      quizManager.stop(chatId);
-      return;
-    }
-
-    const chatCfg = storage.getQuizConfig(chatId);
-    const nextQ = quizManager.nextQuestion(state);
-    state.currentRespondents = {};
-
-    if (nextQ) {
-      await utils.sleep(chatCfg.delayBeforeNextQuestion);
-      const s = getOrCreateState(chatId);
-      if (!s.isActive) return;
-      const sentMsg = await this.sendQuestionMessage(
-        chatId,
-        messageFormatter.formatQuestion(nextQ, s.currentQuestionIndex),
-        nextQ.image,
-      );
-      // If question failed to send, stop the quiz
-      if (!sentMsg) {
-        logger.warn(
-          `processQuestionEnd: failed to send question in ${chatId}, stopping quiz.`,
-        );
-        quizManager.stop(chatId);
-        return;
-      }
-      s.lastQuestionMsgId = sentMsg?.id?._serialized || null;
-      s.questionSentAt = Date.now();
-      await this.startQuizInterval(chatId);
-    } else {
-      await utils.sleep(CONFIG.quiz.delayBeforeResults);
-      await this.sendFinalResults(chatId);
-      quizManager.stop(chatId);
-    }
   },
 
   async sendFinalResults(chatId) {
@@ -499,7 +884,6 @@ const commandHandler = {
           return await client.sendMessage(chatId, media, { caption: text });
         } catch (e) {
           if (isBrowserError(e)) return null;
-          // Fall through to text-only
         }
       }
       if (replyToMsg) {
@@ -520,7 +904,6 @@ const commandHandler = {
     }
   },
 
-  // ── ANSWER ───────────────────────────────────────────────────────
   async handleAnswer(msg, answerLetter) {
     const chatId = msg.from;
     const state = getOrCreateState(chatId);
@@ -532,16 +915,11 @@ const commandHandler = {
         contact.pushname || contact.name || contact.number || userId;
       quizManager.updateScore(state, userId, userName, answerLetter);
     } catch (error) {
-      if (isBrowserError(error)) {
-        // Silently ignore — answer recording failed due to browser crash,
-        // the quiz interval will clean up shortly
-        return;
-      }
+      if (isBrowserError(error)) return;
       logger.error("handleAnswer error:", error.message);
     }
   },
 
-  // ── STOP QUIZ ────────────────────────────────────────────────────
   async handleStopQuiz(msg) {
     const { emojis } = CONFIG.messages;
     if (!(await permissions.isModerator(msg))) {
@@ -569,7 +947,6 @@ const commandHandler = {
     quizManager.stop(chatId);
   },
 
-  // ── SCORE ────────────────────────────────────────────────────────
   async handleScore(msg) {
     const { emojis } = CONFIG.messages;
     const chatId = msg.from;
@@ -590,7 +967,6 @@ const commandHandler = {
     );
   },
 
-  // ── STATS ────────────────────────────────────────────────────────
   async handleStats(msg) {
     const { emojis } = CONFIG.messages;
     const chatId = msg.from;
@@ -610,7 +986,6 @@ const commandHandler = {
     );
   },
 
-  // ── SET INTERVAL ─────────────────────────────────────────────────
   async handleSetInterval(msg, args) {
     const { emojis } = CONFIG.messages;
     if (!(await permissions.isModerator(msg))) {
@@ -635,7 +1010,6 @@ const commandHandler = {
     );
   },
 
-  // ── SET DELAY ────────────────────────────────────────────────────
   async handleSetDelay(msg, args) {
     const { emojis } = CONFIG.messages;
     if (!(await permissions.isModerator(msg))) {
@@ -660,7 +1034,6 @@ const commandHandler = {
     );
   },
 
-  // ── SET MAX ───────────────────────────────────────────────────────
   async handleSetMax(msg, args) {
     const { emojis } = CONFIG.messages;
     if (!(await permissions.isModerator(msg))) {
@@ -685,7 +1058,6 @@ const commandHandler = {
     );
   },
 
-  // ── CHAT CONFIG ───────────────────────────────────────────────────
   async handleChatConfig(msg) {
     const { emojis } = CONFIG.messages;
     const chatId = msg.from;
@@ -698,12 +1070,12 @@ const commandHandler = {
         `🔌 Chat status: ${disabled ? "Disabled 🔴" : "Active 🟢"}\n` +
         `${emojis.timer} Question time: ${utils.formatSeconds(cfg.questionInterval)}\n` +
         `⏳ Next Q delay: ${utils.formatSeconds(cfg.delayBeforeNextQuestion)}\n` +
-        `📋 Max questions: ${cfg.maxQuestionsPerQuiz}\n\n` +
+        `📋 Max questions: ${cfg.maxQuestionsPerQuiz}\n` +
+        `${emojis.ai} AI features: ${CONFIG.ai.apiKey ? "🟢 On" : "🔴 Off (no API key)"}\n\n` +
         `_Commands: ${CONFIG.bot.prefix}setinterval | ${CONFIG.bot.prefix}setdelay | ${CONFIG.bot.prefix}setmax_`,
     );
   },
 
-  // ── ENABLE ────────────────────────────────────────────────────────
   async handleEnable(msg) {
     const { emojis } = CONFIG.messages;
     if (!(await permissions.isBotAdmin(msg))) {
@@ -722,7 +1094,6 @@ const commandHandler = {
     await msg.reply(`${emojis.success} Bot is now *enabled* in this chat.`);
   },
 
-  // ── DISABLE ───────────────────────────────────────────────────────
   async handleDisable(msg) {
     const { emojis } = CONFIG.messages;
     if (!(await permissions.isBotAdmin(msg))) {
@@ -756,7 +1127,6 @@ const commandHandler = {
     );
   },
 
-  // ── GLOBAL ENABLE ─────────────────────────────────────────────────
   async handleGlobalEnable(msg) {
     const { emojis } = CONFIG.messages;
     if (!permissions.isOwner(msg)) {
@@ -774,7 +1144,6 @@ const commandHandler = {
     );
   },
 
-  // ── GLOBAL DISABLE ────────────────────────────────────────────────
   async handleGlobalDisable(msg) {
     const { emojis } = CONFIG.messages;
     if (!permissions.isOwner(msg)) {
@@ -808,7 +1177,6 @@ const commandHandler = {
     );
   },
 
-  // ── ADMIN MANAGEMENT ──────────────────────────────────────────────
   async handleAdmin(msg, args) {
     const { emojis } = CONFIG.messages;
     if (!(await permissions.isBotAdmin(msg))) {
@@ -882,7 +1250,6 @@ const commandHandler = {
     }
   },
 
-  // ── MOD MANAGEMENT ────────────────────────────────────────────────
   async handleMod(msg, args) {
     const { emojis } = CONFIG.messages;
     if (!(await permissions.isBotAdmin(msg))) {
@@ -960,7 +1327,6 @@ const commandHandler = {
     }
   },
 
-  // ── ANNOUNCE ──────────────────────────────────────────────────────
   async handleAnnounce(msg, args) {
     const { emojis } = CONFIG.messages;
     if (!(await permissions.isBotAdmin(msg))) {
@@ -979,7 +1345,6 @@ const commandHandler = {
     await safeSend(msg.from, `📢 *Announcement*\n\n${text}`);
   },
 
-  // ── SET WELCOME ───────────────────────────────────────────────────
   async handleSetWelcome(msg, args) {
     const { emojis } = CONFIG.messages;
     if (!(await permissions.isBotAdmin(msg))) {
@@ -1001,7 +1366,6 @@ const commandHandler = {
     );
   },
 
-  // ── CLEAR WELCOME ─────────────────────────────────────────────────
   async handleClearWelcome(msg) {
     const { emojis } = CONFIG.messages;
     if (!(await permissions.isBotAdmin(msg))) {
@@ -1014,7 +1378,6 @@ const commandHandler = {
     await msg.reply(`${emojis.success} Welcome message cleared.`);
   },
 
-  // ── RESET CONFIG ──────────────────────────────────────────────────
   async handleResetConfig(msg) {
     const { emojis } = CONFIG.messages;
     if (!(await permissions.isBotAdmin(msg))) {
@@ -1027,7 +1390,6 @@ const commandHandler = {
     );
   },
 
-  // ── QUIZ HISTORY ──────────────────────────────────────────────────
   async handleQuizHistory(msg) {
     const { emojis } = CONFIG.messages;
     if (!(await permissions.isBotAdmin(msg))) {
@@ -1056,7 +1418,6 @@ const commandHandler = {
     );
   },
 
-  // ── BROADCAST ─────────────────────────────────────────────────────
   async handleBroadcast(msg, args) {
     const { emojis } = CONFIG.messages;
     if (!permissions.isOwner(msg)) {
@@ -1070,13 +1431,11 @@ const commandHandler = {
       );
       return;
     }
-
     const activeChats = [...activeQuizzes.keys()];
     if (activeChats.length === 0) {
       await msg.reply(`${emojis.warning} No active chats to broadcast to.`);
       return;
     }
-
     let sent = 0;
     for (const chatId of activeChats) {
       const result = await safeSend(chatId, `📢 *Owner Broadcast*\n\n${text}`);
@@ -1087,19 +1446,16 @@ const commandHandler = {
     );
   },
 
-  // ── CHATS ─────────────────────────────────────────────────────────
   async handleChats(msg) {
     const { emojis } = CONFIG.messages;
     if (!permissions.isOwner(msg)) {
       await msg.reply("⛔ Only the Owner can view all chats.");
       return;
     }
-
     const activeList = [...activeQuizzes.entries()].filter(
       ([, s]) => s.isActive,
     );
     const disabledChats = storage.permissions.disabledChats;
-
     let text = `${emojis.chart} *Bot Chat Overview*\n\n`;
     text += `🟢 Active quizzes: ${activeList.length}\n`;
     text += `🔴 Disabled chats: ${disabledChats.length}\n`;
@@ -1111,25 +1467,21 @@ const commandHandler = {
         text += `${i + 1}. ${chatId}\n   ${s.subject?.toUpperCase()} ${s.year} — Q${s.currentQuestionIndex + 1}/${s.questions.length}\n`;
       });
     }
-
     if (disabledChats.length > 0) {
       text += `\n*Disabled Chats:*\n`;
       disabledChats.forEach((id, i) => {
         text += `${i + 1}. ${id}\n`;
       });
     }
-
     await msg.reply(text);
   },
 
-  // ── ALL STAFF ─────────────────────────────────────────────────────
   async handleAllStaff(msg) {
     const { emojis } = CONFIG.messages;
     if (!permissions.isOwner(msg)) {
       await msg.reply("⛔ Only the Owner can view all staff.");
       return;
     }
-
     const { botAdmins, moderators } = storage.permissions;
     const allChatIds = new Set([
       ...Object.keys(botAdmins),
@@ -1140,29 +1492,21 @@ const commandHandler = {
       await msg.reply(`${emojis.info} No staff assigned in any chat yet.`);
       return;
     }
-
     let text = `${emojis.shield} *All Staff Across Chats*\n\n`;
     for (const chatId of allChatIds) {
       const admins = botAdmins[chatId] || [];
       const mods = moderators[chatId] || [];
       if (admins.length === 0 && mods.length === 0) continue;
-
       text += `*Chat:* ${chatId}\n`;
       if (admins.length > 0) {
         const adminNames = await Promise.all(
-          admins.map(async (id) => {
-            const info = await utils.getUserDisplayInfo(id);
-            return info.name;
-          }),
+          admins.map(async (id) => (await utils.getUserDisplayInfo(id)).name),
         );
         text += `  🛡️ Admins: ${adminNames.join(", ")}\n`;
       }
       if (mods.length > 0) {
         const modNames = await Promise.all(
-          mods.map(async (id) => {
-            const info = await utils.getUserDisplayInfo(id);
-            return info.name;
-          }),
+          mods.map(async (id) => (await utils.getUserDisplayInfo(id)).name),
         );
         text += `  ⭐ Mods: ${modNames.join(", ")}\n`;
       }
@@ -1171,7 +1515,6 @@ const commandHandler = {
     await msg.reply(text.trim());
   },
 
-  // ── CLEAR STAFF ───────────────────────────────────────────────────
   async handleClearStaff(msg, args) {
     const { emojis } = CONFIG.messages;
     if (!permissions.isOwner(msg)) {
@@ -1187,7 +1530,6 @@ const commandHandler = {
     );
   },
 
-  // ── INTERNAL ──────────────────────────────────────────────────────
   _resolveTarget(msg, rest) {
     if (msg.mentionedIds && msg.mentionedIds.length > 0)
       return msg.mentionedIds[0];
