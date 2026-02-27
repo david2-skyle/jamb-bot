@@ -10,6 +10,7 @@ const quizManager = require("./quizManager");
 const commandHandler = require("./commandHandler");
 const { activeQuizzes } = require("./state");
 const client = require("./client");
+const apiServer = require("./api-server");
 
 // Inject client into utils so getContact/getUserDisplayInfo work
 utils.setClient(client);
@@ -96,6 +97,7 @@ client.on("ready", () => {
   logger.success(`${CONFIG.bot.name} v${CONFIG.bot.version} is ready!`);
   // V3: Start daily question scheduler after bot is ready
   startDailyScheduler();
+  apiServer.init({ activeQuizzes, storage, commandHandler, dataManager });
 });
 
 client.on("authenticated", () => {
