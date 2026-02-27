@@ -1,9 +1,8 @@
 /**
  * JAMB Quiz Bot — Dashboard API Server
  *
- * Railway only exposes ONE port publicly. This module can either:
- *   1. Attach to an existing http.Server (pass `server` in deps) — recommended for Railway
- *   2. Create its own server on DASHBOARD_PORT — useful for local dev with two ports
+ * Railway only exposes ONE port publicly. This module attaches to the
+ * existing http.Server from index.js so both QR and API share one port.
  */
 
 const http = require("http");
@@ -91,15 +90,15 @@ function buildSnapshot() {
   };
 }
 
-// ── Router ────────────────────────────────────────────────────────
+// ── Router — returns true if it handled the request, false to pass through ──
 function router(req, res) {
   const url = new URL(req.url, `http://localhost`);
   const path = url.pathname;
 
-  // Only handle /api/* and /ws routes — let other routes fall through
-  if (!path.startsWith("/api/") && path !== "/ws") return false;
+  // Only intercept /api/* — everything else (QR page, /health) passes through
+  if (!path.startsWith("/api/")) return false;
 
-  // CORS — allow all origins
+  // CORS
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
@@ -111,6 +110,7 @@ function router(req, res) {
   }
 
   const json = (data, status = 200) => {
+    if (res.headersSent) return;
     res.writeHead(status, { "Content-Type": "application/json" });
     res.end(JSON.stringify(data));
   };
@@ -242,40 +242,38 @@ function router(req, res) {
     return true;
   }
 
+  // Unknown /api/* route
   json({ error: "Not found" }, 404);
   return true;
 }
 
 // ── Public API ────────────────────────────────────────────────────
 const apiServer = {
-  /**
-   * @param {object} deps
-   * @param deps.activeQuizzes
-   * @param deps.storage
-   * @param deps.commandHandler
-   * @param deps.dataManager
-   * @param deps.server   — pass the existing http.Server to share Railway's single port.
-   *                        If omitted, a new server is created on DASHBOARD_PORT (local dev).
-   */
   init(deps) {
     _deps = { ..._deps, ...deps };
 
     let server;
 
     if (deps.server) {
-      // ── Attach to the existing QR/health server (Railway) ─────────
+      // ── Shared port mode (Railway) ─────────────────────────────
+      // Snapshot the existing listeners (QR page, /health),
+      // remove them, then re-add a single dispatcher that tries
+      // the API router first and only falls through if unhandled.
       server = deps.server;
 
-      // Intercept requests before the existing listeners see them
-      server.prependListener("request", (req, res) => {
-        router(req, res);
-        // router returns false for non-API paths, so the existing
-        // listeners (QR page, /health) handle them normally.
+      const existingListeners = server.listeners("request").slice();
+      server.removeAllListeners("request");
+
+      server.on("request", (req, res) => {
+        if (router(req, res)) return;
+        for (const listener of existingListeners) {
+          listener(req, res);
+        }
       });
 
       console.log("✅ Dashboard API attached to existing server (shared port)");
     } else {
-      // ── Standalone server (local dev, two-port setup) ──────────────
+      // ── Standalone mode (local dev) ────────────────────────────
       const PORT = process.env.DASHBOARD_PORT || 3001;
       server = http.createServer((req, res) => {
         if (!router(req, res)) {
@@ -288,7 +286,7 @@ const apiServer = {
       });
     }
 
-    // ── WebSocket — attach to whichever server we ended up with ───────
+    // ── WebSocket ──────────────────────────────────────────────────
     const wss = new WebSocket.Server({ server, path: "/ws" });
 
     wss.on("connection", (ws) => {
