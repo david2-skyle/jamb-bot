@@ -1,12 +1,5 @@
 /**
  * JAMB Quiz Bot — Dashboard API Server
- * =====================================
- * Drop this file into your bot root directory, then require it in index.js:
- *
- *   const apiServer = require('./api-server');
- *   apiServer.init({ activeQuizzes, storage, commandHandler, dataManager });
- *
- * The React dashboard connects to this on port 3001 (or DASHBOARD_PORT env var).
  */
 
 const http = require("http");
@@ -21,6 +14,8 @@ let _deps = {
 
 // ── In-memory event log (last 200) ───────────────────────────────
 const eventLog = [];
+
+
 function pushEvent(type, data) {
   const event = { type, data, ts: Date.now() };
   eventLog.push(event);
@@ -45,7 +40,6 @@ function buildSnapshot() {
   const chats = [];
   const seen = new Set();
 
-  // Active quizzes
   for (const [chatId, state] of activeQuizzes) {
     seen.add(chatId);
     const scores = Object.entries(state.scoreBoard || {})
@@ -66,7 +60,6 @@ function buildSnapshot() {
     });
   }
 
-  // Disabled chats that have no active quiz
   const perms = storage.permissions || {};
   for (const chatId of perms.disabledChats || []) {
     if (!seen.has(chatId)) {
@@ -80,7 +73,10 @@ function buildSnapshot() {
     }
   }
 
-  const aiStatus = commandHandler?.getAiStatus?.() || { isOpen: false, canTry: true };
+  const aiStatus = commandHandler?.getAiStatus?.() || {
+    isOpen: false,
+    canTry: true,
+  };
 
   return {
     ts: Date.now(),
@@ -97,6 +93,7 @@ function router(req, res) {
   const url = new URL(req.url, `http://localhost`);
   const path = url.pathname;
 
+  // CORS — allow all origins
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
@@ -125,19 +122,14 @@ function router(req, res) {
       });
     });
 
-  // Validate simple bearer token
-  const token = process.env.DASHBOARD_TOKEN;
-  if (token) {
-    const auth = req.headers.authorization || "";
-    if (!auth.startsWith("Bearer ") || auth.slice(7) !== token) {
-      json({ error: "Unauthorized" }, 401);
-      return;
-    }
-  }
-
   // ── GET /api/snapshot ──────────────────────────────────────────
   if (path === "/api/snapshot" && req.method === "GET") {
     return json(buildSnapshot());
+  }
+
+  // ── GET /api/events ───────────────────────────────────────────
+  if (path === "/api/events" && req.method === "GET") {
+    return json({ events: eventLog.slice(-50) });
   }
 
   // ── GET /api/history/:chatId ──────────────────────────────────
@@ -145,11 +137,6 @@ function router(req, res) {
     const chatId = decodeURIComponent(path.slice("/api/history/".length));
     const history = _deps.storage?.getQuizHistory?.(chatId) || [];
     return json({ chatId, history });
-  }
-
-  // ── GET /api/events ───────────────────────────────────────────
-  if (path === "/api/events" && req.method === "GET") {
-    return json({ events: eventLog.slice(-50) });
   }
 
   // ── GET /api/subjects ─────────────────────────────────────────
@@ -202,7 +189,6 @@ function router(req, res) {
       if (!chatId) return json({ error: "chatId required" }, 400);
       const state = _deps.activeQuizzes?.get(chatId);
       if (!state?.isActive) return json({ error: "No active quiz" }, 404);
-      // Import quizManager lazily
       try {
         const quizManager = require("./quizManager");
         quizManager.stop(chatId);
@@ -217,26 +203,33 @@ function router(req, res) {
 
   // ── POST /api/config ──────────────────────────────────────────
   if (path === "/api/config" && req.method === "POST") {
-    readBody().then(({ chatId, questionInterval, delayBeforeNextQuestion, maxQuestionsPerQuiz }) => {
-      if (!chatId) return json({ error: "chatId required" }, 400);
-      const cfg = _deps.storage?.quizConfig;
-      if (!cfg) return json({ error: "storage not ready" }, 500);
-      if (!cfg[chatId]) cfg[chatId] = {};
-      if (questionInterval) cfg[chatId].questionInterval = questionInterval * 1000;
-      if (delayBeforeNextQuestion) cfg[chatId].delayBeforeNextQuestion = delayBeforeNextQuestion * 1000;
-      if (maxQuestionsPerQuiz) cfg[chatId].maxQuestionsPerQuiz = maxQuestionsPerQuiz;
-      _deps.storage.saveQuizConfig?.();
-      pushEvent("config_updated", { chatId });
-      json({ ok: true });
-    });
+    readBody().then(
+      ({
+        chatId,
+        questionInterval,
+        delayBeforeNextQuestion,
+        maxQuestionsPerQuiz,
+      }) => {
+        if (!chatId) return json({ error: "chatId required" }, 400);
+        const cfg = _deps.storage?.quizConfig;
+        if (!cfg) return json({ error: "storage not ready" }, 500);
+        if (!cfg[chatId]) cfg[chatId] = {};
+        if (questionInterval)
+          cfg[chatId].questionInterval = questionInterval * 1000;
+        if (delayBeforeNextQuestion)
+          cfg[chatId].delayBeforeNextQuestion = delayBeforeNextQuestion * 1000;
+        if (maxQuestionsPerQuiz)
+          cfg[chatId].maxQuestionsPerQuiz = maxQuestionsPerQuiz;
+        _deps.storage.saveQuizConfig?.();
+        pushEvent("config_updated", { chatId });
+        json({ ok: true });
+      },
+    );
     return;
   }
 
   json({ error: "Not found" }, 404);
 }
-
-// ── Periodic broadcast of snapshot ───────────────────────────────
-let broadcastInterval = null;
 
 // ── Public API ────────────────────────────────────────────────────
 const apiServer = {
@@ -249,7 +242,6 @@ const apiServer = {
 
     wss.on("connection", (ws) => {
       wsClients.add(ws);
-      // Send current snapshot immediately on connect
       ws.send(JSON.stringify({ type: "snapshot", data: buildSnapshot() }));
       ws.on("close", () => wsClients.delete(ws));
     });
@@ -258,8 +250,8 @@ const apiServer = {
       console.log(`✅ Dashboard API server running on port ${PORT}`);
     });
 
-    // Broadcast snapshot every 3 seconds to all connected dashboards
-    broadcastInterval = setInterval(() => {
+    // Broadcast snapshot every 3 seconds
+    setInterval(() => {
       if (wsClients.size > 0) {
         broadcast({ type: "snapshot", data: buildSnapshot() });
       }
