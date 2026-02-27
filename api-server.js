@@ -1,5 +1,9 @@
 /**
  * JAMB Quiz Bot — Dashboard API Server
+ *
+ * Railway only exposes ONE port publicly. This module can either:
+ *   1. Attach to an existing http.Server (pass `server` in deps) — recommended for Railway
+ *   2. Create its own server on DASHBOARD_PORT — useful for local dev with two ports
  */
 
 const http = require("http");
@@ -14,7 +18,6 @@ let _deps = {
 
 // ── In-memory event log (last 200) ───────────────────────────────
 const eventLog = [];
-
 
 function pushEvent(type, data) {
   const event = { type, data, ts: Date.now() };
@@ -93,6 +96,9 @@ function router(req, res) {
   const url = new URL(req.url, `http://localhost`);
   const path = url.pathname;
 
+  // Only handle /api/* and /ws routes — let other routes fall through
+  if (!path.startsWith("/api/") && path !== "/ws") return false;
+
   // CORS — allow all origins
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
@@ -101,7 +107,7 @@ function router(req, res) {
   if (req.method === "OPTIONS") {
     res.writeHead(204);
     res.end();
-    return;
+    return true;
   }
 
   const json = (data, status = 200) => {
@@ -124,27 +130,33 @@ function router(req, res) {
 
   // ── GET /api/snapshot ──────────────────────────────────────────
   if (path === "/api/snapshot" && req.method === "GET") {
-    return json(buildSnapshot());
+    json(buildSnapshot());
+    return true;
   }
 
   // ── GET /api/events ───────────────────────────────────────────
   if (path === "/api/events" && req.method === "GET") {
-    return json({ events: eventLog.slice(-50) });
+    json({ events: eventLog.slice(-50) });
+    return true;
   }
 
   // ── GET /api/history/:chatId ──────────────────────────────────
   if (path.startsWith("/api/history/") && req.method === "GET") {
     const chatId = decodeURIComponent(path.slice("/api/history/".length));
     const history = _deps.storage?.getQuizHistory?.(chatId) || [];
-    return json({ chatId, history });
+    json({ chatId, history });
+    return true;
   }
 
   // ── GET /api/subjects ─────────────────────────────────────────
   if (path === "/api/subjects" && req.method === "GET") {
     const dm = _deps.dataManager;
-    if (!dm) return json({ subjects: [] });
+    if (!dm) {
+      json({ subjects: [] });
+      return true;
+    }
     dm.getAvailableSubjects().then((subjects) => json({ subjects }));
-    return;
+    return true;
   }
 
   // ── POST /api/chat/disable ────────────────────────────────────
@@ -155,7 +167,7 @@ function router(req, res) {
       pushEvent("chat_disabled", { chatId });
       json({ ok: true });
     });
-    return;
+    return true;
   }
 
   // ── POST /api/chat/enable ─────────────────────────────────────
@@ -166,21 +178,23 @@ function router(req, res) {
       pushEvent("chat_enabled", { chatId });
       json({ ok: true });
     });
-    return;
+    return true;
   }
 
   // ── POST /api/global/disable ──────────────────────────────────
   if (path === "/api/global/disable" && req.method === "POST") {
     _deps.storage.setGlobalDisabled(true);
     pushEvent("global_disabled", {});
-    return json({ ok: true });
+    json({ ok: true });
+    return true;
   }
 
   // ── POST /api/global/enable ───────────────────────────────────
   if (path === "/api/global/enable" && req.method === "POST") {
     _deps.storage.setGlobalDisabled(false);
     pushEvent("global_enabled", {});
-    return json({ ok: true });
+    json({ ok: true });
+    return true;
   }
 
   // ── POST /api/quiz/stop ───────────────────────────────────────
@@ -198,7 +212,7 @@ function router(req, res) {
         json({ error: e.message }, 500);
       }
     });
-    return;
+    return true;
   }
 
   // ── POST /api/config ──────────────────────────────────────────
@@ -225,29 +239,62 @@ function router(req, res) {
         json({ ok: true });
       },
     );
-    return;
+    return true;
   }
 
   json({ error: "Not found" }, 404);
+  return true;
 }
 
 // ── Public API ────────────────────────────────────────────────────
 const apiServer = {
+  /**
+   * @param {object} deps
+   * @param deps.activeQuizzes
+   * @param deps.storage
+   * @param deps.commandHandler
+   * @param deps.dataManager
+   * @param deps.server   — pass the existing http.Server to share Railway's single port.
+   *                        If omitted, a new server is created on DASHBOARD_PORT (local dev).
+   */
   init(deps) {
     _deps = { ..._deps, ...deps };
 
-    const PORT = process.env.DASHBOARD_PORT || 3001;
-    const server = http.createServer(router);
+    let server;
+
+    if (deps.server) {
+      // ── Attach to the existing QR/health server (Railway) ─────────
+      server = deps.server;
+
+      // Intercept requests before the existing listeners see them
+      server.prependListener("request", (req, res) => {
+        router(req, res);
+        // router returns false for non-API paths, so the existing
+        // listeners (QR page, /health) handle them normally.
+      });
+
+      console.log("✅ Dashboard API attached to existing server (shared port)");
+    } else {
+      // ── Standalone server (local dev, two-port setup) ──────────────
+      const PORT = process.env.DASHBOARD_PORT || 3001;
+      server = http.createServer((req, res) => {
+        if (!router(req, res)) {
+          res.writeHead(404);
+          res.end("Not found");
+        }
+      });
+      server.listen(PORT, () => {
+        console.log(`✅ Dashboard API server running on port ${PORT}`);
+      });
+    }
+
+    // ── WebSocket — attach to whichever server we ended up with ───────
     const wss = new WebSocket.Server({ server, path: "/ws" });
 
     wss.on("connection", (ws) => {
       wsClients.add(ws);
       ws.send(JSON.stringify({ type: "snapshot", data: buildSnapshot() }));
       ws.on("close", () => wsClients.delete(ws));
-    });
-
-    server.listen(PORT, () => {
-      console.log(`✅ Dashboard API server running on port ${PORT}`);
     });
 
     // Broadcast snapshot every 3 seconds

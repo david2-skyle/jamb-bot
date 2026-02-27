@@ -177,8 +177,13 @@ async function initializeBot() {
     logger.warn("⚠️  Bot is GLOBALLY DISABLED — only Owner can use it");
 
   // ✅ Start API server immediately — before WhatsApp authenticates
-  apiServer.init({ activeQuizzes, storage, commandHandler, dataManager });
-
+  apiServer.init({
+    activeQuizzes,
+    storage,
+    commandHandler,
+    dataManager,
+    server,
+  });
   logger.info("Starting WhatsApp client...");
   client.initialize();
 }
