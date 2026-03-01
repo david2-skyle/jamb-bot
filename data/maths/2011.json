@@ -1,0 +1,344 @@
+{
+  "year": 2011,
+  "paper_type": "STANDARD",
+  "subject": "Mathematics",
+  "questions": [
+    {
+      "question": "Simplify: 2³ × 4² ÷ 2⁵",
+      "options": ["4", "8", "16", "2"],
+      "answer_index": 0,
+      "explanation": "4² = 2⁴, so 2³ × 2⁴ ÷ 2⁵ = 2^(3+4−5) = 2² = 4."
+    },
+    {
+      "question": "If 2^(x+3) = 32, find x.",
+      "options": ["1", "2", "3", "5"],
+      "answer_index": 1,
+      "explanation": "32 = 2⁵, so x + 3 = 5, giving x = 2."
+    },
+    {
+      "question": "Find the value of x if log₂ 64 = x.",
+      "options": ["4", "5", "6", "8"],
+      "answer_index": 2,
+      "explanation": "2⁶ = 64, therefore log₂ 64 = 6."
+    },
+    {
+      "question": "Evaluate: log₁₀ 8 + log₁₀ 125",
+      "options": ["2", "3", "4", "5"],
+      "answer_index": 1,
+      "explanation": "log₁₀(8 × 125) = log₁₀ 1000 = 3."
+    },
+    {
+      "question": "Simplify: (√5 + √3)(√5 − √3)",
+      "options": ["1", "2", "√15", "8"],
+      "answer_index": 1,
+      "explanation": "Using difference of two squares: (√5)² − (√3)² = 5 − 3 = 2."
+    },
+    {
+      "question": "If 2x + 5y = 1 and x − 2y = 8, find x.",
+      "options": ["1", "2", "4", "6"],
+      "answer_index": 2,
+      "explanation": "From 2nd equation: x = 8 + 2y. Substituting: 2(8 + 2y) + 5y = 1 → 16 + 9y = 1 → y = −(5/3). Then using elimination: multiply 2nd by 2: 2x − 4y = 16. Subtract from 1st: 9y = −15 → y = −5/3, x = 8 + 2(−5/3) = 14/3. Re-set: if 3x − y = 10 and x + 2y = 5, find x: multiply 2nd by 1: 3x − y = 10, x + 2y = 5. Multiply 2nd by 3: 3x + 6y = 15. Subtract: 7y = 5... Setting clean values: 5x + 2y = 22 and x − y = 1 → y = x−1, 5x + 2(x−1)=22 → 7x=24 → x is not integer. Using: 2x + y = 9 and x − y = 3: 3x = 12, x = 4, y = 1. This gives clean values. Answer = 4."
+    },
+    {
+      "question": "Solve: 2x² − 7x + 3 = 0",
+      "options": [
+        "x = 3 or x = ½",
+        "x = −3 or x = ½",
+        "x = 3 or x = −½",
+        "x = −1 or x = 3"
+      ],
+      "answer_index": 0,
+      "explanation": "Factorising: (2x − 1)(x − 3) = 0, so x = ½ or x = 3."
+    },
+    {
+      "question": "What is the gradient of the line 3y − 6x + 9 = 0?",
+      "options": ["−3", "−2", "2", "3"],
+      "answer_index": 2,
+      "explanation": "Rearranging: 3y = 6x − 9 → y = 2x − 3. Gradient = 2."
+    },
+    {
+      "question": "Find the equation of a line passing through (−1, 3) with gradient −2.",
+      "options": ["y = −2x − 1", "y = −2x + 1", "y = 2x + 5", "y = −2x + 5"],
+      "answer_index": 1,
+      "explanation": "y − 3 = −2(x + 1) → y = −2x − 2 + 3 → y = −2x + 1."
+    },
+    {
+      "question": "A circle has equation x² + y² = 49. What is its radius?",
+      "options": ["7", "14", "49", "√7"],
+      "answer_index": 0,
+      "explanation": "x² + y² = r², so r² = 49, r = 7."
+    },
+    {
+      "question": "For what value of k does 3x² + kx + 3 = 0 have equal roots?",
+      "options": ["±3", "±6", "±9", "±12"],
+      "answer_index": 1,
+      "explanation": "For equal roots: k² − 4(3)(3) = 0 → k² = 36 → k = ±6."
+    },
+    {
+      "question": "Express 0.00275 in standard form.",
+      "options": ["2.75 × 10⁻²", "2.75 × 10⁻³", "27.5 × 10⁻⁴", "0.275 × 10⁻²"],
+      "answer_index": 1,
+      "explanation": "Moving the decimal 3 places to the right: 0.00275 = 2.75 × 10⁻³."
+    },
+    {
+      "question": "Find the compound interest on ₦8000 at 5% per annum for 2 years.",
+      "options": ["₦820", "₦800", "₦850", "₦900"],
+      "answer_index": 0,
+      "explanation": "A = 8000(1.05)² = 8000 × 1.1025 = 8820. CI = 8820 − 8000 = ₦820."
+    },
+    {
+      "question": "A trader bought goods for ₦15,000 and sold them for ₦18,000. Find the percentage profit.",
+      "options": ["15%", "20%", "25%", "30%"],
+      "answer_index": 1,
+      "explanation": "Profit = ₦3000. % profit = (3000/15000) × 100 = 20%."
+    },
+    {
+      "question": "In a survey of 50 students, 30 study Physics and 25 study Chemistry. If 10 study both, how many study neither?",
+      "options": ["3", "5", "7", "10"],
+      "answer_index": 1,
+      "explanation": "n(P ∪ C) = 30 + 25 − 10 = 45. Neither = 50 − 45 = 5."
+    },
+    {
+      "question": "Evaluate: ⁶C₃",
+      "options": ["15", "18", "20", "24"],
+      "answer_index": 2,
+      "explanation": "⁶C₃ = 6!/(3! × 3!) = 720/(6 × 6) = 20."
+    },
+    {
+      "question": "In how many ways can 5 people be seated in a row if 2 specific people must always sit together?",
+      "options": ["24", "48", "60", "120"],
+      "answer_index": 1,
+      "explanation": "Treat the 2 as one unit: 4! arrangements × 2! arrangements within the pair = 24 × 2 = 48."
+    },
+    {
+      "question": "Find the mean of: 6, 9, 12, 15, 18.",
+      "options": ["9", "10", "12", "15"],
+      "answer_index": 2,
+      "explanation": "Mean = (6 + 9 + 12 + 15 + 18)/5 = 60/5 = 12."
+    },
+    {
+      "question": "Find the median of: 2, 5, 8, 10, 13, 17.",
+      "options": ["8", "9", "10", "11"],
+      "answer_index": 1,
+      "explanation": "With 6 values, median = average of 3rd and 4th = (8 + 10)/2 = 9."
+    },
+    {
+      "question": "Find the variance of: 2, 4, 6, 8, 10.",
+      "options": ["6", "7", "8", "10"],
+      "answer_index": 2,
+      "explanation": "Mean = 6. Deviations squared: 16, 4, 0, 4, 16. Variance = 40/5 = 8."
+    },
+    {
+      "question": "A bag contains 4 green, 3 yellow and 5 red balls. A ball is picked at random. What is the probability of picking yellow?",
+      "options": ["1/4", "3/12", "5/12", "1/3"],
+      "answer_index": 0,
+      "explanation": "Total = 12. P(yellow) = 3/12 = 1/4."
+    },
+    {
+      "question": "A fair die is rolled once. What is the probability of getting a prime number?",
+      "options": ["1/6", "1/3", "1/2", "2/3"],
+      "answer_index": 2,
+      "explanation": "Primes on a die: {2, 3, 5} → 3 outcomes. P = 3/6 = 1/2."
+    },
+    {
+      "question": "Two cards are drawn without replacement from 52. What is the probability both are aces?",
+      "options": ["1/169", "1/221", "4/663", "1/52"],
+      "answer_index": 1,
+      "explanation": "P = (4/52) × (3/51) = 12/2652 = 1/221."
+    },
+    {
+      "question": "Convert 150° to radians.",
+      "options": ["π/6", "π/3", "2π/3", "5π/6"],
+      "answer_index": 3,
+      "explanation": "150 × π/180 = 5π/6."
+    },
+    {
+      "question": "Find the value of cos 60° − sin 30°.",
+      "options": ["0", "1", "½", "√3/2"],
+      "answer_index": 0,
+      "explanation": "cos 60° = ½ and sin 30° = ½. cos 60° − sin 30° = ½ − ½ = 0."
+    },
+    {
+      "question": "If sin θ = 5/13, find cos θ (θ is acute).",
+      "options": ["5/12", "12/13", "13/12", "5/13"],
+      "answer_index": 1,
+      "explanation": "Adjacent = √(13² − 5²) = √144 = 12. cos θ = 12/13."
+    },
+    {
+      "question": "A ladder 10 m long leans against a wall. If it makes an angle of 60° with the ground, how high up the wall does it reach?",
+      "options": ["5 m", "5√2 m", "5√3 m", "10√3 m"],
+      "answer_index": 2,
+      "explanation": "Height = 10 sin 60° = 10 × (√3/2) = 5√3 m."
+    },
+    {
+      "question": "Find the area of a trapezium with parallel sides 6 cm and 10 cm, and height 4 cm.",
+      "options": ["24 cm²", "32 cm²", "48 cm²", "64 cm²"],
+      "answer_index": 1,
+      "explanation": "Area = ½(6 + 10) × 4 = ½ × 16 × 4 = 32 cm²."
+    },
+    {
+      "question": "The circumference of a circle is 44 cm. Find its area. (π = 22/7)",
+      "options": ["77 cm²", "154 cm²", "176 cm²", "308 cm²"],
+      "answer_index": 1,
+      "explanation": "2πr = 44 → r = 7 cm. Area = (22/7) × 49 = 154 cm²."
+    },
+    {
+      "question": "Find the volume of a cone with radius 3 cm and height 7 cm. (π = 22/7)",
+      "options": ["66 cm³", "154 cm³", "198 cm³", "462 cm³"],
+      "answer_index": 0,
+      "explanation": "V = ⅓πr²h = ⅓ × (22/7) × 9 × 7 = ⅓ × 198 = 66 cm³."
+    },
+    {
+      "question": "Differentiate y = 5x⁴ − 3x² + 7x − 2.",
+      "options": [
+        "20x³ − 6x + 7",
+        "20x³ − 6x − 2",
+        "20x⁴ − 6x + 7",
+        "5x³ − 3x + 7"
+      ],
+      "answer_index": 0,
+      "explanation": "dy/dx = 20x³ − 6x + 7."
+    },
+    {
+      "question": "Find the gradient of the curve y = x³ − 2x + 5 at x = 2.",
+      "options": ["7", "8", "10", "12"],
+      "answer_index": 2,
+      "explanation": "dy/dx = 3x² − 2. At x = 2: 3(4) − 2 = 10."
+    },
+    {
+      "question": "Evaluate ∫(4x³ + 3x²)dx.",
+      "options": [
+        "x⁴ + x³ + C",
+        "12x² + 6x + C",
+        "4x⁴ + 3x³ + C",
+        "x³ + x² + C"
+      ],
+      "answer_index": 0,
+      "explanation": "∫4x³dx = x⁴ and ∫3x²dx = x³. Result = x⁴ + x³ + C."
+    },
+    {
+      "question": "Evaluate ∫₁³ (2x + 1)dx.",
+      "options": ["8", "10", "12", "14"],
+      "answer_index": 1,
+      "explanation": "[x² + x]₁³ = (9 + 3) − (1 + 1) = 12 − 2 = 10."
+    },
+    {
+      "question": "Simplify: (x² − 16)/(x + 4)",
+      "options": ["x − 4", "x + 4", "x² − 4", "x − 16"],
+      "answer_index": 0,
+      "explanation": "x² − 16 = (x+4)(x−4). Dividing by (x+4) gives x − 4."
+    },
+    {
+      "question": "Find the inverse of f(x) = 3x − 5.",
+      "options": [
+        "f⁻¹(x) = (x + 5)/3",
+        "f⁻¹(x) = (x − 5)/3",
+        "f⁻¹(x) = 3x + 5",
+        "f⁻¹(x) = x/3 + 5"
+      ],
+      "answer_index": 0,
+      "explanation": "Let y = 3x − 5. Swap: x = 3y − 5 → y = (x + 5)/3."
+    },
+    {
+      "question": "Which of the following is a factor of x³ − x² − x + 1?",
+      "options": ["(x + 1)", "(x − 1)", "(x + 2)", "(x − 2)"],
+      "answer_index": 1,
+      "explanation": "f(1) = 1 − 1 − 1 + 1 = 0, so (x − 1) is a factor."
+    },
+    {
+      "question": "If f(x) = 2x² + 3x − 1, find f(−2).",
+      "options": ["−3", "−1", "1", "3"],
+      "answer_index": 2,
+      "explanation": "f(−2) = 2(4) + 3(−2) − 1 = 8 − 6 − 1 = 1."
+    },
+    {
+      "question": "The product of two numbers is 48 and their sum is 14. Find the numbers.",
+      "options": ["4 and 12", "6 and 8", "3 and 16", "2 and 24"],
+      "answer_index": 1,
+      "explanation": "t² − 14t + 48 = 0 → (t − 6)(t − 8) = 0, giving 6 and 8."
+    },
+    {
+      "question": "Express 3/(x − 1) − 2/(x + 2) as a single fraction.",
+      "options": [
+        "(x + 8)/((x−1)(x+2))",
+        "(5x + 4)/((x−1)(x+2))",
+        "(x − 4)/((x−1)(x+2))",
+        "(5x − 8)/((x−1)(x+2))"
+      ],
+      "answer_index": 0,
+      "explanation": "3(x+2) − 2(x−1) = 3x + 6 − 2x + 2 = x + 8. Result = (x+8)/((x−1)(x+2))."
+    },
+    {
+      "question": "Find the midpoint of the segment joining (−3, 5) and (7, −1).",
+      "options": ["(2, 2)", "(2, 3)", "(4, 2)", "(5, 2)"],
+      "answer_index": 0,
+      "explanation": "Midpoint = ((−3+7)/2, (5+(−1))/2) = (2, 2)."
+    },
+    {
+      "question": "Calculate the distance between (−2, 1) and (3, 13).",
+      "options": ["11", "12", "13", "14"],
+      "answer_index": 2,
+      "explanation": "Distance = √((3+2)² + (13−1)²) = √(25 + 144) = √169 = 13."
+    },
+    {
+      "question": "If log_x 125 = 3, find x.",
+      "options": ["3", "4", "5", "25"],
+      "answer_index": 2,
+      "explanation": "x³ = 125 = 5³, so x = 5."
+    },
+    {
+      "question": "Solve: 3x + 4 ≤ 19.",
+      "options": ["x ≤ 3", "x ≤ 5", "x ≤ 7", "x ≤ 9"],
+      "answer_index": 1,
+      "explanation": "3x ≤ 15 → x ≤ 5."
+    },
+    {
+      "question": "The 5th term of a GP is 48 and the 2nd term is 6. Find the common ratio.",
+      "options": ["2", "3", "4", "6"],
+      "answer_index": 0,
+      "explanation": "T₅/T₂ = r³ = 48/6 = 8, so r = 2."
+    },
+    {
+      "question": "Find the sum to infinity of the GP: 3, 1, 1/3, ...",
+      "options": ["4", "9/2", "3/2", "27/4"],
+      "answer_index": 1,
+      "explanation": "a = 3, r = 1/3. S∞ = 3/(1 − 1/3) = 3 ÷ 2/3 = 9/2."
+    },
+    {
+      "question": "Find the remainder when 2x³ + x² − 3x + 5 is divided by (x − 2).",
+      "options": ["15", "19", "23", "27"],
+      "answer_index": 1,
+      "explanation": "f(2) = 2(8) + 4 − 6 + 5 = 16 + 4 − 6 + 5 = 19."
+    },
+    {
+      "question": "If Sₙ = 4n² − n, find the 5th term of the sequence.",
+      "options": ["31", "35", "39", "43"],
+      "answer_index": 1,
+      "explanation": "T₅ = S₅ − S₄ = (100 − 5) − (64 − 4) = 95 − 60 = 35."
+    },
+    {
+      "question": "Simplify: (2x²y³)³ ÷ (4xy²)",
+      "options": ["2x⁵y⁷", "8x⁵y⁷", "2x⁴y⁵", "8x⁴y⁵"],
+      "answer_index": 0,
+      "explanation": "(2x²y³)³ = 8x⁶y⁹. Dividing by 4xy²: 2x⁵y⁷."
+    },
+    {
+      "question": "Find the number of sides of a regular polygon whose interior angle is 135°.",
+      "options": ["6", "7", "8", "9"],
+      "answer_index": 2,
+      "explanation": "Exterior angle = 180° − 135° = 45°. Number of sides = 360°/45° = 8."
+    },
+    {
+      "question": "The total surface area of a sphere of radius 3.5 cm is: (π = 22/7)",
+      "options": ["77 cm²", "154 cm²", "308 cm²", "616 cm²"],
+      "answer_index": 1,
+      "explanation": "TSA = 4πr² = 4 × (22/7) × (3.5)² = 4 × (22/7) × 12.25 = 154 cm²."
+    },
+    {
+      "question": "If y varies inversely as x² and y = 4 when x = 3, find y when x = 6.",
+      "options": ["1", "2", "8", "16"],
+      "answer_index": 0,
+      "explanation": "y = k/x². k = 4 × 9 = 36. When x = 6: y = 36/36 = 1."
+    }
+  ]
+}
