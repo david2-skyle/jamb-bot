@@ -1,21 +1,30 @@
+/**
+ * storage.js — JAMB Quiz Bot v3.2.0
+ *
+ * Multi-group optimization: permission saves are debounced.
+ * Under load (many groups answering simultaneously), multiple
+ * savePermissions() calls within DEBOUNCE_MS are coalesced into
+ * one single disk write, preventing I/O thrash.
+ */
+
 const fs = require("fs").promises;
 const CONFIG = require("./config");
 const logger = require("./logger");
 
-// ==========================================
-// 🗄️ PERSISTENT STORAGE
-// ==========================================
-// permissions.json structure:
-// {
-//   botAdmins:       { "chatId": ["userId", ...] },
-//   moderators:      { "chatId": ["userId", ...] },
-//   disabledChats:   ["chatId", ...],
-//   welcomeMessages: { "chatId": "text" },
-//   quizHistory:     { "chatId": [{ subject, year, date, participants, winner, score }] }
-// }
-// global_state.json:
-// { disabled: false }
+// ── Debounce helper ───────────────────────────────────────────────
+// Returns a debounced version of fn that fires at most once per delay ms.
+function debounce(fn, delay) {
+  let timer = null;
+  return function (...args) {
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(() => {
+      timer = null;
+      fn.apply(this, args);
+    }, delay);
+  };
+}
 
+// ── Storage ───────────────────────────────────────────────────────
 const storage = {
   permissions: {
     botAdmins: {},
@@ -40,7 +49,6 @@ const storage = {
       try {
         const raw = await fs.readFile(CONFIG.data.permissionsFile, "utf-8");
         const loaded = JSON.parse(raw);
-        // Migration from old formats
         this.permissions = {
           botAdmins: loaded.botAdmins || {},
           moderators: loaded.moderators || {},
@@ -66,7 +74,7 @@ const storage = {
           welcomeMessages: {},
           quizHistory: {},
         };
-        await this.savePermissions();
+        await this._writePermissions();
       }
 
       // Quiz config
@@ -78,7 +86,7 @@ const storage = {
         );
       } catch {
         this.quizConfig = {};
-        await this.saveQuizConfig();
+        await this._writeQuizConfig();
       }
 
       // Global state
@@ -91,12 +99,17 @@ const storage = {
         this.globalState = { disabled: false };
         await this.saveGlobalState();
       }
+
+      // Bind debounced savers now that the object is fully initialised
+      this.savePermissions = debounce(this._writePermissions.bind(this), 300);
+      this.saveQuizConfig = debounce(this._writeQuizConfig.bind(this), 300);
     } catch (error) {
       logger.error("Error loading storage:", error.message);
     }
   },
 
-  async savePermissions() {
+  // ── Internal (immediate) writers ─────────────────────────────────
+  async _writePermissions() {
     try {
       await fs.writeFile(
         CONFIG.data.permissionsFile,
@@ -108,7 +121,7 @@ const storage = {
     }
   },
 
-  async saveQuizConfig() {
+  async _writeQuizConfig() {
     try {
       await fs.writeFile(
         CONFIG.data.configFile,
@@ -130,6 +143,16 @@ const storage = {
     } catch (e) {
       logger.error("Error saving global state:", e.message);
     }
+  },
+
+  // Debounced versions — assigned in load() after binding
+  // Declared here as stubs so callers that require storage before load()
+  // don't crash; they'll be replaced with real debounced fns after load().
+  savePermissions() {
+    return this._writePermissions();
+  },
+  saveQuizConfig() {
+    return this._writeQuizConfig();
   },
 
   // ── Global disable ────────────────────────────────────────────────
@@ -165,7 +188,7 @@ const storage = {
     return false;
   },
 
-  // ── Bot Admins (per-chat) ─────────────────────────────────────────
+  // ── Bot Admins ────────────────────────────────────────────────────
   getBotAdmins(chatId) {
     return this.permissions.botAdmins[chatId] || [];
   },
@@ -196,7 +219,7 @@ const storage = {
     await this.savePermissions();
   },
 
-  // ── Moderators (per-chat) ─────────────────────────────────────────
+  // ── Moderators ────────────────────────────────────────────────────
   getModerators(chatId) {
     return this.permissions.moderators[chatId] || [];
   },
@@ -227,7 +250,7 @@ const storage = {
     await this.savePermissions();
   },
 
-  // ── Welcome messages (per-chat) ───────────────────────────────────
+  // ── Welcome messages ──────────────────────────────────────────────
   getWelcomeMessage(chatId) {
     return this.permissions.welcomeMessages[chatId] || null;
   },
@@ -240,15 +263,15 @@ const storage = {
     await this.savePermissions();
   },
 
-  // ── Quiz history (per-chat) ───────────────────────────────────────
+  // ── Quiz history ──────────────────────────────────────────────────
   getQuizHistory(chatId) {
     return this.permissions.quizHistory[chatId] || [];
   },
   async addQuizHistory(chatId, entry) {
-    if (!this.permissions.quizHistory[chatId])
+    if (!this.permissions.quizHistory[chatId]) {
       this.permissions.quizHistory[chatId] = [];
-    this.permissions.quizHistory[chatId].unshift(entry); // newest first
-    // keep last 20 per chat
+    }
+    this.permissions.quizHistory[chatId].unshift(entry);
     if (this.permissions.quizHistory[chatId].length > 20) {
       this.permissions.quizHistory[chatId] = this.permissions.quizHistory[
         chatId
@@ -257,7 +280,7 @@ const storage = {
     await this.savePermissions();
   },
 
-  // ── Quiz config (per-chat) ────────────────────────────────────────
+  // ── Quiz config ───────────────────────────────────────────────────
   getQuizConfig(chatId) {
     const o = this.quizConfig[chatId] || {};
     return {

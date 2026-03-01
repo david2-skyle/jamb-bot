@@ -8,7 +8,7 @@ const storage = require("./storage");
 const utils = require("./utils");
 const quizManager = require("./quizManager");
 const commandHandler = require("./commandHandler");
-const dataManager = require("./dataManager"); // ← ADD THIS
+const dataManager = require("./dataManager");
 const { activeQuizzes } = require("./state");
 const client = require("./client");
 const apiServer = require("./api-server");
@@ -18,6 +18,7 @@ utils.setClient(client);
 let currentQR = null;
 let isAuthenticated = false;
 
+// ── QR / health HTTP server ───────────────────────────────────────
 const server = http.createServer(async (req, res) => {
   if (req.url === "/qr" || req.url === "/") {
     if (isAuthenticated) {
@@ -59,6 +60,7 @@ const server = http.createServer(async (req, res) => {
     }
     return;
   }
+
   if (req.url === "/health") {
     res.writeHead(200, { "Content-Type": "application/json" });
     res.end(
@@ -67,10 +69,14 @@ const server = http.createServer(async (req, res) => {
         authenticated: isAuthenticated,
         version: CONFIG.bot.version,
         ai: !!CONFIG.ai.apiKey,
+        activeQuizzes: activeQuizzes.size,
+        contactCache: utils.contactCache.size(),
+        uptime: process.uptime(),
       }),
     );
     return;
   }
+
   res.writeHead(404);
   res.end("Not found");
 });
@@ -78,6 +84,7 @@ const server = http.createServer(async (req, res) => {
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => logger.info(`QR server running on port ${PORT}`));
 
+// ── WhatsApp client events ────────────────────────────────────────
 client.on("qr", (qr) => {
   currentQR = qr;
   isAuthenticated = false;
@@ -89,8 +96,6 @@ client.on("ready", () => {
   isAuthenticated = true;
   currentQR = null;
   logger.success(`${CONFIG.bot.name} v${CONFIG.bot.version} is ready!`);
-  startDailyScheduler();
-  // ← REMOVED apiServer.init() from here
 });
 
 client.on("authenticated", () => {
@@ -113,53 +118,15 @@ client.on("message_create", async (msg) => {
   await commandHandler.handle(msg);
 });
 
-let _lastFiredDate = null;
-
-function startDailyScheduler() {
-  if (!CONFIG.ai.features.dailyQuestion) {
-    logger.info("Daily question scheduler: disabled via config");
-    return;
-  }
-  logger.info(
-    `Daily question scheduler started (fires at ${CONFIG.daily.hour}:00 WAT)`,
-  );
-  setInterval(async () => {
-    try {
-      const now = new Date(Date.now() + 60 * 60 * 1000);
-      const todayStr = now.toISOString().slice(0, 10);
-      const currentHour = now.getUTCHours();
-      if (currentHour === CONFIG.daily.hour && _lastFiredDate !== todayStr) {
-        _lastFiredDate = todayStr;
-        await fireDailyQuestions();
-      }
-    } catch (e) {
-      logger.error("Daily scheduler error:", e.message);
-    }
-  }, 60 * 1000);
-}
-
-async function fireDailyQuestions() {
-  if (!isAuthenticated) {
-    logger.warn("Daily: bot not authenticated, skipping");
-    return;
-  }
-  const dailyChats = await commandHandler._loadDailyChats();
-  if (dailyChats.length === 0) return;
-  logger.info(`Daily: sending questions to ${dailyChats.length} chat(s)`);
-  for (const chatId of dailyChats) {
-    await utils.sleep(2000);
-    await commandHandler.sendDailyQuestion(chatId);
-  }
-}
-
+// ── Startup ───────────────────────────────────────────────────────
 async function initializeBot() {
   logger.info(`Starting ${CONFIG.bot.name} v${CONFIG.bot.version}...`);
   await storage.load();
 
-  logger.info(`Prefix: ${CONFIG.bot.prefix}`);
-  logger.info(`Owners: ${CONFIG.bot.owners.length}`);
+  logger.info(`Prefix:  ${CONFIG.bot.prefix}`);
+  logger.info(`Owners:  ${CONFIG.bot.owners.length}`);
   logger.info(
-    `AI: ${CONFIG.ai.apiKey ? `enabled (${CONFIG.ai.model})` : "disabled (no XAI_API_KEY)"}`,
+    `AI:      ${CONFIG.ai.apiKey ? `enabled (${CONFIG.ai.model})` : "disabled (no XAI_API_KEY)"}`,
   );
 
   const adminCount = Object.values(storage.permissions.botAdmins).flat().length;
@@ -176,7 +143,7 @@ async function initializeBot() {
   if (storage.isGloballyDisabled())
     logger.warn("⚠️  Bot is GLOBALLY DISABLED — only Owner can use it");
 
-  // ✅ Start API server immediately — before WhatsApp authenticates
+  // Start API server before WhatsApp authenticates
   apiServer.init({
     activeQuizzes,
     storage,
@@ -184,10 +151,12 @@ async function initializeBot() {
     dataManager,
     server,
   });
+
   logger.info("Starting WhatsApp client...");
   client.initialize();
 }
 
+// ── Graceful shutdown ─────────────────────────────────────────────
 async function gracefulShutdown(signal) {
   logger.info(`Received ${signal}, shutting down...`);
   for (const [chatId] of activeQuizzes) quizManager.stop(chatId);

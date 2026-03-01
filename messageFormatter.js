@@ -1,11 +1,13 @@
+/**
+ * messageFormatter.js — v3.2.0
+ * Daily question references removed.
+ */
+
 const CONFIG = require("./config");
 const utils = require("./utils");
 const storage = require("./storage");
 const permissions = require("./permissions");
 
-// ==========================================
-// 💬 MESSAGE FORMATTERS — v3.0.0
-// ==========================================
 const messageFormatter = {
   formatQuestion(question, index) {
     const optionsText = question.options
@@ -69,16 +71,13 @@ const messageFormatter = {
       `• *${prefix}score* – Current scoreboard\n` +
       `• *${prefix}stats* – Quiz statistics\n`;
 
-    // V3: AI commands — available to everyone if AI is enabled
     if (aiEnabled && CONFIG.ai.features.aiChat) {
       text +=
         `\n*🤖 AI Commands:*\n` +
         `• *${prefix}ai [question]* – Ask the AI tutor anything\n`;
     }
-
     text += "\n";
 
-    // Moderator+
     if (isMod) {
       text +=
         `*Quiz Commands (⭐ Moderator+):*\n` +
@@ -87,11 +86,9 @@ const messageFormatter = {
         `• *${prefix}setinterval [sec]* – Time per question (5–300s)\n` +
         `• *${prefix}setdelay [sec]* – Delay before next question (1–60s)\n` +
         `• *${prefix}setmax [num]* – Max questions per quiz (1–200)\n` +
-        `• *${prefix}chatconfig* – Show this chat's config\n` +
-        `• *${prefix}daily* – Toggle daily practice questions\n\n`; // V3
+        `• *${prefix}chatconfig* – Show this chat's config\n\n`;
     }
 
-    // Bot Admin+
     if (isBotAdmin) {
       text +=
         `*Bot Admin Commands (🛡️ Bot Admin+):*\n` +
@@ -105,12 +102,11 @@ const messageFormatter = {
         `• *${prefix}quizhistory* – View past quiz results\n`;
 
       if (aiEnabled && CONFIG.ai.features.generateQuestions) {
-        text += `• *${prefix}genq [subject] [topic] [count]* – Generate AI questions\n`; // V3
+        text += `• *${prefix}genq [subject] [topic] [count]* – Generate AI questions\n`;
       }
       text += "\n";
     }
 
-    // Owner only
     if (isOwner) {
       text +=
         `*Owner Commands (👑 Owner only):*\n` +

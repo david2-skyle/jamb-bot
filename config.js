@@ -1,13 +1,12 @@
-
 // ==========================================
-// 🔧 GLOBAL CONFIGURATION — v3.0.0
+// 🔧 GLOBAL CONFIGURATION — v3.2.0
 // ==========================================
 const CONFIG = {
   bot: {
     name: "JAMB Quiz Bot",
-    version: "3.0.0",
+    version: "3.2.0",
     prefix: ".",
-    owners: ["249250474627313@lid", "222917996585169@lid"], // Level 1 - universal across all chats
+    owners: ["249250474627313@lid", "222917996585169@lid"],
   },
 
   quiz: {
@@ -19,7 +18,6 @@ const CONFIG = {
     maxQuestionsPerQuiz: 50,
   },
 
-  // ── NEW in V3: AI configuration ───────────────────────────────────
   ai: {
     // Get free API key at https://console.x.ai/
     apiKey: process.env.XAI_API_KEY,
@@ -28,12 +26,10 @@ const CONFIG = {
     temperature: 0.5,
     timeoutMs: 15000,
 
-    // Feature flags — set to false to disable without removing code
     features: {
       answerExplanation: true, // AI explains answers after each question
       generateQuestions: true, // .genq command for admins
       aiChat: true, // .ai command for free chat
-      dailyQuestion: true, // scheduled daily practice question
     },
   },
 
@@ -57,16 +53,8 @@ const CONFIG = {
 
   client: {
     chromePath:
-      process.env.PUPPETEER_EXECUTABLE_PATH || "/usr/bin/google-chrome-stable", 
+      process.env.PUPPETEER_EXECUTABLE_PATH || "/usr/bin/google-chrome-stable",
     headless: true,
-  },
-
-  // ── NEW in V3: Daily question config ──────────────────────────────
-  daily: {
-    // Hour in 24h format (WAT = UTC+1). 8 = 8am WAT
-    hour: 8,
-    // Chats that receive daily questions (populated at runtime via .daily command)
-    // Stored in data/daily_chats.json
   },
 
   messages: {
@@ -88,8 +76,7 @@ const CONFIG = {
       crown: "👑",
       shield: "🛡️",
       star: "⭐",
-      ai: "🤖", // NEW
-      daily: "📅", // NEW
+      ai: "🤖",
     },
   },
 

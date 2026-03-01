@@ -1,3 +1,12 @@
+/**
+ * utils.js — JAMB Quiz Bot v3.2.0
+ *
+ * Multi-group optimization: getUserDisplayInfo now uses an LRU cache
+ * with a 10-minute TTL. In a busy multi-group scenario, scoreboards
+ * are rendered frequently and each entry previously triggered a WA
+ * contact lookup. The cache eliminates redundant round-trips.
+ */
+
 const path = require("path");
 const https = require("https");
 const http = require("http");
@@ -6,9 +15,48 @@ const fs = require("fs").promises;
 const CONFIG = require("./config");
 const logger = require("./logger");
 
-// ==========================================
-// 🛠️ UTILITY FUNCTIONS
-// ==========================================
+// ── LRU contact cache ─────────────────────────────────────────────
+// Keyed by userId. Evicts least-recently-used entries at MAX_SIZE.
+// TTL of 10 min prevents stale display names from persisting forever.
+const contactCache = (() => {
+  const MAX_SIZE = 500;
+  const TTL_MS = 10 * 60 * 1000;
+  const map = new Map(); // insertion order = LRU order
+
+  return {
+    get(userId) {
+      const entry = map.get(userId);
+      if (!entry) return null;
+      if (Date.now() - entry.ts > TTL_MS) {
+        map.delete(userId);
+        return null;
+      }
+      // Refresh LRU position
+      map.delete(userId);
+      map.set(userId, entry);
+      return entry.value;
+    },
+
+    set(userId, value) {
+      if (map.size >= MAX_SIZE) {
+        // Evict oldest (first key)
+        map.delete(map.keys().next().value);
+      }
+      if (map.has(userId)) map.delete(userId); // reset position
+      map.set(userId, { value, ts: Date.now() });
+    },
+
+    // Exposed for debugging / dashboard
+    size() {
+      return map.size;
+    },
+    clear() {
+      map.clear();
+    },
+  };
+})();
+
+// ──────────────────────────────────────────────────────────────────
 const utils = {
   indexToLetter: (i) => String.fromCharCode(65 + i),
   letterToIndex: (l) => l.toUpperCase().charCodeAt(0) - 65,
@@ -34,18 +82,14 @@ const utils = {
     return `@${userId.replace(/@\S+$/, "")}`;
   },
 
-  // Guess MIME type from URL path or file magic bytes
   guessMimeType(url, buffer) {
-    // Check magic bytes first (most reliable)
     if (buffer && buffer.length >= 4) {
       const hex = buffer.slice(0, 4).toString("hex");
       if (hex.startsWith("ffd8ff")) return "image/jpeg";
       if (hex.startsWith("89504e47")) return "image/png";
       if (hex.startsWith("47494638")) return "image/gif";
-      if (hex.startsWith("52494646")) return "image/webp"; // RIFF....WEBP
+      if (hex.startsWith("52494646")) return "image/webp";
     }
-
-    // Fall back to file extension in URL
     const clean = url.split("?")[0].split("#")[0].toLowerCase();
     const ext = clean.split(".").pop();
     const map = {
@@ -56,10 +100,9 @@ const utils = {
       webp: "image/webp",
       bmp: "image/bmp",
     };
-    return map[ext] || "image/jpeg"; // default to jpeg
+    return map[ext] || "image/jpeg";
   },
 
-  // Fetch a URL and return raw buffer + mime type
   fetchUrl(url, redirectCount = 0) {
     if (redirectCount > 5)
       return Promise.reject(new Error("Too many redirects"));
@@ -82,7 +125,6 @@ const utils = {
           res.on("data", (chunk) => chunks.push(chunk));
           res.on("end", () => {
             const buffer = Buffer.concat(chunks);
-            // Prefer magic bytes over content-type header
             const mimeType = this.guessMimeType(url, buffer);
             resolve({ buffer, mimeType });
           });
@@ -94,9 +136,7 @@ const utils = {
 
   async loadImage(imgPath) {
     if (!imgPath) return null;
-
     try {
-      // ── Remote URL ──────────────────────────────────────────────────
       if (imgPath.startsWith("http://") || imgPath.startsWith("https://")) {
         logger.debug(`Fetching image URL: ${imgPath}`);
         const { buffer, mimeType } = await this.fetchUrl(imgPath);
@@ -105,8 +145,6 @@ const utils = {
         const ext = mimeType.split("/")[1] || "jpg";
         return new MessageMedia(mimeType, base64, `image.${ext}`);
       }
-
-      // ── Local file ──────────────────────────────────────────────────
       const resolved = path.isAbsolute(imgPath)
         ? imgPath
         : path.join(CONFIG.data.dataDirectory, imgPath);
@@ -130,7 +168,6 @@ const utils = {
     return `${normalized}@c.us`;
   },
 
-  // Set by index.js after the client is created
   _client: null,
 
   setClient(client) {
@@ -147,7 +184,13 @@ const utils = {
     }
   },
 
+  // ── Cached display info lookup ────────────────────────────────────
+  // Hot path: called for every scoreboard entry in every active group.
+  // Caching avoids O(participants × groups) WA contact round-trips.
   async getUserDisplayInfo(userId, fallbackName = null) {
+    const cached = contactCache.get(userId);
+    if (cached) return cached;
+
     const contact = await this.getContact(userId);
     const name =
       contact?.pushname ||
@@ -155,8 +198,14 @@ const utils = {
       contact?.name ||
       fallbackName ||
       userId.replace(/@\S+$/, "");
-    return { name, text: this.mentionText(userId), contact };
+
+    const info = { name, text: this.mentionText(userId), contact };
+    contactCache.set(userId, info);
+    return info;
   },
+
+  // Expose cache for monitoring (dashboard can report cache size)
+  contactCache,
 };
 
 module.exports = utils;
