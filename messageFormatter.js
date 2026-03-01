@@ -1,6 +1,5 @@
 /**
  * messageFormatter.js — v3.2.0
- * Daily question references removed.
  */
 
 const CONFIG = require("./config");
@@ -52,6 +51,7 @@ const messageFormatter = {
     const isOwner = msg ? permissions.isOwner(msg) : false;
     const isBotAdmin = msg ? await permissions.isBotAdmin(msg) : false;
     const isMod = msg ? await permissions.isModerator(msg) : false;
+    const canAi = msg ? await permissions.canUseAi(msg) : false;
 
     let text =
       `*${emojis.book} ${CONFIG.bot.name} v${CONFIG.bot.version}*\n` +
@@ -71,11 +71,15 @@ const messageFormatter = {
       `• *${prefix}score* – Current scoreboard\n` +
       `• *${prefix}stats* – Quiz statistics\n`;
 
-    if (aiEnabled && CONFIG.ai.features.aiChat) {
+    // AI chat — only shown if user has access
+    if (aiEnabled && CONFIG.ai.features.aiChat && canAi) {
       text +=
         `\n*🤖 AI Commands:*\n` +
         `• *${prefix}ai [question]* – Ask the AI tutor anything\n`;
+    } else if (aiEnabled && !canAi) {
+      text += `\n_💡 AI chat is available — ask an admin to grant you access with ${prefix}aiuser add_\n`;
     }
+
     text += "\n";
 
     if (isMod) {
@@ -95,6 +99,7 @@ const messageFormatter = {
         `• *${prefix}enable / ${prefix}disable* – Enable or disable bot in this chat\n` +
         `• *${prefix}admin add/remove/list @user* – Manage Bot Admins\n` +
         `• *${prefix}mod add/remove/list @user* – Manage Moderators\n` +
+        `• *${prefix}aiuser add/remove/list @user* – Manage AI access 🤖\n` +
         `• *${prefix}announce [msg]* – Send announcement to this chat\n` +
         `• *${prefix}setwelcome [msg]* – Message sent when quiz starts\n` +
         `• *${prefix}clearwelcome* – Remove welcome message\n` +

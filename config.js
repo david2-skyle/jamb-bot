@@ -19,9 +19,10 @@ const CONFIG = {
   },
 
   ai: {
-    // Get free API key at https://console.x.ai/
-    apiKey: process.env.XAI_API_KEY,
-    model: "grok-4-fast-reasoning",
+    // Get a FREE API key at: https://console.groq.com
+    // Free tier: ~14,400 requests/day, 30 req/min — no credit card needed
+    apiKey: process.env.GROQ_API_KEY,
+    model: "llama-3.3-70b-versatile", // fast & free; swap to "llama-3.1-8b-instant" for faster/lighter responses
     maxTokens: 500,
     temperature: 0.5,
     timeoutMs: 15000,

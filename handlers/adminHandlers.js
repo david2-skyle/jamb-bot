@@ -32,6 +32,7 @@ const permissions = require("../permissions");
 const quizManager = require("../quizManager");
 const { activeQuizzes, getOrCreateState } = require("../state");
 const { safeSend, aiCircuitBreaker } = require("./helpers");
+const client = require("../client");
 
 // ── handleSetInterval ─────────────────────────────────────────────
 async function handleSetInterval(msg, args) {
@@ -175,6 +176,21 @@ async function handleGlobalDisable(msg) {
   );
 }
 
+// ── tagReply — sends a message that mentions/tags a user ──────────
+// WhatsApp requires the @number in the text body AND the full contact
+// ID passed in the mentions array. msg.reply() does not support mentions
+// so we use client.sendMessage() with the chat ID from msg.from.
+async function tagReply(msg, targetId, text) {
+  const tag = `@${targetId.replace(/@\S+$/, "")}`;
+  const body = text.replace("{tag}", tag);
+  try {
+    await client.sendMessage(msg.from, body, { mentions: [targetId] });
+  } catch (e) {
+    // Fallback without mention if something goes wrong
+    await msg.reply(text.replace("{tag}", targetId.replace(/@\S+$/, "")));
+  }
+}
+
 // ── handleAdmin ───────────────────────────────────────────────────
 async function handleAdmin(msg, args, resolveTarget) {
   if (!(await permissions.isBotAdmin(msg))) {
@@ -208,22 +224,21 @@ async function handleAdmin(msg, args, resolveTarget) {
     await msg.reply(`❌ Mention someone or provide a phone number.`);
     return;
   }
-  const targetInfo = await utils.getUserDisplayInfo(targetId);
 
   if (action === "add") {
     const added = await permissions.addBotAdmin(chatId, targetId);
-    await msg.reply(
-      added
-        ? `✅ *${targetInfo.name}* is now a Bot Admin.`
-        : `⚠️ Already a Bot Admin.`,
-    );
+    if (added) {
+      await tagReply(msg, targetId, `✅ {tag} is now a 🛡️ *Bot Admin*.`);
+    } else {
+      await msg.reply(`⚠️ That user is already a Bot Admin.`);
+    }
   } else if (action === "remove") {
     const removed = await permissions.removeBotAdmin(chatId, targetId);
-    await msg.reply(
-      removed
-        ? `✅ *${targetInfo.name}* removed as Bot Admin.`
-        : `⚠️ Not a Bot Admin here.`,
-    );
+    if (removed) {
+      await tagReply(msg, targetId, `✅ {tag} has been removed as Bot Admin.`);
+    } else {
+      await msg.reply(`⚠️ That user is not a Bot Admin here.`);
+    }
   }
 }
 
@@ -257,24 +272,23 @@ async function handleMod(msg, args, resolveTarget) {
     await msg.reply("❌ Mention someone or provide a phone number.");
     return;
   }
-  const targetInfo = await utils.getUserDisplayInfo(targetId);
 
   if (action === "add") {
     const result = await permissions.addModerator(chatId, targetId);
-    await msg.reply(
-      result === "already_admin"
-        ? `⚠️ *${targetInfo.name}* is already a Bot Admin.`
-        : result
-          ? `✅ *${targetInfo.name}* is now a Moderator.`
-          : `⚠️ Already a Moderator.`,
-    );
+    if (result === "already_admin") {
+      await tagReply(msg, targetId, `⚠️ {tag} is already a Bot Admin.`);
+    } else if (result) {
+      await tagReply(msg, targetId, `✅ {tag} is now a ⭐ *Moderator*.`);
+    } else {
+      await msg.reply(`⚠️ That user is already a Moderator.`);
+    }
   } else if (action === "remove") {
     const removed = await permissions.removeModerator(chatId, targetId);
-    await msg.reply(
-      removed
-        ? `✅ *${targetInfo.name}* removed as Moderator.`
-        : `⚠️ Not a Moderator here.`,
-    );
+    if (removed) {
+      await tagReply(msg, targetId, `✅ {tag} has been removed as Moderator.`);
+    } else {
+      await msg.reply(`⚠️ That user is not a Moderator here.`);
+    }
   }
 }
 

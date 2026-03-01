@@ -3,15 +3,16 @@ const CONFIG = require("./config");
 const logger = require("./logger");
 
 // ==========================================
-// 🤖 AI SERVICE (Grok via xAI API)
+// 🤖 AI SERVICE (Groq — Free Forever)
 // ==========================================
-// Uses xAI's Grok API (OpenAI-compatible format)
-// Sign up free: https://console.x.ai/
-// Set XAI_API_KEY in your .env
+// Uses Groq's OpenAI-compatible API
+// Free tier: ~14,400 requests/day, no credit card needed
+// Get a free API key at: https://console.groq.com
+// Set GROQ_API_KEY in your .env
 
 const aiService = {
   /**
-   * Core request to Grok API
+   * Core request to Groq API (OpenAI-compatible)
    * @param {Array} messages - OpenAI-format messages array
    * @param {Object} opts - { maxTokens, temperature }
    * @returns {string|null} AI response text
@@ -19,7 +20,7 @@ const aiService = {
   async chat(messages, opts = {}) {
     const apiKey = CONFIG.ai.apiKey;
     if (!apiKey) {
-      logger.warn("AI: No XAI_API_KEY set — skipping AI call");
+      logger.warn("AI: No GROQ_API_KEY set — skipping AI call");
       return null;
     }
 
@@ -32,8 +33,8 @@ const aiService = {
 
     return new Promise((resolve) => {
       const options = {
-        hostname: "api.x.ai",
-        path: "/v1/chat/completions",
+        hostname: "api.groq.com",
+        path: "/openai/v1/chat/completions",
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -78,7 +79,6 @@ const aiService = {
   },
 
   // ── Explain a quiz answer ─────────────────────────────────────────
-  // Called after a question ends — enhances the built-in explanation
   async explainAnswer(question, correctOption, subject, year) {
     if (!CONFIG.ai.apiKey) return null;
 
@@ -104,7 +104,6 @@ const aiService = {
   },
 
   // ── Generate quiz questions ───────────────────────────────────────
-  // Returns array of question objects matching your JSON schema, or null
   async generateQuestions(subject, topic, count = 5) {
     if (!CONFIG.ai.apiKey) return null;
 
@@ -132,12 +131,10 @@ const aiService = {
     if (!raw) return null;
 
     try {
-      // Strip any accidental markdown fences
       const clean = raw.replace(/```json|```/g, "").trim();
       const parsed = JSON.parse(clean);
       if (!Array.isArray(parsed) || parsed.length === 0) return null;
 
-      // Validate each question has required fields
       return parsed.filter(
         (q) =>
           q.question &&
@@ -152,16 +149,18 @@ const aiService = {
   },
 
   // ── Free-form chat ────────────────────────────────────────────────
-  // Used for the !ai command — general educational chat
   async freeChat(userMessage, context = "") {
     if (!CONFIG.ai.apiKey) return null;
 
-    const systemPrompt =
-      "You are a helpful JAMB exam assistant. " +
-      "Help students understand concepts, answer questions about biology, chemistry, physics, and maths. " +
-      "Keep responses short (3-5 sentences). Plain text only.";
-
-    const messages = [{ role: "system", content: systemPrompt }];
+    const messages = [
+      {
+        role: "system",
+        content:
+          "You are a helpful JAMB exam assistant. " +
+          "Help students understand concepts, answer questions about biology, chemistry, physics, and maths. " +
+          "Keep responses short (3-5 sentences). Plain text only.",
+      },
+    ];
 
     if (context) {
       messages.push({ role: "assistant", content: context });

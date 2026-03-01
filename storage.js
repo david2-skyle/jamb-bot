@@ -12,7 +12,6 @@ const CONFIG = require("./config");
 const logger = require("./logger");
 
 // ── Debounce helper ───────────────────────────────────────────────
-// Returns a debounced version of fn that fires at most once per delay ms.
 function debounce(fn, delay) {
   let timer = null;
   return function (...args) {
@@ -29,6 +28,7 @@ const storage = {
   permissions: {
     botAdmins: {},
     moderators: {},
+    aiUsers: {}, // NEW: per-chat list of users allowed to use AI
     disabledChats: [],
     welcomeMessages: {},
     quizHistory: {},
@@ -52,6 +52,7 @@ const storage = {
         this.permissions = {
           botAdmins: loaded.botAdmins || {},
           moderators: loaded.moderators || {},
+          aiUsers: loaded.aiUsers || {}, // NEW
           disabledChats: Array.isArray(loaded.disabledChats)
             ? loaded.disabledChats
             : [],
@@ -62,14 +63,16 @@ const storage = {
           .length;
         const modCount = Object.values(this.permissions.moderators).flat()
           .length;
+        const aiCount = Object.values(this.permissions.aiUsers).flat().length;
         logger.success(
-          `Loaded permissions: ${adminCount} admin(s), ${modCount} mod(s)`,
+          `Loaded permissions: ${adminCount} admin(s), ${modCount} mod(s), ${aiCount} AI user(s)`,
         );
       } catch {
         logger.info("No permissions file, starting fresh");
         this.permissions = {
           botAdmins: {},
           moderators: {},
+          aiUsers: {},
           disabledChats: [],
           welcomeMessages: {},
           quizHistory: {},
@@ -100,7 +103,7 @@ const storage = {
         await this.saveGlobalState();
       }
 
-      // Bind debounced savers now that the object is fully initialised
+      // Bind debounced savers
       this.savePermissions = debounce(this._writePermissions.bind(this), 300);
       this.saveQuizConfig = debounce(this._writeQuizConfig.bind(this), 300);
     } catch (error) {
@@ -145,9 +148,7 @@ const storage = {
     }
   },
 
-  // Debounced versions — assigned in load() after binding
-  // Declared here as stubs so callers that require storage before load()
-  // don't crash; they'll be replaced with real debounced fns after load().
+  // Debounced stubs (replaced after load())
   savePermissions() {
     return this._writePermissions();
   },
@@ -247,6 +248,39 @@ const storage = {
   },
   async clearModerators(chatId) {
     this.permissions.moderators[chatId] = [];
+    await this.savePermissions();
+  },
+
+  // ── AI Users ──────────────────────────────────────────────────────
+  // Bot Admins and above always have access — this list is for
+  // explicit per-chat grants given to mods / regular members.
+  getAiUsers(chatId) {
+    return this.permissions.aiUsers[chatId] || [];
+  },
+  async addAiUser(chatId, userId) {
+    if (!this.permissions.aiUsers[chatId])
+      this.permissions.aiUsers[chatId] = [];
+    if (!this.permissions.aiUsers[chatId].includes(userId)) {
+      this.permissions.aiUsers[chatId].push(userId);
+      await this.savePermissions();
+      return true;
+    }
+    return false;
+  },
+  async removeAiUser(chatId, userId) {
+    if (!this.permissions.aiUsers[chatId]) return false;
+    const before = this.permissions.aiUsers[chatId].length;
+    this.permissions.aiUsers[chatId] = this.permissions.aiUsers[chatId].filter(
+      (id) => id !== userId,
+    );
+    if (this.permissions.aiUsers[chatId].length < before) {
+      await this.savePermissions();
+      return true;
+    }
+    return false;
+  },
+  async clearAiUsers(chatId) {
+    this.permissions.aiUsers[chatId] = [];
     await this.savePermissions();
   },
 

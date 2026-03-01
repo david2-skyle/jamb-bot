@@ -2,12 +2,6 @@
  * commandHandler.js — JAMB Quiz Bot v3.2.0
  * =========================================
  * Pure message router. No business logic lives here.
- *
- * Handler modules:
- *   handlers/quizHandlers.js    – quiz engine + quiz commands
- *   handlers/adminHandlers.js   – admin/mod/config/owner commands
- *   handlers/aiHandlers.js      – AI circuit breaker + AI commands
- *   handlers/generalHandlers.js – ping, help, myrole, subjects, years
  */
 
 const CONFIG = require("./config");
@@ -54,6 +48,7 @@ const {
   aiCircuitBreaker,
   handleAiChat,
   handleGenerateQuestions,
+  handleAiUser,
 } = require("./handlers/aiHandlers");
 
 const {
@@ -122,7 +117,7 @@ const commandHandler = {
 
       const chatDisabled = storage.isChatDisabled(chatId);
 
-      // A/B/C/D answers — checked before prefix, no prefix needed
+      // A/B/C/D answers — checked before prefix
       if (!chatDisabled) {
         const upper = trimmed.toUpperCase();
         if (/^[A-D]$/.test(upper)) {
@@ -231,6 +226,8 @@ const commandHandler = {
           return await handleAiChat(msg, rawArgs);
         case "genq":
           return await handleGenerateQuestions(msg, argParts);
+        case "aiuser":
+          return await handleAiUser(msg, argParts, resolveTarget);
 
         default:
           break;
@@ -252,7 +249,7 @@ const commandHandler = {
   // Exposed for dashboard API
   getAiStatus: () => aiCircuitBreaker.status(),
 
-  // Exposed for index.js (processQuestionEnd is used by quizManager.stop dashboard path)
+  // Exposed for index.js
   processQuestionEnd,
 
   // Exposed for api-server.js quiz stop

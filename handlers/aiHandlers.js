@@ -17,12 +17,20 @@ const permissions = require("../permissions");
 const aiService = require("../Aiservice");
 const { safeSend, aiCircuitBreaker, safeAi } = require("./helpers");
 
-// aiCircuitBreaker and safeAi are defined in helpers.js (no circular deps).
-// Re-export them so callers that did `require('./aiHandlers')` still work.
-
 // ── .ai command — free-form educational chat ──────────────────────
 async function handleAiChat(msg, text) {
   const { emojis } = CONFIG.messages;
+
+  // Check AI access — Bot Admins always allowed, others need explicit grant
+  if (!(await permissions.canUseAi(msg))) {
+    await msg.reply(
+      `${emojis.warning} You don't have access to the AI feature.\n\n` +
+        `Ask a Bot Admin to grant you access with:\n` +
+        `_${CONFIG.bot.prefix}aiuser add @you_`,
+    );
+    return;
+  }
+
   if (!text || text.length < 2) {
     await msg.reply(
       `${emojis.ai} *AI Assistant*\n\nUsage: ${CONFIG.bot.prefix}ai [question]\n` +
@@ -42,6 +50,7 @@ async function handleAiChat(msg, text) {
     await msg.reply(`${emojis.warning} Message too long (max 500 chars).`);
     return;
   }
+
   const thinking = await msg.reply(`${emojis.ai} _Thinking..._`);
   const response = await safeAi(aiService.freeChat.bind(aiService), text);
   if (!response) {
@@ -126,7 +135,6 @@ async function handleGenerateQuestions(msg, args) {
     );
   } catch {}
 
-  // Lazy-require client here to avoid circular deps
   const client = require("../client");
   const confirmed = await _waitForReply(
     client,
@@ -141,6 +149,7 @@ async function handleGenerateQuestions(msg, args) {
 
   const fs = require("fs").promises;
   const ts = Date.now();
+  const filename = `ai_${subject}_${ts}.json`;
   const dir = path.join(CONFIG.data.dataDirectory, subject);
   await fs.mkdir(dir, { recursive: true });
   await fs.writeFile(
@@ -162,6 +171,76 @@ async function handleGenerateQuestions(msg, args) {
     `${emojis.success} Saved ${questions.length} questions! File: \`${filename}\`\n` +
       `Use: _${CONFIG.bot.prefix}start ${subject} ai_${subject}_${ts}_`,
   );
+}
+
+// ── .aiuser command — manage AI access (Bot Admin+) ───────────────
+async function handleAiUser(msg, args, resolveTarget) {
+  const { emojis } = CONFIG.messages;
+
+  if (!(await permissions.isBotAdmin(msg))) {
+    await msg.reply("⛔ Only Bot Admins or the Owner can manage AI access.");
+    return;
+  }
+
+  const [action, ...rest] = args;
+  const chatId = msg.from;
+
+  // List current AI users
+  if (!action || action === "list") {
+    const list = permissions.listAiUsers(chatId);
+    if (!list.length) {
+      await msg.reply(
+        `${emojis.ai} No AI users set.\n\n` +
+          `Bot Admins always have AI access automatically.\n` +
+          `Use _${CONFIG.bot.prefix}aiuser add @user_ to grant access.`,
+      );
+      return;
+    }
+    const lines = await Promise.all(
+      list.map(
+        async (id, i) =>
+          `${i + 1}. ${(await utils.getUserDisplayInfo(id)).name}`,
+      ),
+    );
+    await msg.reply(
+      `${emojis.ai} *AI Users (${list.length}):*\n\n${lines.join("\n")}`,
+    );
+    return;
+  }
+
+  const targetId = resolveTarget(msg, rest);
+  if (!targetId) {
+    await msg.reply("❌ Mention someone or provide a phone number.");
+    return;
+  }
+
+  const targetInfo = await utils.getUserDisplayInfo(targetId);
+
+  if (action === "add") {
+    const added = await permissions.addAiUser(chatId, targetId);
+    await msg.reply(
+      added
+        ? `${emojis.success} *${targetInfo.name}* can now use the AI feature. 🤖`
+        : `${emojis.warning} *${targetInfo.name}* already has AI access.`,
+    );
+  } else if (action === "remove") {
+    const removed = await permissions.removeAiUser(chatId, targetId);
+    await msg.reply(
+      removed
+        ? `${emojis.success} AI access removed for *${targetInfo.name}*.`
+        : `${emojis.warning} *${targetInfo.name}* is not in the AI users list.`,
+    );
+  } else if (action === "clear") {
+    await require("../storage").clearAiUsers(chatId);
+    await msg.reply(
+      `${emojis.success} All AI user grants cleared for this chat.`,
+    );
+  } else {
+    await msg.reply(
+      `❌ Unknown action. Use: _add_, _remove_, _list_, or _clear_.\n` +
+        `Example: _${CONFIG.bot.prefix}aiuser add @user_`,
+    );
+  }
 }
 
 // ── Internal: wait for a "yes" reply within timeout ───────────────
@@ -192,4 +271,5 @@ module.exports = {
   safeAi,
   handleAiChat,
   handleGenerateQuestions,
+  handleAiUser,
 };
