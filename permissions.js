@@ -1,5 +1,6 @@
 const CONFIG = require("./config");
 const storage = require("./storage");
+const logger = require("./logger");
 
 // ==========================================
 // 🔐 PERMISSION HELPERS
@@ -8,7 +9,6 @@ const storage = require("./storage");
 // Bot Admin  → per-chat: explicitly added OR is a WhatsApp group admin
 // Moderator  → per-chat: explicitly added
 // AI User    → per-chat: explicitly granted by a Bot Admin
-//              (Bot Admins and above always have AI access automatically)
 
 const permissions = {
   getUserId(msg) {
@@ -21,13 +21,17 @@ const permissions = {
       const chat = await msg.getChat();
       if (!chat.isGroup) return false;
       const userId = this.getUserId(msg);
+      // Try _serialized first, then fall back to string comparison
       const participant = chat.participants.find(
-        (p) => p.id._serialized === userId,
+        (p) =>
+          p.id._serialized === userId ||
+          p.id.user === userId.replace(/@\S+$/, ""),
       );
       return participant
         ? participant.isAdmin || participant.isSuperAdmin
         : false;
-    } catch {
+    } catch (e) {
+      logger.warn(`[Permissions] isWhatsAppGroupAdmin error: ${e.message}`);
       return false;
     }
   },
@@ -42,7 +46,12 @@ const permissions = {
     const chatId = msg.from;
     if (CONFIG.bot.owners.includes(userId)) return true;
     if (storage.getBotAdmins(chatId).includes(userId)) return true;
-    return await this.isWhatsAppGroupAdmin(msg);
+    // WhatsApp group admin check as fallback — may be slow, cached by WA client
+    try {
+      return await this.isWhatsAppGroupAdmin(msg);
+    } catch {
+      return false;
+    }
   },
 
   async isModerator(msg) {
@@ -53,8 +62,6 @@ const permissions = {
   },
 
   // ── AI access check ───────────────────────────────────────────────
-  // Bot Admins and above always have AI access.
-  // Regular members/mods need to be explicitly granted by an admin.
   async canUseAi(msg) {
     if (await this.isBotAdmin(msg)) return true;
     const userId = this.getUserId(msg);

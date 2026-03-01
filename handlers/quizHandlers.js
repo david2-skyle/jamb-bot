@@ -2,18 +2,11 @@
  * handlers/quizHandlers.js
  * Core quiz engine and quiz-facing commands.
  *
- * Exports:
- *   safeSend              – safe client.sendMessage wrapper
- *   isBrowserError        – browser crash detection
- *   handleStartQuiz
- *   handleStopQuiz
- *   handleScore
- *   handleStats
- *   handleQuestion
- *   processQuestionEnd    – called by the per-chat interval
- *   startQuizInterval
- *   sendFinalResults
- *   sendQuestionMessage
+ * FIXES:
+ * - startQuizInterval now always reads state from the Map (never holds stale ref)
+ * - interval handle stored on the Map entry, not a captured local variable
+ * - processQuestionEnd guard uses the Map entry directly
+ * - questionSentAt set before startQuizInterval to prevent race condition
  */
 
 const CONFIG = require("../config");
@@ -35,8 +28,6 @@ const {
 } = require("./helpers");
 
 // ── Per-chat end-question guard ───────────────────────────────────
-// Prevents processQuestionEnd from running concurrently for the same
-// chat when two timers fire close together across many active groups.
 const endingQuestion = new Set();
 
 // ── _sendWithRetry ────────────────────────────────────────────────
@@ -92,10 +83,73 @@ async function sendQuestionMessage(chatId, text, imgPath, replyToMsg = null) {
   }
 }
 
+// ── startQuizInterval ─────────────────────────────────────────────
+// FIXED: Always reads state fresh from the Map on every tick.
+// Never holds a captured reference to a state object that could become stale.
+async function startQuizInterval(chatId) {
+  // Clear any existing interval by reading current state from Map
+  const currentState = getOrCreateState(chatId);
+  if (currentState.interval) {
+    clearInterval(currentState.interval);
+    currentState.interval = null;
+  }
+
+  const chatCfg = storage.getQuizConfig(chatId);
+
+  const intervalHandle = setInterval(async () => {
+    try {
+      // Always read fresh from Map — never use captured state
+      const s = activeQuizzes.get(chatId);
+      if (!s) {
+        clearInterval(intervalHandle);
+        return;
+      }
+      if (!s.isActive) {
+        clearInterval(intervalHandle);
+        s.interval = null;
+        return;
+      }
+      // Make sure we own the interval (stop() may have replaced the state)
+      if (s.interval !== intervalHandle) {
+        clearInterval(intervalHandle);
+        return;
+      }
+      const elapsed = Date.now() - (s.questionSentAt || Date.now());
+      if (elapsed >= chatCfg.questionInterval) {
+        clearInterval(intervalHandle);
+        s.interval = null;
+        await processQuestionEnd(chatId);
+      }
+    } catch (error) {
+      if (isBrowserError(error)) {
+        logger.warn(
+          `[Interval] Browser disconnected in ${chatId} — stopping quiz.`,
+        );
+        const s = activeQuizzes.get(chatId);
+        if (s) {
+          if (s.interval) {
+            clearInterval(s.interval);
+            s.interval = null;
+          }
+          quizManager.stop(chatId);
+        }
+      } else {
+        logger.error(`[Interval] Error in ${chatId}:`, error.message);
+      }
+    }
+  }, 1000);
+
+  // Store handle on the LIVE map entry
+  const liveState = activeQuizzes.get(chatId);
+  if (liveState) {
+    liveState.interval = intervalHandle;
+  } else {
+    clearInterval(intervalHandle);
+  }
+}
+
 // ── processQuestionEnd ────────────────────────────────────────────
 async function processQuestionEnd(chatId) {
-  // Guard: skip if already processing end for this chat
-  // (protects against double-fire across many concurrent groups)
   if (endingQuestion.has(chatId)) {
     logger.warn(
       `[Quiz] processQuestionEnd already running for ${chatId} — skipping`,
@@ -106,8 +160,9 @@ async function processQuestionEnd(chatId) {
 
   try {
     const { emojis } = CONFIG.messages;
-    const state = getOrCreateState(chatId);
-    if (!state.isActive) return;
+    // Always read fresh from Map
+    const state = activeQuizzes.get(chatId);
+    if (!state || !state.isActive) return;
 
     // 1. Build results text
     const correctAnswer = quizManager.getCurrentAnswerLetter(state);
@@ -123,13 +178,13 @@ async function processQuestionEnd(chatId) {
       `${emojis.success} *Got it right (${correctList.length}):*\n` +
       (correctList.length > 0 ? correctList.join(", ") : "Nobody this round!");
 
-    // 2. Send results (non-fatal if it fails)
+    // 2. Send results
     const resultsSent = await safeSend(chatId, resultsMsg);
     if (!resultsSent) {
       logger.warn(`[Quiz] Failed to send results in ${chatId}`);
     }
 
-    // 3. AI explanation — fire-and-forget, NEVER blocks the quiz
+    // 3. AI explanation — fire-and-forget
     const currentQ = quizManager.getCurrentQuestion(state);
     if (currentQ) {
       safeAi(
@@ -152,8 +207,9 @@ async function processQuestionEnd(chatId) {
     if (nextQ) {
       await utils.sleep(chatCfg.delayBeforeNextQuestion);
 
-      const s = getOrCreateState(chatId);
-      if (!s.isActive) return;
+      // Re-read state after sleep — it may have been stopped
+      const s = activeQuizzes.get(chatId);
+      if (!s || !s.isActive) return;
 
       const questionText = messageFormatter.formatQuestion(
         nextQ,
@@ -177,11 +233,12 @@ async function processQuestionEnd(chatId) {
         return;
       }
 
+      // FIXED: Set questionSentAt BEFORE starting the interval
       s.lastQuestionMsgId = sentMsg?.id?._serialized || null;
       s.questionSentAt = Date.now();
       await startQuizInterval(chatId);
     } else {
-      // 5. Quiz complete
+      // Quiz complete
       await utils.sleep(CONFIG.quiz?.delayBeforeResults || 2000);
       await sendFinalResults(chatId);
       quizManager.stop(chatId);
@@ -191,50 +248,10 @@ async function processQuestionEnd(chatId) {
   }
 }
 
-// ── startQuizInterval ─────────────────────────────────────────────
-async function startQuizInterval(chatId) {
-  const state = getOrCreateState(chatId);
-  if (state.interval) {
-    clearInterval(state.interval);
-    state.interval = null;
-  }
-  const chatCfg = storage.getQuizConfig(chatId);
-
-  state.interval = setInterval(async () => {
-    try {
-      const s = getOrCreateState(chatId);
-      if (!s.isActive) {
-        clearInterval(s.interval);
-        s.interval = null;
-        return;
-      }
-      const elapsed = Date.now() - (s.questionSentAt || Date.now());
-      if (elapsed >= chatCfg.questionInterval) {
-        clearInterval(s.interval);
-        s.interval = null;
-        await processQuestionEnd(chatId);
-      }
-    } catch (error) {
-      if (isBrowserError(error)) {
-        logger.warn(
-          `[Interval] Browser disconnected in ${chatId} — stopping quiz.`,
-        );
-        const s = getOrCreateState(chatId);
-        if (s.interval) {
-          clearInterval(s.interval);
-          s.interval = null;
-        }
-        quizManager.stop(chatId);
-      } else {
-        logger.error(`[Interval] Error in ${chatId}:`, error.message);
-      }
-    }
-  }, 1000);
-}
-
 // ── sendFinalResults ──────────────────────────────────────────────
 async function sendFinalResults(chatId) {
-  const state = getOrCreateState(chatId);
+  const state = activeQuizzes.get(chatId);
+  if (!state) return;
   const stats = quizManager.getStats(state);
   const { emojis } = CONFIG.messages;
 
@@ -281,8 +298,8 @@ async function sendFinalResults(chatId) {
 // ── handleAnswer ──────────────────────────────────────────────────
 async function handleAnswer(msg, answerLetter) {
   const chatId = msg.from;
-  const state = getOrCreateState(chatId);
-  if (!state.isActive) return;
+  const state = activeQuizzes.get(chatId);
+  if (!state || !state.isActive) return;
   try {
     const userId = permissions.getUserId(msg);
     const contact = await msg.getContact();
@@ -333,7 +350,8 @@ async function handleStartQuiz(msg, args) {
     return;
   }
 
-  const freshState = getOrCreateState(chatId);
+  // Read fresh state after quizManager.start() mutates it
+  const freshState = activeQuizzes.get(chatId);
   freshState.startedSubject = subject;
   freshState.startedYear = year;
   freshState.startedAt = Date.now();
@@ -354,8 +372,9 @@ async function handleStartQuiz(msg, args) {
 
   await utils.sleep(chatCfg.delayBeforeFirstQuestion || 3000);
 
-  const s = getOrCreateState(chatId);
-  if (!s.isActive) return;
+  // Re-read after sleep — may have been stopped
+  const s = activeQuizzes.get(chatId);
+  if (!s || !s.isActive) return;
 
   const firstQ = quizManager.getCurrentQuestion(s);
   if (!firstQ) return;
@@ -375,8 +394,11 @@ async function handleStartQuiz(msg, args) {
     return;
   }
 
-  s.lastQuestionMsgId = sentMsg?.id?._serialized || null;
-  s.questionSentAt = Date.now();
+  // FIXED: Set questionSentAt BEFORE starting the interval
+  const liveState = activeQuizzes.get(chatId);
+  if (!liveState || !liveState.isActive) return;
+  liveState.lastQuestionMsgId = sentMsg?.id?._serialized || null;
+  liveState.questionSentAt = Date.now();
   await startQuizInterval(chatId);
 }
 
@@ -390,8 +412,8 @@ async function handleStopQuiz(msg) {
     return;
   }
   const chatId = msg.from;
-  const state = getOrCreateState(chatId);
-  if (!state.isActive) {
+  const state = activeQuizzes.get(chatId);
+  if (!state || !state.isActive) {
     await msg.reply(`${emojis.warning} No active quiz in this chat.`);
     return;
   }
@@ -412,8 +434,8 @@ async function handleStopQuiz(msg) {
 async function handleScore(msg) {
   const { emojis } = CONFIG.messages;
   const chatId = msg.from;
-  const state = getOrCreateState(chatId);
-  if (!state.isActive) {
+  const state = activeQuizzes.get(chatId);
+  if (!state || !state.isActive) {
     await msg.reply(
       `${emojis.warning} No active quiz.\n\nStart with ${CONFIG.bot.prefix}start [subject] [year]`,
     );
@@ -432,8 +454,8 @@ async function handleScore(msg) {
 // ── handleStats ───────────────────────────────────────────────────
 async function handleStats(msg) {
   const { emojis } = CONFIG.messages;
-  const state = getOrCreateState(msg.from);
-  if (!state.isActive) {
+  const state = activeQuizzes.get(msg.from);
+  if (!state || !state.isActive) {
     await msg.reply(`${emojis.warning} No active quiz.`);
     return;
   }
