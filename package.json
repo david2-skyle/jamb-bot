@@ -19,6 +19,7 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^17.3.1",
+    "firebase-admin": "^13.7.0",
     "qrcode": "^1.5.4",
     "qrcode-terminal": "^0.12.0",
     "whatsapp-web.js": "^1.23.0",

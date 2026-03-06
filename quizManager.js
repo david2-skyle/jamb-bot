@@ -73,6 +73,9 @@ const quizManager = {
     state.currentQuestionIndex = 0;
     state.scoreBoard = {};
     state.currentRespondents = {};
+    // currentAnswers tracks the LATEST answer letter each user submitted
+    // this round. Scoring only happens at question end using this map.
+    state.currentAnswers = {};
     state.startTime = Date.now();
     state.lastQuestionMsgId = null;
     state.questionSentAt = null;
@@ -96,28 +99,56 @@ const quizManager = {
     return wasActive;
   },
 
-  updateScore(state, userId, userName, answerLetter) {
+  // ── recordAnswer ──────────────────────────────────────────────────
+  // Called every time a user sends A/B/C/D.
+  // Only stores their latest choice — does NOT touch scoreBoard yet.
+  // Returns true if it's their first answer this round (for optional feedback).
+  recordAnswer(state, userId, userName, answerLetter) {
     if (!state.isActive) return false;
-    const answerIndex = utils.letterToIndex(answerLetter);
-    const isCorrect = this.checkAnswer(state, answerIndex);
+    const isFirstAnswer = !state.currentAnswers[userId];
+    state.currentAnswers[userId] = { letter: answerLetter, name: userName };
+    return isFirstAnswer;
+  },
 
-    if (!state.scoreBoard[userId]) {
-      state.scoreBoard[userId] = {
-        name: userName,
-        score: 0,
-        correct: 0,
-        wrong: 0,
-      };
-    }
-    if (isCorrect) {
-      state.scoreBoard[userId].score++;
-      state.scoreBoard[userId].correct++;
-    } else {
-      state.scoreBoard[userId].wrong++;
+  // ── commitAnswers ─────────────────────────────────────────────────
+  // Called by processQuestionEnd (quizHandlers) when the timer fires.
+  // Scores every user based on their FINAL recorded answer.
+  // Populates currentRespondents so the results message shows who got it right.
+  commitAnswers(state) {
+    if (!state.currentAnswers) return;
+
+    for (const [userId, { letter, name }] of Object.entries(
+      state.currentAnswers,
+    )) {
+      const answerIndex = utils.letterToIndex(letter);
+      const isCorrect = this.checkAnswer(state, answerIndex);
+
+      if (!state.scoreBoard[userId]) {
+        state.scoreBoard[userId] = {
+          name,
+          score: 0,
+          correct: 0,
+          wrong: 0,
+        };
+      }
+
+      if (isCorrect) {
+        state.scoreBoard[userId].score++;
+        state.scoreBoard[userId].correct++;
+      } else {
+        state.scoreBoard[userId].wrong++;
+      }
+
+      state.currentRespondents[userId] = { name, isCorrect };
     }
 
-    state.currentRespondents[userId] = { name: userName, isCorrect };
-    return isCorrect;
+    // Clear for next round
+    state.currentAnswers = {};
+  },
+
+  // ── updateScore (kept for backwards compat, now just calls recordAnswer) ──
+  updateScore(state, userId, userName, answerLetter) {
+    return this.recordAnswer(state, userId, userName, answerLetter);
   },
 
   getStats(state) {

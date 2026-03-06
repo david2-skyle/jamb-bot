@@ -2,6 +2,7 @@ require("dotenv").config();
 const qrcode = require("qrcode-terminal");
 const qrcodeLib = require("qrcode");
 const http = require("http");
+const https = require("https");
 const CONFIG = require("./config");
 const logger = require("./logger");
 const storage = require("./storage");
@@ -83,6 +84,24 @@ const server = http.createServer(async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => logger.info(`QR server running on port ${PORT}`));
+
+// ── Render keep-alive ─────────────────────────────────────────────
+if (process.env.RENDER_EXTERNAL_URL) {
+  const keepAliveUrl = `${process.env.RENDER_EXTERNAL_URL}/health`;
+  setInterval(
+    () => {
+      https
+        .get(keepAliveUrl, (res) => {
+          logger.debug(`Keep-alive ping: ${res.statusCode}`);
+        })
+        .on("error", (e) => {
+          logger.warn("Keep-alive ping failed:", e.message);
+        });
+    },
+    10 * 60 * 1000,
+  );
+  logger.info(`Keep-alive enabled → ${keepAliveUrl}`);
+}
 
 // ── WhatsApp client events ────────────────────────────────────────
 client.on("qr", (qr) => {

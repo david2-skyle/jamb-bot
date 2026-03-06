@@ -1,15 +1,97 @@
 /**
- * storage.js — JAMB Quiz Bot v3.2.0
+ * storage.js — JAMB Quiz Bot v3.3.1
  *
- * Multi-group optimization: permission saves are debounced.
- * Under load (many groups answering simultaneously), multiple
- * savePermissions() calls within DEBOUNCE_MS are coalesced into
- * one single disk write, preventing I/O thrash.
+ * Upstash Redis backend replacing file-based storage.
+ * Data persists across Railway restarts/redeploys with no disk needed.
+ *
+ * Setup:
+ *   1. Go to https://console.upstash.com → Create Database
+ *      - Type: Redis
+ *      - Region: pick closest to your Railway region
+ *      - Eviction: OFF (so data never gets deleted)
+ *   2. After creation, open the database → "REST API" tab
+ *   3. Copy UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN
+ *   4. Add both to Railway environment variables:
+ *        UPSTASH_REDIS_REST_URL=https://xxx.upstash.io
+ *        UPSTASH_REDIS_REST_TOKEN=AXXXxxxxx...
+ *
+ * No npm install needed — uses Node's built-in https module only.
  */
 
-const fs = require("fs").promises;
+const https = require("https");
 const CONFIG = require("./config");
 const logger = require("./logger");
+
+// ── Upstash Redis REST client ─────────────────────────────────────
+const redis = {
+  _url: null,
+  _token: null,
+
+  init() {
+    this._url = process.env.UPSTASH_REDIS_REST_URL;
+    this._token = process.env.UPSTASH_REDIS_REST_TOKEN;
+    if (!this._url || !this._token) {
+      throw new Error(
+        "Missing UPSTASH_REDIS_REST_URL or UPSTASH_REDIS_REST_TOKEN env vars",
+      );
+    }
+  },
+
+  // Execute any Redis command e.g. cmd("SET","key","value") or cmd("GET","key")
+  async cmd(...args) {
+    return new Promise((resolve, reject) => {
+      const body = JSON.stringify(args);
+      const url = new URL(this._url);
+
+      const options = {
+        hostname: url.hostname,
+        path: "/",
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${this._token}`,
+          "Content-Type": "application/json",
+          "Content-Length": Buffer.byteLength(body),
+        },
+      };
+
+      const req = https.request(options, (res) => {
+        let data = "";
+        res.on("data", (c) => (data += c));
+        res.on("end", () => {
+          try {
+            const json = JSON.parse(data);
+            if (json.error) return reject(new Error(json.error));
+            resolve(json.result);
+          } catch (e) {
+            reject(new Error("Redis parse error: " + e.message));
+          }
+        });
+      });
+
+      req.on("error", reject);
+      req.setTimeout(8000, () => {
+        req.destroy();
+        reject(new Error("Redis request timed out"));
+      });
+      req.write(body);
+      req.end();
+    });
+  },
+
+  async get(key) {
+    const val = await this.cmd("GET", key);
+    if (!val) return null;
+    try {
+      return JSON.parse(val);
+    } catch {
+      return val;
+    }
+  },
+
+  async set(key, value) {
+    return this.cmd("SET", key, JSON.stringify(value));
+  },
+};
 
 // ── Debounce helper ───────────────────────────────────────────────
 function debounce(fn, delay) {
@@ -28,7 +110,7 @@ const storage = {
   permissions: {
     botAdmins: {},
     moderators: {},
-    aiUsers: {}, // NEW: per-chat list of users allowed to use AI
+    aiUsers: {},
     disabledChats: [],
     welcomeMessages: {},
     quizHistory: {},
@@ -36,119 +118,118 @@ const storage = {
   quizConfig: {},
   globalState: { disabled: false },
 
-  get globalStateFile() {
-    return CONFIG.data.dataDirectory + "/global_state.json";
-  },
-
-  // ── Load all data ─────────────────────────────────────────────────
+  // ── Load all data from Redis ──────────────────────────────────────
   async load() {
     try {
-      await fs.mkdir(CONFIG.data.dataDirectory, { recursive: true });
+      redis.init();
+      logger.success("Upstash Redis connected");
 
-      // Permissions
+      // ── Permissions ──────────────────────────────────────────────
       try {
-        const raw = await fs.readFile(CONFIG.data.permissionsFile, "utf-8");
-        const loaded = JSON.parse(raw);
-        this.permissions = {
-          botAdmins: loaded.botAdmins || {},
-          moderators: loaded.moderators || {},
-          aiUsers: loaded.aiUsers || {}, // NEW
-          disabledChats: Array.isArray(loaded.disabledChats)
-            ? loaded.disabledChats
-            : [],
-          welcomeMessages: loaded.welcomeMessages || {},
-          quizHistory: loaded.quizHistory || {},
-        };
-        const adminCount = Object.values(this.permissions.botAdmins).flat()
-          .length;
-        const modCount = Object.values(this.permissions.moderators).flat()
-          .length;
-        const aiCount = Object.values(this.permissions.aiUsers).flat().length;
-        logger.success(
-          `Loaded permissions: ${adminCount} admin(s), ${modCount} mod(s), ${aiCount} AI user(s)`,
-        );
-      } catch {
-        logger.info("No permissions file, starting fresh");
-        this.permissions = {
-          botAdmins: {},
-          moderators: {},
-          aiUsers: {},
-          disabledChats: [],
-          welcomeMessages: {},
-          quizHistory: {},
-        };
-        await this._writePermissions();
+        const loaded = await redis.get("bot:permissions");
+        if (loaded) {
+          this.permissions = {
+            botAdmins: loaded.botAdmins || {},
+            moderators: loaded.moderators || {},
+            aiUsers: loaded.aiUsers || {},
+            disabledChats: Array.isArray(loaded.disabledChats)
+              ? loaded.disabledChats
+              : [],
+            welcomeMessages: loaded.welcomeMessages || {},
+            quizHistory: loaded.quizHistory || {},
+          };
+          const adminCount = Object.values(this.permissions.botAdmins).flat()
+            .length;
+          const modCount = Object.values(this.permissions.moderators).flat()
+            .length;
+          const aiCount = Object.values(this.permissions.aiUsers).flat().length;
+          logger.success(
+            `Loaded permissions: ${adminCount} admin(s), ${modCount} mod(s), ${aiCount} AI user(s)`,
+          );
+        } else {
+          logger.info("No permissions in Redis yet, starting fresh");
+          this.permissions = {
+            botAdmins: {},
+            moderators: {},
+            aiUsers: {},
+            disabledChats: [],
+            welcomeMessages: {},
+            quizHistory: {},
+          };
+          await this._writePermissions();
+        }
+      } catch (e) {
+        logger.error("Failed to load permissions from Redis:", e.message);
       }
 
-      // Quiz config
+      // ── Quiz config ──────────────────────────────────────────────
       try {
-        const raw = await fs.readFile(CONFIG.data.configFile, "utf-8");
-        this.quizConfig = JSON.parse(raw);
-        logger.success(
-          `Loaded quiz config for ${Object.keys(this.quizConfig).length} chat(s)`,
-        );
-      } catch {
+        const loaded = await redis.get("bot:quizConfig");
+        if (loaded) {
+          this.quizConfig = loaded;
+          logger.success(
+            `Loaded quiz config for ${Object.keys(this.quizConfig).length} chat(s)`,
+          );
+        } else {
+          this.quizConfig = {};
+          await this._writeQuizConfig();
+        }
+      } catch (e) {
+        logger.error("Failed to load quiz config from Redis:", e.message);
         this.quizConfig = {};
-        await this._writeQuizConfig();
       }
 
-      // Global state
+      // ── Global state ─────────────────────────────────────────────
       try {
-        const raw = await fs.readFile(this.globalStateFile, "utf-8");
-        this.globalState = { disabled: false, ...JSON.parse(raw) };
-        if (this.globalState.disabled)
-          logger.warn("⚠️  Bot is GLOBALLY DISABLED");
-      } catch {
+        const loaded = await redis.get("bot:globalState");
+        if (loaded) {
+          this.globalState = { disabled: false, ...loaded };
+          if (this.globalState.disabled)
+            logger.warn("⚠️  Bot is GLOBALLY DISABLED");
+        } else {
+          this.globalState = { disabled: false };
+          await this.saveGlobalState();
+        }
+      } catch (e) {
+        logger.error("Failed to load global state from Redis:", e.message);
         this.globalState = { disabled: false };
-        await this.saveGlobalState();
       }
 
-      // Bind debounced savers
-      this.savePermissions = debounce(this._writePermissions.bind(this), 300);
-      this.saveQuizConfig = debounce(this._writeQuizConfig.bind(this), 300);
+      // Bind debounced savers after loading
+      this.savePermissions = debounce(this._writePermissions.bind(this), 500);
+      this.saveQuizConfig = debounce(this._writeQuizConfig.bind(this), 500);
     } catch (error) {
       logger.error("Error loading storage:", error.message);
+      throw error;
     }
   },
 
-  // ── Internal (immediate) writers ─────────────────────────────────
+  // ── Writers ───────────────────────────────────────────────────────
   async _writePermissions() {
     try {
-      await fs.writeFile(
-        CONFIG.data.permissionsFile,
-        JSON.stringify(this.permissions, null, 2),
-        "utf-8",
-      );
+      await redis.set("bot:permissions", this.permissions);
     } catch (e) {
-      logger.error("Error saving permissions:", e.message);
+      logger.error("Error saving permissions to Redis:", e.message);
     }
   },
 
   async _writeQuizConfig() {
     try {
-      await fs.writeFile(
-        CONFIG.data.configFile,
-        JSON.stringify(this.quizConfig, null, 2),
-        "utf-8",
-      );
+      await redis.set("bot:quizConfig", this.quizConfig);
     } catch (e) {
-      logger.error("Error saving quiz config:", e.message);
+      logger.error("Error saving quiz config to Redis:", e.message);
     }
   },
 
   async saveGlobalState() {
     try {
-      await fs.writeFile(
-        this.globalStateFile,
-        JSON.stringify(this.globalState, null, 2),
-        "utf-8",
-      );
+      await redis.set("bot:globalState", this.globalState);
     } catch (e) {
-      logger.error("Error saving global state:", e.message);
+      logger.error("Error saving global state to Redis:", e.message);
     }
   },
 
-  // Debounced stubs (replaced after load())
+  // Debounced stubs — replaced after load()
   savePermissions() {
     return this._writePermissions();
   },
@@ -252,8 +333,6 @@ const storage = {
   },
 
   // ── AI Users ──────────────────────────────────────────────────────
-  // Bot Admins and above always have access — this list is for
-  // explicit per-chat grants given to mods / regular members.
   getAiUsers(chatId) {
     return this.permissions.aiUsers[chatId] || [];
   },

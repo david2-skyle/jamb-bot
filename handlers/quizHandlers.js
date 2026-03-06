@@ -2,11 +2,11 @@
  * handlers/quizHandlers.js
  * Core quiz engine and quiz-facing commands.
  *
- * FIXES:
- * - startQuizInterval now always reads state from the Map (never holds stale ref)
- * - interval handle stored on the Map entry, not a captured local variable
- * - processQuestionEnd guard uses the Map entry directly
- * - questionSentAt set before startQuizInterval to prevent race condition
+ * CHANGES v3.3.1:
+ * - processQuestionEnd now calls quizManager.commitAnswers() before scoring.
+ *   This means a user's score is based on their FINAL answer, not every
+ *   submission. Changing A → B → C before time is up no longer penalises them.
+ * - currentAnswers is reset when advancing to the next question.
  */
 
 const CONFIG = require("../config");
@@ -84,10 +84,7 @@ async function sendQuestionMessage(chatId, text, imgPath, replyToMsg = null) {
 }
 
 // ── startQuizInterval ─────────────────────────────────────────────
-// FIXED: Always reads state fresh from the Map on every tick.
-// Never holds a captured reference to a state object that could become stale.
 async function startQuizInterval(chatId) {
-  // Clear any existing interval by reading current state from Map
   const currentState = getOrCreateState(chatId);
   if (currentState.interval) {
     clearInterval(currentState.interval);
@@ -98,7 +95,6 @@ async function startQuizInterval(chatId) {
 
   const intervalHandle = setInterval(async () => {
     try {
-      // Always read fresh from Map — never use captured state
       const s = activeQuizzes.get(chatId);
       if (!s) {
         clearInterval(intervalHandle);
@@ -109,7 +105,6 @@ async function startQuizInterval(chatId) {
         s.interval = null;
         return;
       }
-      // Make sure we own the interval (stop() may have replaced the state)
       if (s.interval !== intervalHandle) {
         clearInterval(intervalHandle);
         return;
@@ -139,7 +134,6 @@ async function startQuizInterval(chatId) {
     }
   }, 1000);
 
-  // Store handle on the LIVE map entry
   const liveState = activeQuizzes.get(chatId);
   if (liveState) {
     liveState.interval = intervalHandle;
@@ -160,9 +154,13 @@ async function processQuestionEnd(chatId) {
 
   try {
     const { emojis } = CONFIG.messages;
-    // Always read fresh from Map
     const state = activeQuizzes.get(chatId);
     if (!state || !state.isActive) return;
+
+    // ── COMMIT ANSWERS ──────────────────────────────────────────────
+    // Score every user based on their FINAL submitted answer.
+    // Must happen before reading currentRespondents below.
+    quizManager.commitAnswers(state);
 
     // 1. Build results text
     const correctAnswer = quizManager.getCurrentAnswerLetter(state);
@@ -202,12 +200,14 @@ async function processQuestionEnd(chatId) {
     // 4. Advance to next question
     const chatCfg = storage.getQuizConfig(chatId);
     const nextQ = quizManager.nextQuestion(state);
+
+    // Reset respondents AND current answers for the new round
     state.currentRespondents = {};
+    state.currentAnswers = {};
 
     if (nextQ) {
       await utils.sleep(chatCfg.delayBeforeNextQuestion);
 
-      // Re-read state after sleep — it may have been stopped
       const s = activeQuizzes.get(chatId);
       if (!s || !s.isActive) return;
 
@@ -233,7 +233,6 @@ async function processQuestionEnd(chatId) {
         return;
       }
 
-      // FIXED: Set questionSentAt BEFORE starting the interval
       s.lastQuestionMsgId = sentMsg?.id?._serialized || null;
       s.questionSentAt = Date.now();
       await startQuizInterval(chatId);
@@ -305,7 +304,7 @@ async function handleAnswer(msg, answerLetter) {
     const contact = await msg.getContact();
     const userName =
       contact.pushname || contact.name || contact.number || userId;
-    quizManager.updateScore(state, userId, userName, answerLetter);
+    quizManager.recordAnswer(state, userId, userName, answerLetter);
   } catch (e) {
     if (!isBrowserError(e)) logger.error("[Answer] Error:", e.message);
   }
@@ -350,7 +349,6 @@ async function handleStartQuiz(msg, args) {
     return;
   }
 
-  // Read fresh state after quizManager.start() mutates it
   const freshState = activeQuizzes.get(chatId);
   freshState.startedSubject = subject;
   freshState.startedYear = year;
@@ -372,7 +370,6 @@ async function handleStartQuiz(msg, args) {
 
   await utils.sleep(chatCfg.delayBeforeFirstQuestion || 3000);
 
-  // Re-read after sleep — may have been stopped
   const s = activeQuizzes.get(chatId);
   if (!s || !s.isActive) return;
 
@@ -394,7 +391,6 @@ async function handleStartQuiz(msg, args) {
     return;
   }
 
-  // FIXED: Set questionSentAt BEFORE starting the interval
   const liveState = activeQuizzes.get(chatId);
   if (!liveState || !liveState.isActive) return;
   liveState.lastQuestionMsgId = sentMsg?.id?._serialized || null;

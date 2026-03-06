@@ -2,11 +2,17 @@
  * handlers/aiHandlers.js
  * AI circuit breaker, safeAi wrapper, and AI-facing commands.
  *
+ * CHANGES v3.3.0:
+ * - .ai command now sends response directly (no "Thinking..." edit trick)
+ *   because message.edit() is unreliable on WhatsApp Web and often silently fails.
+ * - Added timeout so users always get a response even if Groq is slow.
+ *
  * Exports:
  *   aiCircuitBreaker  – shared singleton used by quizHandlers too
  *   safeAi            – fire-and-forget-safe AI call wrapper
  *   handleAiChat      – .ai command
  *   handleGenerateQuestions – .genq command
+ *   handleAiUser      – .aiuser command
  */
 
 const path = require("path");
@@ -38,6 +44,7 @@ async function handleAiChat(msg, text) {
     );
     return;
   }
+
   if (!aiCircuitBreaker.canTry()) {
     const s = aiCircuitBreaker.status();
     await msg.reply(
@@ -46,37 +53,40 @@ async function handleAiChat(msg, text) {
     );
     return;
   }
+
   if (text.length > 500) {
     await msg.reply(`${emojis.warning} Message too long (max 500 chars).`);
     return;
   }
 
-  const thinking = await msg.reply(`${emojis.ai} _Thinking..._`);
+  // Send response directly — no "Thinking..." message that needs editing.
+  // msg.reply() with edit() is unreliable; sometimes the edit never shows.
   const response = await safeAi(aiService.freeChat.bind(aiService), text);
+
   if (!response) {
-    try {
-      await thinking.edit(
-        `${emojis.error} AI is unavailable. Try again later.`,
-      );
-    } catch {}
+    await msg.reply(
+      `${emojis.error} AI is unavailable right now. Try again in a moment.`,
+    );
     return;
   }
-  try {
-    await thinking.edit(`${emojis.ai} *AI Answer*\n\n${response}`);
-  } catch {}
+
+  await msg.reply(`${emojis.ai} *AI Answer*\n\n${response}`);
 }
 
 // ── .genq command — generate AI quiz questions (Bot Admin+) ───────
 async function handleGenerateQuestions(msg, args) {
   const { emojis } = CONFIG.messages;
+
   if (!(await permissions.isBotAdmin(msg))) {
     await msg.reply("⛔ Only Bot Admins or the Owner can generate questions.");
     return;
   }
+
   if (!aiCircuitBreaker.canTry()) {
     await msg.reply(`${emojis.warning} AI unavailable right now.`);
     return;
   }
+
   if (args.length < 2) {
     await msg.reply(
       `${emojis.error} Usage: ${CONFIG.bot.prefix}genq [subject] [topic] [count]\n` +
@@ -93,8 +103,9 @@ async function handleGenerateQuestions(msg, args) {
     ? args.slice(1, -1).join(" ")
     : args.slice(1).join(" ");
 
-  const status = await msg.reply(
-    `${emojis.ai} Generating ${count} questions on *${topic}*...\n_10–15 seconds..._`,
+  // Send status message directly (no edit)
+  await msg.reply(
+    `${emojis.ai} Generating ${count} questions on *${topic}*...\n_This takes 10–15 seconds. You'll get the result shortly._`,
   );
 
   const questions = await safeAi(
@@ -105,11 +116,10 @@ async function handleGenerateQuestions(msg, args) {
   );
 
   if (!questions || questions.length === 0) {
-    try {
-      await status.edit(
-        `${emojis.error} Failed to generate questions. Try a more specific topic.`,
-      );
-    } catch {}
+    await safeSend(
+      msg.from,
+      `${emojis.error} Failed to generate questions. Try a more specific topic.`,
+    );
     return;
   }
 
@@ -126,14 +136,13 @@ async function handleGenerateQuestions(msg, args) {
     })
     .join("\n\n");
 
-  try {
-    await status.edit(
-      `${emojis.ai} *Generated ${questions.length} questions for ` +
-        `${subject.toUpperCase()} — "${topic}"*\n\n${preview}` +
-        `${questions.length > 3 ? `\n\n_...and ${questions.length - 3} more_` : ""}\n\n` +
-        `Reply *yes* within 30s to save.`,
-    );
-  } catch {}
+  await safeSend(
+    msg.from,
+    `${emojis.ai} *Generated ${questions.length} questions for ` +
+      `${subject.toUpperCase()} — "${topic}"*\n\n${preview}` +
+      `${questions.length > 3 ? `\n\n_...and ${questions.length - 3} more_` : ""}\n\n` +
+      `Reply *yes* within 30s to save.`,
+  );
 
   const client = require("../client");
   const confirmed = await _waitForReply(
@@ -142,6 +151,7 @@ async function handleGenerateQuestions(msg, args) {
     permissions.getUserId(msg),
     30000,
   );
+
   if (!confirmed) {
     await safeSend(msg.from, `${emojis.info} Questions discarded.`);
     return;
@@ -185,7 +195,6 @@ async function handleAiUser(msg, args, resolveTarget) {
   const [action, ...rest] = args;
   const chatId = msg.from;
 
-  // List current AI users
   if (!action || action === "list") {
     const list = permissions.listAiUsers(chatId);
     if (!list.length) {

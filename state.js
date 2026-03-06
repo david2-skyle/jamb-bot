@@ -13,6 +13,8 @@ function createFreshState(chatId) {
     currentQuestionIndex: 0,
     scoreBoard: {},
     currentRespondents: {},
+    // Tracks each user's LATEST answer this round (letter → scored at question end)
+    currentAnswers: {},
     chatId,
     startTime: null,
     interval: null,
