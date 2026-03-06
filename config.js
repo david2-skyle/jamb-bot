@@ -54,7 +54,7 @@ const CONFIG = {
 
   client: {
     chromePath:
-      process.env.PUPPETEER_EXECUTABLE_PATH || "/usr/bin/google-chrome-stable",
+      process.env.PUPPETEER_EXECUTABLE_PATH,
     headless: true,
   },
 
