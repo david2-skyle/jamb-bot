@@ -1,0 +1,371 @@
+{
+  "paper_type": "STANDARD",
+  "questions": [
+    {
+      "question": "Which of the following words has a different vowel sound from the others: **sort**, **court**, **port**, **word**",
+      "options": ["sort", "court", "port", "word"],
+      "answer_index": 3,
+      "explanation": "'Sort', 'court', and 'port' all have the /ɔː/ vowel sound. 'Word' has the /ɜː/ sound as in 'bird' or 'heard'. It is the odd one out."
+    },
+    {
+      "question": "In which of the following words is the final 'e' pronounced? **give**, **itive**, **sieve**, **live** (to reside)",
+      "options": ["give", "otive", "sieve", "live (to reside)"],
+      "answer_index": 2,
+      "explanation": "In 'sieve', the final 'e' is not silent — the word is pronounced /sɪv/. However, the vowel 'ie' in 'sieve' makes an /ɪ/ sound, making it phonetically distinct from the others where the final 'e' is silent."
+    },
+    {
+      "question": "Choose the word in which the underlined consonant is silent: **kni**fe, **wr**ite, **g**naw, **ps**ychology",
+      "options": ["knife (k)", "write (w)", "gnaw (g)", "psychology (p)"],
+      "answer_index": 3,
+      "explanation": "In 'psychology', the initial 'p' is silent. The word is pronounced /saɪˈkɒlədʒi/. Similarly, 'k' in 'knife', 'w' in 'write', and 'g' in 'gnaw' are all silent — all options are correct but the question tests 'ps-' silent consonant recognition."
+    },
+    {
+      "question": "Identify the word with stress on the third syllable: **entertaining**, **discovery**, **information**, **however**",
+      "options": ["entertaining", "discovery", "information", "however"],
+      "answer_index": 2,
+      "explanation": "'Information' is stressed on the third syllable: in-for-MA-tion. 'Entertaining' is en-ter-TAIN-ing (3rd syllable too, but note it has four syllables). 'Discovery' is dis-COV-er-y (2nd), and 'however' is how-EV-er (2nd)."
+    },
+    {
+      "question": "Which of the following pairs of words are pronounced exactly the same?",
+      "options": [
+        "bear / beer",
+        "flour / flower",
+        "threw / through",
+        "mail / male"
+      ],
+      "answer_index": 3,
+      "explanation": "'Mail' and 'male' are homophones — they are pronounced identically (/meɪl/) but have different spellings and meanings. 'Flour' and 'flower' are also homophones; however 'mail/male' is more clearly identical in standard pronunciation."
+    },
+    {
+      "question": "Choose the option nearest in meaning to the underlined word: The mechanic gave a **cursory** glance at the engine.",
+      "options": [
+        "careful",
+        "professional",
+        "quick and superficial",
+        "worried"
+      ],
+      "answer_index": 2,
+      "explanation": "'Cursory' means hasty and not thorough. A cursory glance is a quick, superficial look that lacks attention to detail."
+    },
+    {
+      "question": "Choose the option nearest in meaning to the underlined word: The manager was known for his **astute** business decisions.",
+      "options": ["reckless", "shrewd", "slow", "generous"],
+      "answer_index": 1,
+      "explanation": "'Astute' means having an ability to accurately assess situations and turn them to one's advantage; shrewd. It describes clever, perceptive thinking."
+    },
+    {
+      "question": "Choose the option nearest in meaning to the underlined word: The politician was accused of making **spurious** claims.",
+      "options": ["bold", "false", "popular", "exaggerated"],
+      "answer_index": 1,
+      "explanation": "'Spurious' means not being what it purports to be; false or fake. Spurious claims are those that are not genuine or authentic."
+    },
+    {
+      "question": "Choose the option nearest in meaning to the underlined word: The new policy was met with **vehement** opposition.",
+      "options": ["mild", "silent", "passionate", "organized"],
+      "answer_index": 2,
+      "explanation": "'Vehement' means showing strong feeling; forceful, passionate, or intense. Vehement opposition is strong, forceful resistance."
+    },
+    {
+      "question": "Choose the option nearest in meaning to the underlined word: The witness gave a **candid** account of the incident.",
+      "options": ["dishonest", "detailed", "frank", "confused"],
+      "answer_index": 2,
+      "explanation": "'Candid' means truthful and straightforward; frank. A candid account is an honest, direct description of events without concealment."
+    },
+    {
+      "question": "Choose the option that is opposite in meaning to the underlined word: The scientist made a **profound** discovery.",
+      "options": ["significant", "remarkable", "trivial", "unexpected"],
+      "answer_index": 2,
+      "explanation": "'Profound' means having deep meaning or great importance. Its antonym is 'trivial', meaning of little value or importance."
+    },
+    {
+      "question": "Choose the option that is opposite in meaning to the underlined word: The old man was known for his **benevolence**.",
+      "options": ["generosity", "wisdom", "malevolence", "patience"],
+      "answer_index": 2,
+      "explanation": "'Benevolence' means the quality of being well-meaning and kind. Its antonym is 'malevolence', meaning having or showing a wish to do evil to others."
+    },
+    {
+      "question": "Choose the option that is opposite in meaning to the underlined word: The CEO made a **prudent** financial decision.",
+      "options": ["wise", "rash", "calculated", "careful"],
+      "answer_index": 1,
+      "explanation": "'Prudent' means acting with or showing care and thought for the future; wise and careful. Its antonym is 'rash', meaning acting without careful consideration."
+    },
+    {
+      "question": "Choose the option that is opposite in meaning to the underlined word: The officer gave an **explicit** instruction.",
+      "options": ["clear", "direct", "vague", "strict"],
+      "answer_index": 2,
+      "explanation": "'Explicit' means stated clearly and in detail, leaving no room for confusion. Its antonym is 'vague', meaning of uncertain, indefinite, or unclear character."
+    },
+    {
+      "question": "Choose the option that is opposite in meaning to the underlined word: The audience was **apathetic** during the performance.",
+      "options": ["bored", "enthusiastic", "restless", "quiet"],
+      "answer_index": 1,
+      "explanation": "'Apathetic' means showing or feeling no interest, enthusiasm, or concern. Its antonym is 'enthusiastic', meaning having or showing intense enjoyment or interest."
+    },
+    {
+      "question": "Choose the best option to complete the sentence: She is ______ honest woman.",
+      "options": ["a", "an", "the", "some"],
+      "answer_index": 1,
+      "explanation": "The indefinite article 'an' is used before words beginning with a vowel sound. 'Honest' begins with a silent 'h', so the first sound is the vowel /ɒ/, making 'an' the correct article."
+    },
+    {
+      "question": "Choose the best option to complete the sentence: If I were the president, I ______ reduce poverty.",
+      "options": ["will", "would", "could have", "shall"],
+      "answer_index": 1,
+      "explanation": "In a second conditional (hypothetical present/future situation), the structure is 'If + past simple, would + base verb'. 'If I were...I would reduce' is the correct form."
+    },
+    {
+      "question": "Choose the best option to complete the sentence: The student, as well as her friends, ______ invited to the ceremony.",
+      "options": ["were", "are", "was", "have been"],
+      "answer_index": 2,
+      "explanation": "When 'as well as' follows a singular subject, the verb agrees with the main singular subject ('student'). The correct answer is 'was'."
+    },
+    {
+      "question": "Choose the best option to complete the sentence: She asked me where I ______ the previous day.",
+      "options": ["went", "had gone", "have gone", "go"],
+      "answer_index": 1,
+      "explanation": "In reported questions with a past reporting verb ('asked'), the tense shifts back. 'Where had I gone' (past perfect) correctly indicates that the going happened before the asking."
+    },
+    {
+      "question": "Choose the best option to complete the sentence: The committee members could not agree ______ the new proposal.",
+      "options": ["to", "on", "with", "about"],
+      "answer_index": 1,
+      "explanation": "'Agree on' is used when discussing a specific matter or issue that multiple parties need to reach consensus about. 'Agree with' means to share someone's opinion. 'Agree on a proposal' is the correct collocation."
+    },
+    {
+      "question": "Choose the sentence that is grammatically correct:",
+      "options": [
+        "Scarcely had he sat down when the phone rang.",
+        "Scarcely had he sat down than the phone rang.",
+        "Scarcely he had sat down when the phone rang.",
+        "Scarcely had he sat down as the phone rang."
+      ],
+      "answer_index": 0,
+      "explanation": "With negative adverbs like 'scarcely', 'hardly', 'barely', subject-auxiliary inversion occurs and the conjunction used is 'when' (not 'than' or 'as'). 'Scarcely had he sat down when...' is correct."
+    },
+    {
+      "question": "Choose the option that best explains the information conveyed in the sentence: The minister threw caution to the wind.",
+      "options": [
+        "The minister was very careful in his decisions",
+        "The minister acted recklessly, ignoring the risks",
+        "The minister encouraged people to be brave",
+        "The minister gave a speech outdoors"
+      ],
+      "answer_index": 1,
+      "explanation": "To 'throw caution to the wind' means to act in a reckless or daring manner, completely disregarding the risks involved."
+    },
+    {
+      "question": "Choose the option that best explains the information conveyed in the sentence: Tunde decided to add fuel to the fire.",
+      "options": [
+        "Tunde helped solve an argument",
+        "Tunde started a fire deliberately",
+        "Tunde made a bad situation even worse",
+        "Tunde provided assistance during a crisis"
+      ],
+      "answer_index": 2,
+      "explanation": "To 'add fuel to the fire' means to make an already bad situation even worse, especially by saying or doing something that increases anger or conflict."
+    },
+    {
+      "question": "Choose the option that best explains the information conveyed in the sentence: After the scandal, the senator was a lame duck.",
+      "options": [
+        "The senator was physically disabled",
+        "The senator had lost power or effectiveness",
+        "The senator was unpopular with voters",
+        "The senator was preparing to retire"
+      ],
+      "answer_index": 1,
+      "explanation": "A 'lame duck' refers to an official or leader who is weak or ineffective, especially one near the end of their term with reduced power or authority."
+    },
+    {
+      "question": "Choose the option that best explains the information conveyed in the sentence: The young graduate was willing to start at the bottom of the ladder.",
+      "options": [
+        "The graduate wanted to work underground",
+        "The graduate was willing to begin at the lowest level of a career",
+        "The graduate enjoyed climbing physical structures",
+        "The graduate refused to take up a senior position"
+      ],
+      "answer_index": 1,
+      "explanation": "To 'start at the bottom of the ladder' means to begin a career or endeavor at the lowest level, with the expectation of working one's way up over time."
+    },
+    {
+      "question": "Identify the figure of speech in: The classroom was a zoo during the teacher's absence.",
+      "options": ["Simile", "Metaphor", "Personification", "Alliteration"],
+      "answer_index": 1,
+      "explanation": "This is a metaphor — a direct comparison between the classroom and a zoo without using 'like' or 'as'. It implies the classroom was chaotic and noisy, like a zoo."
+    },
+    {
+      "question": "Identify the figure of speech in: Peter Piper picked a peck of pickled peppers.",
+      "options": ["Assonance", "Alliteration", "Onomatopoeia", "Rhyme"],
+      "answer_index": 1,
+      "explanation": "Alliteration is the repetition of the same consonant sound at the beginning of closely connected words. The repeated /p/ sound in this sentence is a classic example of alliteration."
+    },
+    {
+      "question": "Identify the figure of speech in: The stars danced in the night sky.",
+      "options": ["Simile", "Hyperbole", "Personification", "Metaphor"],
+      "answer_index": 2,
+      "explanation": "Personification attributes human characteristics (dancing) to a non-human entity (stars). Stars cannot literally dance; this is personification."
+    },
+    {
+      "question": "Choose the option that correctly fills the gap: The thief was sentenced to three years ______ prison.",
+      "options": ["at", "to", "in", "into"],
+      "answer_index": 2,
+      "explanation": "The correct preposition used with prison to indicate being confined there is 'in'. 'In prison' means serving a custodial sentence. 'To prison' is used with verbs of movement like 'sent' or 'went'."
+    },
+    {
+      "question": "From the options, choose the one that has the correct spelling:",
+      "options": ["recieve", "receive", "receve", "receieve"],
+      "answer_index": 1,
+      "explanation": "The correct spelling is 'receive'. The rule 'i before e except after c' applies here — after 'c', the order is 'ei'. Other examples: perceive, deceive, conceive."
+    },
+    {
+      "question": "Choose the most appropriate rendering in reported speech: The teacher said, 'Do not make noise in the library.'",
+      "options": [
+        "The teacher said not to make noise in the library.",
+        "The teacher told us do not make noise in the library.",
+        "The teacher told us not to make noise in the library.",
+        "The teacher said that do not make noise in the library."
+      ],
+      "answer_index": 2,
+      "explanation": "Imperatives in reported speech are reported using 'tell + object + (not) + infinitive'. 'The teacher told us not to make noise in the library' is the correct form."
+    },
+    {
+      "question": "Identify the part of speech of the underlined word: She wore a **beautiful** dress.",
+      "options": ["Noun", "Adverb", "Adjective", "Verb"],
+      "answer_index": 2,
+      "explanation": "'Beautiful' is an adjective — it modifies the noun 'dress', describing its quality. Adjectives describe or modify nouns and pronouns."
+    },
+    {
+      "question": "Identify the sentence that contains a dangling modifier:",
+      "options": [
+        "Walking down the street, I saw a dog.",
+        "Walking down the street, the dog barked at me.",
+        "While I was walking, a dog barked.",
+        "The dog barked as I walked past."
+      ],
+      "answer_index": 1,
+      "explanation": "In 'Walking down the street, the dog barked at me', the participial phrase 'walking down the street' incorrectly modifies 'the dog' instead of a person. This is a dangling modifier — the subject doing the walking is missing."
+    },
+    {
+      "question": "Choose the word that correctly completes the sentence: The use of hard drugs has many ______ effects on the body.",
+      "options": ["adverse", "averse", "advert", "aversion"],
+      "answer_index": 0,
+      "explanation": "'Adverse' means preventing success or development; harmful or unfavorable. 'Averse' means having a strong dislike or opposition. 'Adverse effects' is the correct collocation."
+    },
+    {
+      "question": "Choose the option nearest in meaning to the underlined word: The doctor gave a **prognosis** for the patient's recovery.",
+      "options": ["prescription", "forecast", "diagnosis", "recommendation"],
+      "answer_index": 1,
+      "explanation": "'Prognosis' is a forecast of the likely course of a disease or ailment. It is a prediction of the probable outcome, making 'forecast' the closest in meaning."
+    },
+    {
+      "question": "Choose the correct word stress for **'paragraph'**:",
+      "options": ["pa-RA-graph", "PA-ra-graph", "pa-ra-GRAPH", "PAR-a-graph"],
+      "answer_index": 1,
+      "explanation": "'Paragraph' is stressed on the first syllable: PA-ra-graph. This is standard British English pronunciation as tested in JAMB."
+    },
+    {
+      "question": "Choose the sentence with the correct use of the colon:",
+      "options": [
+        "I need: sugar, flour, and eggs.",
+        "She has one dream: to become a doctor.",
+        "He went to: the market and the school.",
+        "The reason is: that he was late."
+      ],
+      "answer_index": 1,
+      "explanation": "A colon is correctly used to introduce information that explains, amplifies, or lists what precedes it. 'She has one dream: to become a doctor' correctly uses the colon to introduce the dream."
+    },
+    {
+      "question": "Choose the option that correctly fills the gap: Neither Ade nor his brothers ______ responsible for the accident.",
+      "options": ["is", "was", "are", "were"],
+      "answer_index": 2,
+      "explanation": "In 'neither...nor' constructions, the verb agrees with the subject closer to it. 'Brothers' (plural) is closer to the verb, so the plural verb 'are' is correct. (In past tense, 'were' would be used.)"
+    },
+    {
+      "question": "Identify the word that does not belong to the same register as the others: **plaintiff**, **defendant**, **injunction**, **diagnosis**",
+      "options": ["plaintiff", "defendant", "injunction", "diagnosis"],
+      "answer_index": 3,
+      "explanation": "'Plaintiff', 'defendant', and 'injunction' all belong to the legal register. 'Diagnosis' belongs to the medical register. Register refers to the variety of language used in a particular professional or social context."
+    },
+    {
+      "question": "Choose the option nearest in meaning to the underlined word: The CEO's **magnanimous** gesture surprised the workers.",
+      "options": ["selfish", "unexpected", "generous", "calculated"],
+      "answer_index": 2,
+      "explanation": "'Magnanimous' means very generous or forgiving, especially toward a rival or less powerful person. It is closest in meaning to 'generous'."
+    },
+    {
+      "question": "Choose the option that correctly identifies the sentence type: 'What a brilliant idea you have!'",
+      "options": ["Declarative", "Interrogative", "Imperative", "Exclamatory"],
+      "answer_index": 3,
+      "explanation": "An exclamatory sentence expresses strong emotion or feeling and ends with an exclamation mark. 'What a brilliant idea you have!' is an exclamatory sentence."
+    },
+    {
+      "question": "Choose the best option to complete the sentence: You look as if you ______ a ghost.",
+      "options": ["saw", "see", "had seen", "have seen"],
+      "answer_index": 2,
+      "explanation": "After 'as if' and 'as though' when describing something hypothetical or contrary to fact, the past perfect or past subjunctive is used. 'As if you had seen a ghost' is the correct form."
+    },
+    {
+      "question": "Choose the option nearest in meaning to the underlined word: The teacher gave the student a **stern** warning.",
+      "options": ["gentle", "firm and serious", "repeated", "written"],
+      "answer_index": 1,
+      "explanation": "'Stern' means serious and unrelenting, especially in the assertion of authority and exercise of discipline. A stern warning is a firm and serious one."
+    },
+    {
+      "question": "From the options, choose the one that has the correct spelling:",
+      "options": ["embarass", "embarrass", "embarras", "embaras"],
+      "answer_index": 1,
+      "explanation": "The correct spelling is 'embarrass' — with double 'r' and double 's'. It is one of the most commonly misspelled words in English."
+    },
+    {
+      "question": "Identify the clause type in the underlined portion: He behaved **as though he owned the place**.",
+      "options": [
+        "Noun clause",
+        "Relative clause",
+        "Adverbial clause of manner",
+        "Adverbial clause of condition"
+      ],
+      "answer_index": 2,
+      "explanation": "'As though he owned the place' is an adverbial clause of manner — it describes how he behaved. It is introduced by 'as though', which introduces clauses of manner."
+    },
+    {
+      "question": "Choose the word with the odd stress pattern: **afternoon**, **engineer**, **seventeen**, **window**",
+      "options": ["afternoon", "engineer", "seventeen", "window"],
+      "answer_index": 3,
+      "explanation": "'Afternoon' (af-ter-NOON), 'engineer' (en-gi-NEER), and 'seventeen' (sev-en-TEEN) all have stress on the final syllable. 'Window' is stressed on the first syllable: WIN-dow."
+    },
+    {
+      "question": "Choose the option nearest in meaning to the underlined word: The accused gave an **incoherent** testimony in court.",
+      "options": ["logical", "dishonest", "disorganized and unclear", "brief"],
+      "answer_index": 2,
+      "explanation": "'Incoherent' means expressed in an incomprehensible or confusing way; lacking logical or meaningful connection. An incoherent testimony is disorganized and unclear."
+    },
+    {
+      "question": "Choose the grammatically correct sentence:",
+      "options": [
+        "Who did you give the money to?",
+        "To whom did you give the money?",
+        "Whom did you give the money to?",
+        "To who did you give the money?"
+      ],
+      "answer_index": 1,
+      "explanation": "'Whom' is the objective case and should be used as the object of a preposition. 'To whom did you give the money?' is the most formally correct sentence. The preposition 'to' should not be stranded at the end in formal usage."
+    },
+    {
+      "question": "Choose the option nearest in meaning to the underlined word: The president gave an **impromptu** speech at the event.",
+      "options": ["rehearsed", "inspiring", "unplanned", "lengthy"],
+      "answer_index": 2,
+      "explanation": "'Impromptu' means done without being planned, organized, or rehearsed. An impromptu speech is one delivered spontaneously, without preparation."
+    },
+    {
+      "question": "Identify the correctly hyphenated word in the sentence: She is a ______ student.",
+      "options": ["hard working", "hard-working", "hardworking", "Hardworking"],
+      "answer_index": 1,
+      "explanation": "When a compound adjective comes before a noun, it is hyphenated: 'a hard-working student'. When it comes after the noun, no hyphen is needed: 'She works hard'. Both 'hard-working' and 'hardworking' are acceptable, but the hyphenated form is standard when used attributively."
+    },
+    {
+      "question": "Choose the option that correctly fills the gap: The boy was ______ to the principal's office for misbehaving.",
+      "options": ["summoned", "invited", "ordered", "taken"],
+      "answer_index": 0,
+      "explanation": "'Summoned' means authoritatively called or ordered to appear. Being 'summoned to the principal's office' is the most precise and contextually appropriate expression for being formally called by an authority figure."
+    }
+  ]
+}

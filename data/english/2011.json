@@ -1,0 +1,392 @@
+{
+  "paper_type": "STANDARD",
+  "questions": [
+    {
+      "question": "Choose the word that has a different vowel sound from the others: **beat**, **seat**, **great**, **heat**",
+      "options": ["beat", "seat", "great", "heat"],
+      "answer_index": 2,
+      "explanation": "'Beat', 'seat', and 'heat' all have the long /iː/ vowel sound. 'Great' has the /eɪ/ diphthong sound as in 'late' or 'mate'."
+    },
+    {
+      "question": "Identify the word in which the underlined letters are pronounced differently from the others: tho**ugh**, thro**ugh**, eno**ugh**, altho**ugh**",
+      "options": ["though", "through", "enough", "although"],
+      "answer_index": 1,
+      "explanation": "In 'though' and 'although', the '-ough' ending is silent (/oʊ/). In 'enough', '-ough' is pronounced /ʌf/. In 'through', '-ough' is pronounced /uː/ — different from all others."
+    },
+    {
+      "question": "In which of the following words is the stress on the first syllable? **police**, **machine**, **palace**, **mistake**",
+      "options": ["police", "machine", "palace", "mistake"],
+      "answer_index": 2,
+      "explanation": "'Palace' is stressed on the first syllable: PAL-ace. 'Police' (po-LICE), 'machine' (ma-CHINE), and 'mistake' (mis-TAKE) are all stressed on the second syllable."
+    },
+    {
+      "question": "Choose the word with the correct stress pattern: **arithmetic** (the subject)",
+      "options": [
+        "A-rith-me-tic",
+        "a-RITH-me-tic",
+        "a-rith-ME-tic",
+        "a-rith-me-TIC"
+      ],
+      "answer_index": 1,
+      "explanation": "'Arithmetic' (the subject/noun) is stressed on the second syllable: a-RITH-me-tic. This follows standard British English pronunciation as used in JAMB."
+    },
+    {
+      "question": "Which of the following has the same stress pattern as **'banana'**?",
+      "options": ["cinema", "agency", "however", "paradise"],
+      "answer_index": 2,
+      "explanation": "'Banana' is stressed on the second syllable: ba-NA-na. 'However' is also stressed on the second syllable: how-EV-er. 'Cinema', 'agency', and 'paradise' are all stressed on the first syllable."
+    },
+    {
+      "question": "Choose the option nearest in meaning to the underlined word: The accused man gave a **plausible** excuse.",
+      "options": ["believable", "lengthy", "ridiculous", "complicated"],
+      "answer_index": 0,
+      "explanation": "'Plausible' means seeming reasonable or probable; believable. A plausible excuse is one that seems credible and convincing."
+    },
+    {
+      "question": "Choose the option nearest in meaning to the underlined word: The chairman was **adamant** in his decision.",
+      "options": ["flexible", "uncertain", "unyielding", "hasty"],
+      "answer_index": 2,
+      "explanation": "'Adamant' means refusing to be persuaded or to change one's mind; unyielding. It describes a firm, inflexible stance."
+    },
+    {
+      "question": "Choose the option nearest in meaning to the underlined word: The journalist wrote a **scathing** review of the film.",
+      "options": ["praising", "neutral", "harshly critical", "detailed"],
+      "answer_index": 2,
+      "explanation": "'Scathing' means severely critical; harshly censorious. A scathing review is one that attacks or criticizes sharply and harshly."
+    },
+    {
+      "question": "Choose the option nearest in meaning to the underlined word: The new employee proved to be very **diligent**.",
+      "options": ["lazy", "hardworking", "intelligent", "aggressive"],
+      "answer_index": 1,
+      "explanation": "'Diligent' means having or showing care and conscientiousness in one's work; hardworking. It implies steady and persistent effort."
+    },
+    {
+      "question": "Choose the option nearest in meaning to the underlined word: The news of the accident was **harrowing**.",
+      "options": ["exciting", "distressing", "surprising", "unbelievable"],
+      "answer_index": 1,
+      "explanation": "'Harrowing' means intensely distressing; causing distress or torment. It describes news or experiences that are deeply upsetting."
+    },
+    {
+      "question": "Choose the option that is opposite in meaning to the underlined word: The chairman's speech was **concise**.",
+      "options": ["brief", "clear", "rambling", "formal"],
+      "answer_index": 2,
+      "explanation": "'Concise' means giving a lot of information clearly and in a few words; brief but comprehensive. Its antonym is 'rambling', meaning lengthy and confused or inconsequential."
+    },
+    {
+      "question": "Choose the option that is opposite in meaning to the underlined word: She received a **cordial** reception.",
+      "options": ["warm", "cold", "grand", "simple"],
+      "answer_index": 1,
+      "explanation": "'Cordial' means warm and friendly. Its antonym is 'cold', implying an unfriendly, distant, or unwelcoming reception."
+    },
+    {
+      "question": "Choose the option that is opposite in meaning to the underlined word: The speaker was very **verbose** in his delivery.",
+      "options": ["long-winded", "confusing", "concise", "emotional"],
+      "answer_index": 2,
+      "explanation": "'Verbose' means using more words than needed; long-winded. Its antonym is 'concise', meaning brief and to the point."
+    },
+    {
+      "question": "Choose the option that is opposite in meaning to the underlined word: The convict showed no sign of **remorse** for his actions.",
+      "options": ["guilt", "indifference", "joy", "pride"],
+      "answer_index": 1,
+      "explanation": "'Remorse' means deep regret or guilt for a wrong committed. Its antonym in context is 'indifference', meaning complete lack of concern or regret."
+    },
+    {
+      "question": "Choose the option that is opposite in meaning to the underlined word: The student was known for his **exemplary** behaviour.",
+      "options": ["outstanding", "reprehensible", "acceptable", "notable"],
+      "answer_index": 1,
+      "explanation": "'Exemplary' means serving as a desirable model; representing the best. Its antonym is 'reprehensible', meaning deserving censure or condemnation."
+    },
+    {
+      "question": "Choose the best option to complete the sentence: He is the kind of man who always ______ his promises.",
+      "options": ["honors", "makes up", "backs down on", "goes back on"],
+      "answer_index": 3,
+      "explanation": "The sentence describes someone who does not keep promises. 'Goes back on' means to fail to keep a promise or an agreement. The phrase is a fixed idiomatic expression."
+    },
+    {
+      "question": "Choose the best option to complete the sentence: By the time we arrived, the ceremony ______ .",
+      "options": [
+        "already started",
+        "has already started",
+        "had already started",
+        "will have already started"
+      ],
+      "answer_index": 2,
+      "explanation": "The past perfect tense ('had already started') is used to show that one past action (the ceremony starting) was completed before another past action (our arrival)."
+    },
+    {
+      "question": "Choose the best option to complete the sentence: The management insisted that every worker ______ on time.",
+      "options": ["arrives", "arrived", "arrive", "had arrived"],
+      "answer_index": 2,
+      "explanation": "After verbs of insisting, demanding, recommending, etc. in formal contexts, the subjunctive is used. 'Insisted that every worker arrive' uses the base form (subjunctive) without the -s."
+    },
+    {
+      "question": "Choose the best option to complete the sentence: The higher you climb, ______ the air becomes.",
+      "options": ["the thin", "the thinner", "thinner", "most thin"],
+      "answer_index": 1,
+      "explanation": "This is a correlative comparative structure: 'The higher...the thinner'. Both parts use the comparative form. 'The thinner' is the correct completion."
+    },
+    {
+      "question": "Choose the best option to complete the sentence: I would rather you ______ here tomorrow.",
+      "options": ["come", "came", "will come", "have come"],
+      "answer_index": 1,
+      "explanation": "After 'would rather' when the subject changes, the past subjunctive (simple past form) is used: 'I would rather you came'. This expresses a preference about someone else's action."
+    },
+    {
+      "question": "From the words lettered A to D, choose the word that best completes the sentence: The teacher asked us to ______ our essays before submission.",
+      "options": ["go over", "go into", "go after", "go through with"],
+      "answer_index": 0,
+      "explanation": "'Go over' means to review or check something carefully. 'Go into' means to examine in detail. 'Go after' means to pursue. In the context of reviewing essays before submission, 'go over' is the most appropriate."
+    },
+    {
+      "question": "Choose the option that best explains the information conveyed in the sentence: The new director hit the ground running.",
+      "options": [
+        "The director fell on his first day at work",
+        "The director started his job energetically and effectively",
+        "The director was always in a hurry",
+        "The director exercised every morning before work"
+      ],
+      "answer_index": 1,
+      "explanation": "To 'hit the ground running' means to start something new and work hard and effectively from the very beginning, without needing time to settle in."
+    },
+    {
+      "question": "Choose the option that best explains the information conveyed in the sentence: Chidi has bitten off more than he can chew.",
+      "options": [
+        "Chidi ate too much food",
+        "Chidi attempted something beyond his capabilities",
+        "Chidi was too greedy at dinner",
+        "Chidi refused to accept less than he deserved"
+      ],
+      "answer_index": 1,
+      "explanation": "To 'bite off more than one can chew' means to take on a task that is too big or difficult for one to handle; to overcommit oneself."
+    },
+    {
+      "question": "Choose the option that best explains the information conveyed in the sentence: The old woman was the black sheep of the family.",
+      "options": [
+        "The old woman had dark skin",
+        "The old woman was the family's most hardworking member",
+        "The old woman was regarded as a disgrace to the family",
+        "The old woman was the oldest member of the family"
+      ],
+      "answer_index": 2,
+      "explanation": "The 'black sheep' of the family is a member who is considered a disgrace or embarrassment to the rest of the family, standing out unfavorably."
+    },
+    {
+      "question": "Choose the option that best explains the information conveyed in the sentence: The politician was burning the candle at both ends.",
+      "options": [
+        "The politician was wasting money on electricity",
+        "The politician was working excessively hard and tiring himself out",
+        "The politician lit candles at political events",
+        "The politician was destroying his opposition"
+      ],
+      "answer_index": 1,
+      "explanation": "To 'burn the candle at both ends' means to work excessively hard, staying up late and waking early, leading to exhaustion. It implies overextending oneself."
+    },
+    {
+      "question": "Identify the figure of speech in the following sentence: He ran as fast as a cheetah.",
+      "options": ["Metaphor", "Personification", "Simile", "Hyperbole"],
+      "answer_index": 2,
+      "explanation": "A simile is a direct comparison using 'like' or 'as'. 'As fast as a cheetah' compares his speed to that of a cheetah using 'as', making it a simile."
+    },
+    {
+      "question": "Identify the figure of speech in the following sentence: I have told you a million times not to do that.",
+      "options": ["Metaphor", "Personification", "Simile", "Hyperbole"],
+      "answer_index": 3,
+      "explanation": "Hyperbole is an exaggerated statement not meant to be taken literally, used for emphasis or effect. 'A million times' is a clear exaggeration to stress the frequency of repetition."
+    },
+    {
+      "question": "Choose the correct option to fill the gap: The boys ______ football when it started to rain.",
+      "options": ["played", "were playing", "had played", "play"],
+      "answer_index": 1,
+      "explanation": "The past continuous ('were playing') is used to describe an action that was in progress when another action interrupted it. The rain interrupted the ongoing game."
+    },
+    {
+      "question": "Choose the option that correctly fills the gap: He congratulated her ______ passing the examination.",
+      "options": ["for", "of", "on", "at"],
+      "answer_index": 2,
+      "explanation": "'Congratulate someone on something' is the correct prepositional collocation. You congratulate someone 'on' an achievement, not 'for', 'of', or 'at'."
+    },
+    {
+      "question": "From the options, choose the one that has the correct spelling:",
+      "options": ["supercede", "supersede", "superceed", "superceed"],
+      "answer_index": 1,
+      "explanation": "The correct spelling is 'supersede' — meaning to take the place of (a person or thing previously in authority or use). It ends in '-sede', not '-cede' or '-ceed'."
+    },
+    {
+      "question": "Choose the most appropriate reported speech for: He said, 'I am studying for my exams.'",
+      "options": [
+        "He said that he is studying for his exams.",
+        "He said that he was studying for his exams.",
+        "He said that he studied for his exams.",
+        "He said that he has been studying for his exams."
+      ],
+      "answer_index": 1,
+      "explanation": "In reported speech, the present continuous ('am studying') shifts to the past continuous ('was studying'). The correct reported speech is: 'He said that he was studying for his exams.'"
+    },
+    {
+      "question": "Choose the sentence that is grammatically correct:",
+      "options": [
+        "Between you and I, the plan will fail.",
+        "Between you and me, the plan will fail.",
+        "Between you and myself, the plan will fail.",
+        "Betwixt you and I, the plan will fail."
+      ],
+      "answer_index": 1,
+      "explanation": "After prepositions ('between'), the object form of the pronoun is used. 'Me' is the object form, not 'I'. The correct sentence is 'Between you and me'."
+    },
+    {
+      "question": "Identify the word class of the underlined word: She speaks **very** fluently.",
+      "options": ["Adjective", "Adverb", "Preposition", "Conjunction"],
+      "answer_index": 1,
+      "explanation": "'Very' is an adverb of degree. It modifies the adverb 'fluently', intensifying its meaning. Adverbs can modify verbs, adjectives, and other adverbs."
+    },
+    {
+      "question": "Choose the option nearest in meaning to the underlined word: The judge gave an **impartial** ruling.",
+      "options": ["biased", "lenient", "fair", "harsh"],
+      "answer_index": 2,
+      "explanation": "'Impartial' means treating all rivals or disputants equally; fair and just. An impartial ruling is one not influenced by personal feelings or prejudice."
+    },
+    {
+      "question": "Choose the option that correctly identifies the underlined clause type: **When the rain stops**, we will go out.",
+      "options": [
+        "Noun clause",
+        "Relative clause",
+        "Adverbial clause of time",
+        "Adverbial clause of condition"
+      ],
+      "answer_index": 2,
+      "explanation": "'When the rain stops' is an adverbial clause of time — it tells us when the action in the main clause will happen. It is introduced by the time conjunction 'when'."
+    },
+    {
+      "question": "Choose the word with the correct stress: **certificate**",
+      "options": [
+        "CER-tif-i-cate",
+        "cer-TIF-i-cate",
+        "cer-tif-I-cate",
+        "cer-tif-i-CATE"
+      ],
+      "answer_index": 1,
+      "explanation": "'Certificate' is stressed on the second syllable: cer-TIF-i-cate. This is standard British English pronunciation."
+    },
+    {
+      "question": "Choose the correct option to fill the gap: She ______ the letter before the meeting started.",
+      "options": ["write", "has written", "had written", "was writing"],
+      "answer_index": 2,
+      "explanation": "The past perfect ('had written') is used to indicate an action completed before another past action (the meeting starting). 'Had written' correctly establishes this time sequence."
+    },
+    {
+      "question": "Choose the option that best completes the sentence: The doctor advised the patient to ______ fatty foods.",
+      "options": ["cut down on", "cut off", "cut across", "cut through"],
+      "answer_index": 0,
+      "explanation": "'Cut down on' means to reduce the consumption or use of something. A doctor would advise a patient to reduce fatty foods, making 'cut down on' the correct phrasal verb."
+    },
+    {
+      "question": "Choose the option nearest in meaning to the underlined word: The government released a **communiqué** after the summit.",
+      "options": [
+        "budget",
+        "official statement",
+        "new policy",
+        "list of decisions"
+      ],
+      "answer_index": 1,
+      "explanation": "A 'communiqué' is an official announcement or statement, especially one made to the media. It is a formal communication typically released after diplomatic meetings or summits."
+    },
+    {
+      "question": "Identify the correctly punctuated sentence:",
+      "options": [
+        "The meeting which was held on Monday was productive.",
+        "The meeting, which was held on Monday, was productive.",
+        "The meeting which, was held on Monday, was productive.",
+        "The meeting, which was held on Monday was productive."
+      ],
+      "answer_index": 1,
+      "explanation": "Non-restrictive relative clauses (which give extra, non-essential information) must be set off with commas. 'Which was held on Monday' is non-restrictive and should be enclosed in commas."
+    },
+    {
+      "question": "Choose the option that is opposite in meaning to the underlined word: The judge's ruling was considered very **judicious**.",
+      "options": ["wise", "fair", "foolish", "controversial"],
+      "answer_index": 2,
+      "explanation": "'Judicious' means having or showing good judgment; sensible and wise. Its antonym is 'foolish', meaning lacking good judgment or wisdom."
+    },
+    {
+      "question": "Choose the option that correctly fills the gap: The chairman, together with his advisers, ______ reviewing the report.",
+      "options": ["are", "were", "is", "have been"],
+      "answer_index": 2,
+      "explanation": "When the subject is followed by a phrase beginning with 'together with', the verb agrees with the main subject. 'Chairman' is singular, so 'is' is correct."
+    },
+    {
+      "question": "Choose the option nearest in meaning to the underlined word: The government took **drastic** measures to control inflation.",
+      "options": ["mild", "extreme", "unusual", "temporary"],
+      "answer_index": 1,
+      "explanation": "'Drastic' means likely to have a strong or far-reaching effect; extreme and severe. Drastic measures are those that are forceful and far-reaching."
+    },
+    {
+      "question": "From the options, choose the one that has the correct spelling:",
+      "options": ["occassion", "occasion", "ocassion", "ocasion"],
+      "answer_index": 1,
+      "explanation": "The correct spelling is 'occasion' — with double 'c' but single 's'. This is one of the most commonly misspelled words in English."
+    },
+    {
+      "question": "Identify the sentence with the correct use of the semicolon:",
+      "options": [
+        "She loves reading; but she hates writing.",
+        "He studied hard; therefore, he passed the exam.",
+        "The food was good; although it was cold.",
+        "I went to the market; because I needed vegetables."
+      ],
+      "answer_index": 1,
+      "explanation": "A semicolon is correctly used before conjunctive adverbs like 'therefore', 'however', 'moreover', and 'consequently'. 'He studied hard; therefore, he passed' is the correctly punctuated sentence."
+    },
+    {
+      "question": "Which of the following is an example of onomatopoeia?",
+      "options": [
+        "The sun smiled on the earth.",
+        "He ran like a horse.",
+        "The bees buzzed in the garden.",
+        "Life is a stage."
+      ],
+      "answer_index": 2,
+      "explanation": "Onomatopoeia refers to words that phonetically imitate the sound they describe. 'Buzzed' imitates the sound made by bees. Other examples include 'hiss', 'clang', 'sizzle', and 'murmur'."
+    },
+    {
+      "question": "Choose the option nearest in meaning to the underlined word: The governor made a **cursory** inspection of the facility.",
+      "options": ["thorough", "hasty", "official", "detailed"],
+      "answer_index": 1,
+      "explanation": "'Cursory' means hasty and therefore not thorough or detailed. A cursory inspection is a brief, rushed look that does not examine things carefully."
+    },
+    {
+      "question": "Choose the sentence that correctly uses the word 'despite':",
+      "options": [
+        "Despite of the rain, they continued playing.",
+        "Despite the rain, they continued playing.",
+        "Despite that it rained, they continued playing.",
+        "Despite it was raining, they continued playing."
+      ],
+      "answer_index": 1,
+      "explanation": "'Despite' is a preposition and is followed directly by a noun or noun phrase, not by 'of' or a clause. The correct usage is 'Despite the rain' (noun phrase), not 'despite of' or 'despite that'."
+    },
+    {
+      "question": "Choose the option that has the same stress pattern as **'economy'**:",
+      "options": ["education", "certificate", "discovery", "information"],
+      "answer_index": 2,
+      "explanation": "'Economy' is stressed on the second syllable: e-CON-o-my. 'Discovery' also follows this pattern: dis-COV-er-y. 'Education' and 'information' have stress on the third syllable; 'certificate' on the second but with different rhythm."
+    },
+    {
+      "question": "Identify the word that is wrongly used in the sentence: She was **complemented** on her beautiful dress.",
+      "options": ["was", "complemented", "on", "beautiful"],
+      "answer_index": 1,
+      "explanation": "The correct word is 'complimented' (praised), not 'complemented' (to complete or enhance). These are homophones with different meanings. To pay someone a compliment is to 'compliment' them."
+    },
+    {
+      "question": "Choose the option that best completes the sentence: The teacher demanded that the student ______ the assignment.",
+      "options": ["redoes", "redo", "redid", "had redone"],
+      "answer_index": 1,
+      "explanation": "After verbs of demand, insist, recommend, or suggest, the subjunctive mood requires the base form of the verb (without -s or tense changes). 'Demanded that the student redo' is correct."
+    },
+    {
+      "question": "Choose the option nearest in meaning to the underlined word: The scholar gave an **erudite** lecture.",
+      "options": ["boring", "deeply learned", "controversial", "brief"],
+      "answer_index": 1,
+      "explanation": "'Erudite' means having or showing great knowledge or learning. An erudite lecture is one delivered by a person of great scholarship."
+    }
+  ]
+}

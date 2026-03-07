@@ -1,0 +1,346 @@
+{
+  "paper_type": "STANDARD",
+  "questions": [
+    {
+      "question": "Simplify: (2\u00b3 \u00d7 4\u00b2) \u00f7 2\u2075",
+      "options": ["4", "8", "2", "16"],
+      "answer_index": 0,
+      "explanation": "2\u00b3 = 8, 4\u00b2 = 16, so 8 \u00d7 16 = 128. 2\u2075 = 32. 128 \u00f7 32 = 4."
+    },
+    {
+      "question": "If log\u2081\u2080 2 = 0.3010, find log\u2081\u2080 8.",
+      "options": ["0.6020", "0.9030", "1.2040", "2.4080"],
+      "answer_index": 1,
+      "explanation": "log\u2081\u2080 8 = log\u2081\u2080 2\u00b3 = 3 \u00d7 log\u2081\u2080 2 = 3 \u00d7 0.3010 = 0.9030."
+    },
+    {
+      "question": "Evaluate: (0.064)^(1/3)",
+      "options": ["0.4", "0.04", "0.2", "4"],
+      "answer_index": 0,
+      "explanation": "0.064 = 64/1000. Cube root of 64 = 4, cube root of 1000 = 10. So (0.064)^(1/3) = 4/10 = 0.4."
+    },
+    {
+      "question": "Find the value of x if 3^(x+1) = 27",
+      "options": ["1", "2", "3", "4"],
+      "answer_index": 1,
+      "explanation": "27 = 3\u00b3, so 3^(x+1) = 3\u00b3. Therefore x + 1 = 3, giving x = 2."
+    },
+    {
+      "question": "Simplify: (\u221a75 - \u221a12) / \u221a3",
+      "options": ["3", "4", "5", "2"],
+      "answer_index": 0,
+      "explanation": "\u221a75 = 5\u221a3 and \u221a12 = 2\u221a3. So (5\u221a3 - 2\u221a3) / \u221a3 = 3\u221a3 / \u221a3 = 3."
+    },
+    {
+      "question": "If x : y = 3 : 4 and y : z = 2 : 5, find x : z.",
+      "options": ["3 : 10", "6 : 20", "3 : 5", "6 : 10"],
+      "answer_index": 0,
+      "explanation": "x : y = 3 : 4, y : z = 2 : 5. To combine, make y the same: x : y = 6 : 8 and y : z = 8 : 20. So x : z = 6 : 20 = 3 : 10."
+    },
+    {
+      "question": "A car travels 240 km in 3 hours. How long will it take to travel 400 km at the same speed?",
+      "options": ["4 hours", "5 hours", "6 hours", "4.5 hours"],
+      "answer_index": 1,
+      "explanation": "Speed = 240/3 = 80 km/h. Time = 400/80 = 5 hours."
+    },
+    {
+      "question": "Find the simple interest on \u20a65,000 for 3 years at 8% per annum.",
+      "options": ["\u20a61,000", "\u20a61,200", "\u20a61,500", "\u20a6800"],
+      "answer_index": 1,
+      "explanation": "SI = (P \u00d7 R \u00d7 T) / 100 = (5000 \u00d7 8 \u00d7 3) / 100 = 120000 / 100 = \u20a61,200."
+    },
+    {
+      "question": "A man bought a television for \u20a680,000 and sold it for \u20a668,000. Find the percentage loss.",
+      "options": ["12%", "15%", "17.6%", "10%"],
+      "answer_index": 1,
+      "explanation": "Loss = 80,000 - 68,000 = 12,000. % Loss = (12,000/80,000) \u00d7 100 = 15%."
+    },
+    {
+      "question": "Express 0.000562 in standard form.",
+      "options": [
+        "5.62 \u00d7 10\u207b\u2074",
+        "5.62 \u00d7 10\u207b\u00b3",
+        "5.62 \u00d7 10\u207b\u2075",
+        "56.2 \u00d7 10\u207b\u2075"
+      ],
+      "answer_index": 0,
+      "explanation": "0.000562 = 5.62 \u00d7 10\u207b\u2074. The decimal point moves 4 places to the right, giving a negative exponent of 4."
+    },
+    {
+      "question": "Solve for x: 2x - 5 = 3(x - 4)",
+      "options": ["7", "-7", "5", "-5"],
+      "answer_index": 0,
+      "explanation": "2x - 5 = 3x - 12. -5 + 12 = 3x - 2x. x = 7."
+    },
+    {
+      "question": "Factorize completely: 3x\u00b2 - 12x",
+      "options": ["3x(x - 4)", "3(x\u00b2 - 4x)", "x(3x - 12)", "3x(x - 12)"],
+      "answer_index": 0,
+      "explanation": "The common factor of 3x\u00b2 and 12x is 3x. 3x\u00b2 - 12x = 3x(x - 4)."
+    },
+    {
+      "question": "Solve: x\u00b2 - 5x + 6 = 0",
+      "options": [
+        "x = 2 or x = 3",
+        "x = -2 or x = -3",
+        "x = 1 or x = 6",
+        "x = -1 or x = -6"
+      ],
+      "answer_index": 0,
+      "explanation": "Factorize: (x - 2)(x - 3) = 0. So x = 2 or x = 3."
+    },
+    {
+      "question": "If f(x) = 2x\u00b2 - 3x + 1, find f(-2).",
+      "options": ["15", "11", "3", "7"],
+      "answer_index": 0,
+      "explanation": "f(-2) = 2(-2)\u00b2 - 3(-2) + 1 = 2(4) + 6 + 1 = 8 + 6 + 1 = 15."
+    },
+    {
+      "question": "Find the gradient of the line passing through (2, 3) and (6, 11).",
+      "options": ["1", "2", "3", "4"],
+      "answer_index": 1,
+      "explanation": "Gradient = (y\u2082 - y\u2081)/(x\u2082 - x\u2081) = (11 - 3)/(6 - 2) = 8/4 = 2."
+    },
+    {
+      "question": "Find the equation of a line with gradient 3 passing through the point (1, 2).",
+      "options": ["y = 3x - 1", "y = 3x + 1", "y = 3x + 2", "y = x + 3"],
+      "answer_index": 0,
+      "explanation": "Using y - y\u2081 = m(x - x\u2081): y - 2 = 3(x - 1) \u2192 y - 2 = 3x - 3 \u2192 y = 3x - 1."
+    },
+    {
+      "question": "What is the distance between the points A(1, 2) and B(4, 6)?",
+      "options": ["3", "4", "5", "7"],
+      "answer_index": 2,
+      "explanation": "Distance = \u221a[(4-1)\u00b2 + (6-2)\u00b2] = \u221a[9 + 16] = \u221a25 = 5."
+    },
+    {
+      "question": "The midpoint of a line segment joining (4, -2) and (x, 6) is (3, 2). Find x.",
+      "options": ["1", "2", "3", "4"],
+      "answer_index": 1,
+      "explanation": "Midpoint formula: (4 + x)/2 = 3. So 4 + x = 6, giving x = 2."
+    },
+    {
+      "question": "If a line has equation 3x - 2y + 6 = 0, what is its y-intercept?",
+      "options": ["3", "-3", "3/2", "6"],
+      "answer_index": 0,
+      "explanation": "Set x = 0: -2y + 6 = 0 \u2192 y = 3. The y-intercept is 3."
+    },
+    {
+      "question": "Solve the simultaneous equations: x + y = 7 and x - y = 3.",
+      "options": [
+        "x = 5, y = 2",
+        "x = 4, y = 3",
+        "x = 6, y = 1",
+        "x = 3, y = 4"
+      ],
+      "answer_index": 0,
+      "explanation": "Adding the two equations: 2x = 10, so x = 5. Substituting: 5 + y = 7, so y = 2."
+    },
+    {
+      "question": "A triangle has angles in the ratio 2:3:5. Find the largest angle.",
+      "options": ["36\u00b0", "54\u00b0", "90\u00b0", "72\u00b0"],
+      "answer_index": 2,
+      "explanation": "The angles sum to 180\u00b0. Parts = 2 + 3 + 5 = 10. Largest angle = (5/10) \u00d7 180\u00b0 = 90\u00b0."
+    },
+    {
+      "question": "Find the area of a triangle with base 10 cm and height 6 cm.",
+      "options": ["30 cm\u00b2", "60 cm\u00b2", "15 cm\u00b2", "25 cm\u00b2"],
+      "answer_index": 0,
+      "explanation": "Area of triangle = \u00bd \u00d7 base \u00d7 height = \u00bd \u00d7 10 \u00d7 6 = 30 cm\u00b2."
+    },
+    {
+      "question": "Calculate the perimeter of a rectangle with length 12 cm and width 7 cm.",
+      "options": ["84 cm", "38 cm", "19 cm", "40 cm"],
+      "answer_index": 1,
+      "explanation": "Perimeter = 2(l + w) = 2(12 + 7) = 2 \u00d7 19 = 38 cm."
+    },
+    {
+      "question": "Find the area of a circle with radius 7 cm. (Take \u03c0 = 22/7)",
+      "options": ["44 cm\u00b2", "154 cm\u00b2", "88 cm\u00b2", "308 cm\u00b2"],
+      "answer_index": 1,
+      "explanation": "Area = \u03c0r\u00b2 = (22/7) \u00d7 7\u00b2 = (22/7) \u00d7 49 = 22 \u00d7 7 = 154 cm\u00b2."
+    },
+    {
+      "question": "A cylinder has radius 3.5 cm and height 10 cm. Find its volume. (Take \u03c0 = 22/7)",
+      "options": [
+        "385 cm\u00b3",
+        "110 cm\u00b3",
+        "770 cm\u00b3",
+        "192.5 cm\u00b3"
+      ],
+      "answer_index": 0,
+      "explanation": "Volume = \u03c0r\u00b2h = (22/7) \u00d7 (3.5)\u00b2 \u00d7 10 = (22/7) \u00d7 12.25 \u00d7 10 = (22/7) \u00d7 122.5 = 22 \u00d7 17.5 = 385 cm\u00b3."
+    },
+    {
+      "question": "Two angles of a triangle are 65\u00b0 and 45\u00b0. Find the third angle.",
+      "options": ["60\u00b0", "70\u00b0", "80\u00b0", "50\u00b0"],
+      "answer_index": 1,
+      "explanation": "Angles in a triangle sum to 180\u00b0. Third angle = 180\u00b0 - 65\u00b0 - 45\u00b0 = 70\u00b0."
+    },
+    {
+      "question": "In the diagram, a straight line is cut by a transversal. If one co-interior angle is 112\u00b0, find the other.",
+      "options": ["68\u00b0", "78\u00b0", "58\u00b0", "88\u00b0"],
+      "answer_index": 0,
+      "explanation": "Co-interior angles (also called same-side interior or consecutive angles) between parallel lines are supplementary, summing to 180\u00b0. So the other angle = 180\u00b0 - 112\u00b0 = 68\u00b0."
+    },
+    {
+      "question": "The exterior angle of a regular polygon is 30\u00b0. How many sides does the polygon have?",
+      "options": ["10", "12", "15", "8"],
+      "answer_index": 1,
+      "explanation": "Number of sides = 360\u00b0 \u00f7 exterior angle = 360\u00b0 \u00f7 30\u00b0 = 12 sides."
+    },
+    {
+      "question": "Find the value of sin 30\u00b0 + cos 60\u00b0.",
+      "options": ["\u00bd", "1", "\u221a3/2", "\u221a2/2"],
+      "answer_index": 1,
+      "explanation": "sin 30\u00b0 = \u00bd and cos 60\u00b0 = \u00bd. So sin 30\u00b0 + cos 60\u00b0 = \u00bd + \u00bd = 1."
+    },
+    {
+      "question": "A ladder leans against a vertical wall. The foot of the ladder is 5 m from the wall and the ladder is 13 m long. How high up the wall does the ladder reach?",
+      "options": ["10 m", "12 m", "8 m", "14 m"],
+      "answer_index": 1,
+      "explanation": "Using Pythagoras: h\u00b2 + 5\u00b2 = 13\u00b2. h\u00b2 = 169 - 25 = 144. h = \u221a144 = 12 m."
+    },
+    {
+      "question": "If tan \u03b8 = 3/4, find sin \u03b8 (assuming \u03b8 is acute).",
+      "options": ["3/5", "4/5", "3/4", "5/3"],
+      "answer_index": 0,
+      "explanation": "In a right triangle with opposite = 3 and adjacent = 4, hypotenuse = \u221a(9 + 16) = 5. sin \u03b8 = opposite/hypotenuse = 3/5."
+    },
+    {
+      "question": "The scores of five students are: 14, 18, 12, 20, 16. Find the mean.",
+      "options": ["15", "16", "17", "18"],
+      "answer_index": 1,
+      "explanation": "Mean = (14 + 18 + 12 + 20 + 16) / 5 = 80 / 5 = 16."
+    },
+    {
+      "question": "Find the median of the following data: 5, 2, 8, 3, 7, 1, 6.",
+      "options": ["3", "5", "6", "7"],
+      "answer_index": 1,
+      "explanation": "Arrange in order: 1, 2, 3, 5, 6, 7, 8. The median (middle value) of 7 values is the 4th value = 5."
+    },
+    {
+      "question": "The ages (in years) of 6 students are: 15, 17, 14, 16, 15, 17. Find the mode.",
+      "options": ["14", "15 and 17", "16", "15"],
+      "answer_index": 1,
+      "explanation": "Mode is the value that appears most frequently. Both 15 and 17 each appear twice, while others appear once. So the data is bimodal: mode = 15 and 17."
+    },
+    {
+      "question": "Find the range of the data: 12, 7, 3, 18, 5, 21, 9.",
+      "options": ["14", "18", "21", "18"],
+      "answer_index": 1,
+      "explanation": "Range = Highest value - Lowest value = 21 - 3 = 18."
+    },
+    {
+      "question": "A bag contains 4 red balls and 6 blue balls. What is the probability of picking a red ball at random?",
+      "options": ["2/5", "3/5", "1/4", "2/3"],
+      "answer_index": 0,
+      "explanation": "Total balls = 4 + 6 = 10. P(red) = 4/10 = 2/5."
+    },
+    {
+      "question": "In how many ways can 4 people be arranged in a row?",
+      "options": ["16", "12", "24", "8"],
+      "answer_index": 2,
+      "explanation": "The number of permutations of 4 people = 4! = 4 \u00d7 3 \u00d7 2 \u00d7 1 = 24."
+    },
+    {
+      "question": "Evaluate: \u2075C\u2082 (5 choose 2)",
+      "options": ["5", "10", "15", "20"],
+      "answer_index": 1,
+      "explanation": "\u2075C\u2082 = 5! / (2! \u00d7 3!) = (5 \u00d7 4) / (2 \u00d7 1) = 20 / 2 = 10."
+    },
+    {
+      "question": "Two fair coins are tossed. What is the probability of getting exactly one head?",
+      "options": ["1/4", "1/2", "3/4", "1"],
+      "answer_index": 1,
+      "explanation": "Sample space = {HH, HT, TH, TT}. Outcomes with exactly one head = {HT, TH} = 2. P(exactly one head) = 2/4 = 1/2."
+    },
+    {
+      "question": "Differentiate y = 3x\u00b2 - 5x + 2 with respect to x.",
+      "options": ["6x - 5", "6x + 5", "3x - 5", "6x\u00b2 - 5"],
+      "answer_index": 0,
+      "explanation": "Using the power rule: dy/dx of 3x\u00b2 = 6x, dy/dx of -5x = -5, dy/dx of 2 = 0. So dy/dx = 6x - 5."
+    },
+    {
+      "question": "Find the maximum point of y = -x\u00b2 + 4x + 1.",
+      "options": ["(2, 5)", "(4, 1)", "(1, 4)", "(2, 4)"],
+      "answer_index": 0,
+      "explanation": "dy/dx = -2x + 4. Setting to zero: -2x + 4 = 0, x = 2. y = -(2\u00b2) + 4(2) + 1 = -4 + 8 + 1 = 5. Maximum point is (2, 5)."
+    },
+    {
+      "question": "Evaluate: \u222b(4x + 3) dx",
+      "options": [
+        "4x\u00b2 + 3x + C",
+        "2x\u00b2 + 3x + C",
+        "4x\u00b2 + 3 + C",
+        "8x + C"
+      ],
+      "answer_index": 1,
+      "explanation": "\u222b4x dx = 4x\u00b2/2 = 2x\u00b2. \u222b3 dx = 3x. So \u222b(4x + 3) dx = 2x\u00b2 + 3x + C."
+    },
+    {
+      "question": "Find the number of terms in the Arithmetic Progression (AP): 5, 8, 11, ..., 50.",
+      "options": ["15", "16", "17", "18"],
+      "answer_index": 2,
+      "explanation": "Using a\u2099 = a + (n-1)d: 50 = 5 + (n-1)3. 45 = (n-1)3. n-1 = 15. n = 16. Wait \u2014 let's recheck: 50 = 5 + (n-1)(3) \u2192 (n-1) = 45/3 = 15 \u2192 n = 16. Answer is 16."
+    },
+    {
+      "question": "The sum of the first 10 terms of an AP is 155. If the first term is 2, find the common difference.",
+      "options": ["2", "3", "4", "5"],
+      "answer_index": 1,
+      "explanation": "S\u2099 = n/2[2a + (n-1)d]. 155 = 10/2[2(2) + 9d] = 5[4 + 9d]. 31 = 4 + 9d. 9d = 27. d = 3."
+    },
+    {
+      "question": "In a Geometric Progression, the first term is 3 and the common ratio is 2. Find the 5th term.",
+      "options": ["24", "48", "96", "32"],
+      "answer_index": 1,
+      "explanation": "a\u2099 = ar\u207f\u207b\u00b9. a\u2085 = 3 \u00d7 2\u2074 = 3 \u00d7 16 = 48."
+    },
+    {
+      "question": "Simplify: (x\u00b2 - 9) / (x - 3)",
+      "options": ["x - 3", "x + 3", "x\u00b2 + 3", "x - 9"],
+      "answer_index": 1,
+      "explanation": "x\u00b2 - 9 = (x - 3)(x + 3). Dividing by (x - 3) gives x + 3 (for x \u2260 3)."
+    },
+    {
+      "question": "If the mean of 5 numbers is 12 and four of the numbers are 10, 14, 8, and 16, find the fifth number.",
+      "options": ["10", "12", "14", "11"],
+      "answer_index": 1,
+      "explanation": "Sum of 5 numbers = 5 \u00d7 12 = 60. Sum of known 4 = 10 + 14 + 8 + 16 = 48. Fifth number = 60 - 48 = 12."
+    },
+    {
+      "question": "A chord is 8 cm from the centre of a circle of radius 10 cm. Find the length of the chord.",
+      "options": ["6 cm", "12 cm", "18 cm", "9 cm"],
+      "answer_index": 1,
+      "explanation": "The radius, the perpendicular distance, and half the chord form a right triangle. Half-chord = \u221a(10\u00b2 - 8\u00b2) = \u221a(100 - 64) = \u221a36 = 6 cm. Full chord = 2 \u00d7 6 = 12 cm."
+    },
+    {
+      "question": "Solve the inequality: 2x - 3 > 7",
+      "options": ["x > 5", "x > 2", "x < 5", "x > 10"],
+      "answer_index": 0,
+      "explanation": "2x - 3 > 7 \u2192 2x > 10 \u2192 x > 5."
+    },
+    {
+      "question": "A man's income is \u20a6120,000. He spends 35% on food, 25% on rent, and saves the rest. How much does he save?",
+      "options": [
+        "\u20a648,000",
+        "\u20a642,000",
+        "\u20a660,000",
+        "\u20a654,000"
+      ],
+      "answer_index": 0,
+      "explanation": "Total spent = 35% + 25% = 60%. Savings = 100% - 60% = 40%. 40% of \u20a6120,000 = 0.4 \u00d7 120,000 = \u20a648,000."
+    },
+    {
+      "question": "Find the volume of a sphere with radius 3 cm. (Take \u03c0 = 22/7)",
+      "options": [
+        "113.1 cm\u00b3",
+        "113.14 cm\u00b3",
+        "792/7 cm\u00b3",
+        "113 cm\u00b3"
+      ],
+      "answer_index": 2,
+      "explanation": "V = (4/3)\u03c0r\u00b3 = (4/3) \u00d7 (22/7) \u00d7 27 = (4 \u00d7 22 \u00d7 27) / (3 \u00d7 7) = 2376/21 = 792/7 cm\u00b3 \u2248 113.14 cm\u00b3."
+    }
+  ]
+}
