@@ -20,6 +20,9 @@ function createFreshState(chatId) {
     interval: null,
     lastQuestionMsgId: null,
     questionSentAt: null,
+    // Pause/resume support: quiz pauses instead of stopping on send errors
+    isPaused: false,
+    pausedAt: null,
   };
 }
 
