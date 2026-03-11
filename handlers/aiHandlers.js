@@ -2,32 +2,39 @@
  * handlers/aiHandlers.js
  * AI circuit breaker, safeAi wrapper, and AI-facing commands.
  *
- * CHANGES v3.3.0:
- * - .ai command now sends response directly (no "Thinking..." edit trick)
- *   because message.edit() is unreliable on WhatsApp Web and often silently fails.
- * - Added timeout so users always get a response even if Groq is slow.
+ * CHANGES v3.4.0 (AI quiz mode):
+ * - .genq now generates questions and IMMEDIATELY starts a live quiz
+ *   using the existing quiz engine (same timer, scoring, leaderboard).
+ *   Questions are in-memory only — nothing is written to disk.
+ * - Old save-to-disk flow removed. Use .start to run saved question files.
  *
  * Exports:
  *   aiCircuitBreaker  – shared singleton used by quizHandlers too
  *   safeAi            – fire-and-forget-safe AI call wrapper
  *   handleAiChat      – .ai command
- *   handleGenerateQuestions – .genq command
+ *   handleGenerateQuestions – .genq command (now starts AI quiz directly)
  *   handleAiUser      – .aiuser command
  */
 
-const path = require("path");
 const CONFIG = require("../config");
 const logger = require("../logger");
 const utils = require("../utils");
 const permissions = require("../permissions");
 const aiService = require("../Aiservice");
+const quizManager = require("../quizManager");
+const storage = require("../storage");
+const { activeQuizzes } = require("../state");
 const { safeSend, aiCircuitBreaker, safeAi } = require("./helpers");
+
+// Lazy-required to avoid circular deps at load time
+function getQuizHandlers() {
+  return require("./quizHandlers");
+}
 
 // ── .ai command — free-form educational chat ──────────────────────
 async function handleAiChat(msg, text) {
   const { emojis } = CONFIG.messages;
 
-  // Check AI access — Bot Admins always allowed, others need explicit grant
   if (!(await permissions.canUseAi(msg))) {
     await msg.reply(
       `${emojis.warning} You don't have access to the AI feature.\n\n` +
@@ -59,8 +66,6 @@ async function handleAiChat(msg, text) {
     return;
   }
 
-  // Send response directly — no "Thinking..." message that needs editing.
-  // msg.reply() with edit() is unreliable; sometimes the edit never shows.
   const response = await safeAi(aiService.freeChat.bind(aiService), text);
 
   if (!response) {
@@ -73,114 +78,192 @@ async function handleAiChat(msg, text) {
   await msg.reply(`${emojis.ai} *AI Answer*\n\n${response}`);
 }
 
-// ── .genq command — generate AI quiz questions (Bot Admin+) ───────
-async function handleGenerateQuestions(msg, args) {
+// ── .genq command — generate AI questions and start quiz directly ──
+//
+// Usage:  .genq [subject] [topic...] [count]
+// Example: .genq biology cell division 5
+//
+// Flow:
+//   1. Validate permissions & AI availability
+//   2. Tell the group generation is starting
+//   3. Call Groq to generate questions
+//   4. Show a 2-question preview
+//   5. Start the quiz immediately using the existing engine
+async function handleGenerateQuestions(msg, argParts) {
   const { emojis } = CONFIG.messages;
+  const chatId = msg.from;
 
-  if (!(await permissions.isBotAdmin(msg))) {
-    await msg.reply("⛔ Only Bot Admins or the Owner can generate questions.");
-    return;
-  }
-
-  if (!aiCircuitBreaker.canTry()) {
-    await msg.reply(`${emojis.warning} AI unavailable right now.`);
-    return;
-  }
-
-  if (args.length < 2) {
+  // ── Permission check ────────────────────────────────────────────
+  if (!(await permissions.isModerator(msg))) {
     await msg.reply(
-      `${emojis.error} Usage: ${CONFIG.bot.prefix}genq [subject] [topic] [count]\n` +
-        `Example: _${CONFIG.bot.prefix}genq biology cell division 5_`,
+      "⛔ Only Moderators, Bot Admins, or the Owner can run AI quizzes.",
     );
     return;
   }
 
-  const subject = args[0];
-  const countArg = parseInt(args[args.length - 1]);
-  const hasCount = !isNaN(countArg) && countArg > 0;
-  const count = Math.min(hasCount ? countArg : 5, 10);
-  const topic = hasCount
-    ? args.slice(1, -1).join(" ")
-    : args.slice(1).join(" ");
+  // ── Already running? ────────────────────────────────────────────
+  const existingState = activeQuizzes.get(chatId);
+  if (existingState?.isActive) {
+    await msg.reply(
+      `${emojis.warning} A quiz is already running!\n\n` +
+        `Subject: ${existingState.subject?.toUpperCase()}` +
+        (existingState.aiTopic
+          ? ` — ${existingState.aiTopic}`
+          : ` ${existingState.year}`) +
+        `\nQ${existingState.currentQuestionIndex + 1}/${existingState.questions.length}\n\n` +
+        `Use ${CONFIG.bot.prefix}stop to end it first.`,
+    );
+    return;
+  }
 
-  // Send status message directly (no edit)
+  // ── Circuit breaker ─────────────────────────────────────────────
+  if (!aiCircuitBreaker.canTry()) {
+    const s = aiCircuitBreaker.status();
+    await msg.reply(
+      `${emojis.warning} AI is temporarily unavailable. ` +
+        `Resets in ~${Math.ceil(s.resetIn / 60)}min.`,
+    );
+    return;
+  }
+
+  // ── Parse args: .genq subject topic words... [optional_count] ───
+  if (argParts.length < 2) {
+    await msg.reply(
+      `${emojis.error} Usage: ${CONFIG.bot.prefix}genq [subject] [topic] [count]\n\n` +
+        `Examples:\n` +
+        `• _${CONFIG.bot.prefix}genq biology cell division 5_\n` +
+        `• _${CONFIG.bot.prefix}genq chemistry organic reactions 8_\n` +
+        `• _${CONFIG.bot.prefix}genq physics waves_\n\n` +
+        `Count is optional (default 5, max 10).`,
+    );
+    return;
+  }
+
+  const subject = argParts[0].toLowerCase();
+  const lastArg = argParts[argParts.length - 1];
+  const trailingCount = parseInt(lastArg);
+  const hasCount =
+    !isNaN(trailingCount) && trailingCount > 0 && argParts.length > 2;
+  const count = Math.min(hasCount ? trailingCount : 5, 10);
+  const topicParts = hasCount ? argParts.slice(1, -1) : argParts.slice(1);
+  const topic = topicParts.join(" ");
+
+  if (!topic) {
+    await msg.reply(
+      `${emojis.error} Please provide a topic after the subject.`,
+    );
+    return;
+  }
+
+  const chatCfg = storage.getQuizConfig(chatId);
+
+  // ── Announce generation ─────────────────────────────────────────
   await msg.reply(
-    `${emojis.ai} Generating ${count} questions on *${topic}*...\n_This takes 10–15 seconds. You'll get the result shortly._`,
+    `${emojis.ai} *Generating AI Quiz*\n\n` +
+      `📖 Subject: *${subject.toUpperCase()}*\n` +
+      `🧠 Topic: *${topic}*\n` +
+      `📋 Questions: *${count}*\n\n` +
+      `_Hold tight — this takes about 10 seconds..._`,
   );
 
-  const questions = await safeAi(
+  // ── Generate questions via Groq ─────────────────────────────────
+  const raw = await safeAi(
     aiService.generateQuestions.bind(aiService),
     subject,
     topic,
     count,
   );
 
-  if (!questions || questions.length === 0) {
+  if (!raw || raw.length === 0) {
     await safeSend(
-      msg.from,
-      `${emojis.error} Failed to generate questions. Try a more specific topic.`,
+      chatId,
+      `${emojis.error} Failed to generate questions. Try a more specific topic, or check that your GROQ_API_KEY is set.`,
     );
     return;
   }
 
-  const preview = questions
-    .slice(0, 3)
+  // ── Show preview of first 2 questions ──────────────────────────
+  const preview = raw
+    .slice(0, 2)
     .map((q, i) => {
       const opts = q.options
         .map((o, j) => `${utils.indexToLetter(j)}. ${o}`)
         .join("\n");
-      return (
-        `*Q${i + 1}.* ${q.question}\n${opts}\n` +
-        `✅ Answer: ${utils.indexToLetter(q.answer_index)}`
-      );
+      return `*Q${i + 1}.* ${q.question}\n${opts}`;
     })
     .join("\n\n");
 
   await safeSend(
-    msg.from,
-    `${emojis.ai} *Generated ${questions.length} questions for ` +
-      `${subject.toUpperCase()} — "${topic}"*\n\n${preview}` +
-      `${questions.length > 3 ? `\n\n_...and ${questions.length - 3} more_` : ""}\n\n` +
-      `Reply *yes* within 30s to save.`,
+    chatId,
+    `${emojis.ai} *Preview (first 2 of ${raw.length}):*\n\n${preview}`,
   );
 
-  const client = require("../client");
-  const confirmed = await _waitForReply(
-    client,
-    msg.from,
-    permissions.getUserId(msg),
-    30000,
-  );
+  // ── Start the quiz in-memory ────────────────────────────────────
+  const started = quizManager.startFromQuestions(raw, subject, topic, chatId);
 
-  if (!confirmed) {
-    await safeSend(msg.from, `${emojis.info} Questions discarded.`);
+  if (!started) {
+    await safeSend(
+      chatId,
+      `${emojis.error} Could not start the AI quiz — no valid questions.`,
+    );
     return;
   }
 
-  const fs = require("fs").promises;
-  const ts = Date.now();
-  const filename = `ai_${subject}_${ts}.json`;
-  const dir = path.join(CONFIG.data.dataDirectory, subject);
-  await fs.mkdir(dir, { recursive: true });
-  await fs.writeFile(
-    path.join(dir, filename),
-    JSON.stringify(
-      {
-        paper_type: "AI_GENERATED",
-        topic,
-        generated_at: new Date().toISOString(),
-        questions,
-      },
-      null,
-      2,
-    ),
+  const freshState = activeQuizzes.get(chatId);
+  freshState.startedSubject = subject;
+  freshState.startedYear = `AI`;
+  freshState.startedAt = Date.now();
+
+  // ── Send start banner ───────────────────────────────────────────
+  await safeSend(
+    chatId,
+    `${emojis.rocket} *AI Quiz Starting!*\n\n` +
+      `📖 Subject: *${subject.toUpperCase()}*\n` +
+      `🧠 Topic: *${topic}*\n` +
+      `📋 Questions: *${freshState.questions.length}*\n` +
+      `${emojis.timer} Time per question: *${utils.formatSeconds(chatCfg.questionInterval)}*\n` +
+      `⏳ Delay between Qs: *${utils.formatSeconds(chatCfg.delayBeforeNextQuestion)}*\n\n` +
+      `Send *A, B, C, or D* to answer. You can change your answer until time is up! 🍀`,
   );
 
-  await safeSend(
-    msg.from,
-    `${emojis.success} Saved ${questions.length} questions! File: \`${filename}\`\n` +
-      `Use: _${CONFIG.bot.prefix}start ${subject} ai_${subject}_${ts}_`,
-  );
+  const welcome = storage.getWelcomeMessage(chatId);
+  if (welcome) await safeSend(chatId, welcome);
+
+  await utils.sleep(chatCfg.delayBeforeFirstQuestion || 3000);
+
+  // Re-check quiz is still active (someone might have .stop'd during the sleep)
+  const s = activeQuizzes.get(chatId);
+  if (!s || !s.isActive) return;
+
+  // ── Send first question using the shared quiz engine ────────────
+  const { startQuizInterval, sendQuestionMessage } = getQuizHandlers();
+  const messageFormatter = require("../messageFormatter");
+
+  const firstQ = quizManager.getCurrentQuestion(s);
+  if (!firstQ) return;
+
+  const questionText = messageFormatter.formatQuestion(firstQ, 0);
+  let sentMsg = null;
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    sentMsg = await sendQuestionMessage(chatId, questionText, firstQ.image);
+    if (sentMsg) break;
+    if (attempt < 3) await utils.sleep(3000);
+  }
+
+  if (!sentMsg) {
+    await safeSend(
+      chatId,
+      `${emojis.error} Failed to send the first question. Quiz cancelled.`,
+    );
+    quizManager.stop(chatId);
+    return;
+  }
+
+  const liveState = activeQuizzes.get(chatId);
+  if (!liveState || !liveState.isActive) return;
+  liveState.lastQuestionMsgId = sentMsg?.id?._serialized || null;
+  liveState.questionSentAt = Date.now();
+  await startQuizInterval(chatId);
 }
 
 // ── .aiuser command — manage AI access (Bot Admin+) ───────────────
@@ -250,29 +333,6 @@ async function handleAiUser(msg, args, resolveTarget) {
         `Example: _${CONFIG.bot.prefix}aiuser add @user_`,
     );
   }
-}
-
-// ── Internal: wait for a "yes" reply within timeout ───────────────
-function _waitForReply(client, chatId, userId, timeoutMs) {
-  return new Promise((resolve) => {
-    const timer = setTimeout(() => {
-      client.removeListener("message_create", handler);
-      resolve(null);
-    }, timeoutMs);
-
-    const handler = async (m) => {
-      if (
-        m.from === chatId &&
-        (m.author === userId || m.from === userId) &&
-        m.body?.trim().toLowerCase() === "yes"
-      ) {
-        clearTimeout(timer);
-        client.removeListener("message_create", handler);
-        resolve(m);
-      }
-    };
-    client.on("message_create", handler);
-  });
 }
 
 module.exports = {

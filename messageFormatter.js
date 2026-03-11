@@ -1,5 +1,5 @@
 /**
- * messageFormatter.js — v3.2.0
+ * messageFormatter.js — v3.4.0
  */
 
 const CONFIG = require("./config");
@@ -12,7 +12,12 @@ const messageFormatter = {
     const optionsText = question.options
       .map((opt, i) => `${utils.indexToLetter(i)}. ${opt}`)
       .join("\n");
-    const yearTag = question.year ? `\n📅 Year: ${question.year}` : "";
+    // For AI-generated questions the "year" field is "AI" — show nothing.
+    // For normal questions it's a 4-digit year — show it.
+    const yearTag =
+      question.year && question.year !== "AI"
+        ? `\n📅 Year: ${question.year}`
+        : "";
     return `*Question ${index + 1}*\n\n${question.question}\n\n${optionsText}${yearTag}`;
   },
 
@@ -90,7 +95,15 @@ const messageFormatter = {
         `• *${prefix}setinterval [sec]* – Time per question (5–300s)\n` +
         `• *${prefix}setdelay [sec]* – Delay before next question (1–60s)\n` +
         `• *${prefix}setmax [num]* – Max questions per quiz (1–200)\n` +
-        `• *${prefix}chatconfig* – Show this chat's config\n\n`;
+        `• *${prefix}chatconfig* – Show this chat's config\n`;
+
+      if (aiEnabled && CONFIG.ai.features.generateQuestions) {
+        text +=
+          `• *${prefix}genq [subject] [topic] [count]* – 🤖 Generate & start an AI quiz\n` +
+          `  _e.g. ${prefix}genq biology photosynthesis 5_\n`;
+      }
+
+      text += "\n";
     }
 
     if (isBotAdmin) {
@@ -104,12 +117,7 @@ const messageFormatter = {
         `• *${prefix}setwelcome [msg]* – Message sent when quiz starts\n` +
         `• *${prefix}clearwelcome* – Remove welcome message\n` +
         `• *${prefix}resetconfig* – Reset quiz settings to defaults\n` +
-        `• *${prefix}quizhistory* – View past quiz results\n`;
-
-      if (aiEnabled && CONFIG.ai.features.generateQuestions) {
-        text += `• *${prefix}genq [subject] [topic] [count]* – Generate AI questions\n`;
-      }
-      text += "\n";
+        `• *${prefix}quizhistory* – View past quiz results\n\n`;
     }
 
     if (isOwner) {

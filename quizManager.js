@@ -41,6 +41,42 @@ const quizManager = {
     return this.getCurrentQuestion(state);
   },
 
+  // ── startFromQuestions — AI quiz mode ─────────────────────────────
+  // Accepts a pre-built questions array (e.g. from Groq) and starts
+  // the quiz directly without loading anything from disk.
+  // Returns true on success, false if questions array is empty.
+  startFromQuestions(questions, subject, topic, chatId) {
+    if (!questions || questions.length === 0) return false;
+
+    const state = getOrCreateState(chatId);
+    const chatCfg = storage.getQuizConfig(chatId);
+
+    // Respect per-chat max questions cap
+    const capped = questions.slice(0, chatCfg.maxQuestionsPerQuiz);
+
+    state.isActive = true;
+    state.subject = subject;
+    // Store topic in year field so scoreboard / history shows it nicely
+    state.year = `AI`;
+    state.aiTopic = topic; // extra field for display
+    state.paperType = "AI_GENERATED";
+    state.questions = capped;
+    state.currentQuestionIndex = 0;
+    state.scoreBoard = {};
+    state.currentRespondents = {};
+    state.currentAnswers = {};
+    state.startTime = Date.now();
+    state.lastQuestionMsgId = null;
+    state.questionSentAt = null;
+    state.isPaused = false;
+    state.pausedAt = null;
+
+    logger.success(
+      `AI quiz started in ${chatId}: ${subject} — "${topic}" (${capped.length} questions)`,
+    );
+    return true;
+  },
+
   async start(subject, year, chatId) {
     const state = getOrCreateState(chatId);
     const chatCfg = storage.getQuizConfig(chatId);
