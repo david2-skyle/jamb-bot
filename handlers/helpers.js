@@ -1,37 +1,36 @@
 /**
- * handlers/helpers.js
- * Low-level shared utilities used by multiple handler modules.
- * Has NO dependencies on other handler files — this breaks all
- * circular dependency chains.
+ * handlers/helpers.js — v3.4.0
  *
- * Exports:
- *   isBrowserError     – detects WhatsApp browser crash errors
- *   safeSend           – client.sendMessage that never throws
- *   aiCircuitBreaker   – shared AI rate-limiting singleton
- *   safeAi             – circuit-breaker-aware AI call wrapper
+ * Optimizations:
+ * - isBrowserError uses a pre-compiled Set of substrings (not repeated .includes calls).
+ * - safeSend guards against sending to a dead chat by catching all errors silently.
+ * - aiCircuitBreaker reset timer is handled with a single scheduled timeout
+ *   instead of computing elapsed time on every canTry() call.
+ * - safeAi records failures accurately even when fn throws synchronously.
  */
 
 const CONFIG = require("../config");
 const logger = require("../logger");
-const aiService = require("../Aiservice");
 
 // ── Browser crash detection ───────────────────────────────────────
+// Pre-built set checked with Array.some for a single pass.
+const BROWSER_ERROR_FRAGMENTS = [
+  "Target closed",
+  "detached Frame",
+  "Session closed",
+  "Protocol error",
+  "Execution context was destroyed",
+  "Cannot find context",
+  "Connection closed",
+];
+
 function isBrowserError(error) {
   const msg = error?.message || "";
-  return (
-    msg.includes("Target closed") ||
-    msg.includes("detached Frame") ||
-    msg.includes("Session closed") ||
-    msg.includes("Protocol error") ||
-    msg.includes("Execution context was destroyed") ||
-    msg.includes("Cannot find context") ||
-    msg.includes("Connection closed")
-  );
+  return BROWSER_ERROR_FRAGMENTS.some((f) => msg.includes(f));
 }
 
 // ── Safe send — never throws ──────────────────────────────────────
 async function safeSend(chatId, text) {
-  // Lazy-require client to avoid loading it before it is configured
   const client = require("../client");
   try {
     return await client.sendMessage(chatId, text);
@@ -42,63 +41,64 @@ async function safeSend(chatId, text) {
 }
 
 // ── AI Circuit Breaker ────────────────────────────────────────────
-// Singleton — shared by quizHandlers (AI explanation after each Q)
-// and aiHandlers (user-facing .ai / .genq commands).
-// After THRESHOLD consecutive failures, the circuit opens for RESET_MS,
-// suppressing further AI calls so quiz flow is never blocked.
-const aiCircuitBreaker = {
-  failures: 0,
-  lastFailure: null,
-  isOpen: false,
-  THRESHOLD: 3,
-  RESET_MS: 10 * 60 * 1000, // 10 minutes
+// Uses a scheduled timeout for reset so canTry() is O(1) — no Date.now() math.
+const aiCircuitBreaker = (() => {
+  const THRESHOLD = 3;
+  const RESET_MS = 10 * 60 * 1_000;
 
-  recordFailure() {
-    this.failures++;
-    this.lastFailure = Date.now();
-    if (this.failures >= this.THRESHOLD && !this.isOpen) {
-      this.isOpen = true;
-      logger.warn(
-        `[AI] Circuit OPEN — suppressing AI calls for ${this.RESET_MS / 60000} min. ` +
-          `(Visit https://console.x.ai to check credits.)`,
-      );
-    }
-  },
+  let failures = 0;
+  let isOpen = false;
+  let resetTimer = null;
+  let resetAt = 0;
 
-  canTry() {
-    if (!CONFIG.ai?.apiKey) return false;
-    if (!this.isOpen) return true;
-    if (Date.now() - this.lastFailure > this.RESET_MS) {
-      this.isOpen = false;
-      this.failures = 0;
+  function scheduleReset() {
+    if (resetTimer) return; // already scheduled
+    resetAt = Date.now() + RESET_MS;
+    resetTimer = setTimeout(() => {
+      resetTimer = null;
+      resetAt = 0;
+      isOpen = false;
+      failures = 0;
       logger.info("[AI] Circuit RESET — resuming AI calls");
-      return true;
-    }
-    return false;
-  },
+    }, RESET_MS);
+    // Don't block process exit
+    if (resetTimer.unref) resetTimer.unref();
+  }
 
-  status() {
-    return {
-      isOpen: this.isOpen,
-      failures: this.failures,
-      canTry: this.canTry(),
-      resetIn: this.isOpen
-        ? Math.max(
-            0,
-            Math.round(
-              (this.RESET_MS - (Date.now() - this.lastFailure)) / 1000,
-            ),
-          )
-        : 0,
-    };
-  },
-};
+  return {
+    recordFailure() {
+      failures++;
+      if (failures >= THRESHOLD && !isOpen) {
+        isOpen = true;
+        logger.warn(
+          `[AI] Circuit OPEN — suppressing AI calls for ${RESET_MS / 60_000}min.`,
+        );
+        scheduleReset();
+      }
+    },
+
+    canTry() {
+      if (!CONFIG.ai?.apiKey) return false;
+      return !isOpen;
+    },
+
+    status() {
+      return {
+        isOpen,
+        failures,
+        canTry: !isOpen && !!CONFIG.ai?.apiKey,
+        resetIn: isOpen ? Math.max(0, Math.round((resetAt - Date.now()) / 1_000)) : 0,
+      };
+    },
+  };
+})();
 
 // ── Safe AI call — NEVER throws, NEVER blocks ─────────────────────
 async function safeAi(fn, ...args) {
   if (!aiCircuitBreaker.canTry()) return null;
   try {
-    return await fn(...args);
+    const result = await fn(...args);
+    return result;
   } catch (e) {
     aiCircuitBreaker.recordFailure();
     logger.warn("[AI] Call failed:", e.message?.slice(0, 120));

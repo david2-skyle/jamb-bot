@@ -55,7 +55,7 @@ const server = http.createServer(async (req, res) => {
           <script>setTimeout(() => location.reload(), 20000);</script>
         </body></html>
       `);
-    } catch (e) {
+    } catch {
       res.writeHead(500);
       res.end("Error generating QR");
     }
@@ -63,18 +63,22 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (req.url === "/health") {
+    const mem = process.memoryUsage();
     res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(
-      JSON.stringify({
-        status: "ok",
-        authenticated: isAuthenticated,
-        version: CONFIG.bot.version,
-        ai: !!CONFIG.ai.apiKey,
-        activeQuizzes: activeQuizzes.size,
-        contactCache: utils.contactCache.size(),
-        uptime: process.uptime(),
-      }),
-    );
+    res.end(JSON.stringify({
+      status: "ok",
+      authenticated: isAuthenticated,
+      version: CONFIG.bot.version,
+      ai: !!CONFIG.ai.apiKey,
+      activeQuizzes: activeQuizzes.size,
+      contactCache: utils.contactCache.size(),
+      questionCache: dataManager._questionCache.size(),
+      uptime: process.uptime(),
+      memory: {
+        rss: `${Math.round(mem.rss / 1024 / 1024)}MB`,
+        heap: `${Math.round(mem.heapUsed / 1024 / 1024)}MB / ${Math.round(mem.heapTotal / 1024 / 1024)}MB`,
+      },
+    }));
     return;
   }
 
@@ -85,30 +89,36 @@ const server = http.createServer(async (req, res) => {
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => logger.info(`QR server running on port ${PORT}`));
 
-// ── Render keep-alive ─────────────────────────────────────────────
+// ── Render keep-alive (with abort on shutdown) ────────────────────
+let keepAliveTimer = null;
 if (process.env.RENDER_EXTERNAL_URL) {
   const keepAliveUrl = `${process.env.RENDER_EXTERNAL_URL}/health`;
-  setInterval(
-    () => {
-      https
-        .get(keepAliveUrl, (res) => {
-          logger.debug(`Keep-alive ping: ${res.statusCode}`);
-        })
-        .on("error", (e) => {
-          logger.warn("Keep-alive ping failed:", e.message);
-        });
-    },
-    10 * 60 * 1000,
-  );
+  keepAliveTimer = setInterval(() => {
+    https.get(keepAliveUrl, (res) => {
+      res.resume(); // consume response body so socket is released
+      logger.debug(`Keep-alive ping: ${res.statusCode}`);
+    }).on("error", (e) => {
+      logger.warn("Keep-alive ping failed:", e.message);
+    });
+  }, 10 * 60 * 1_000);
+  if (keepAliveTimer.unref) keepAliveTimer.unref();
   logger.info(`Keep-alive enabled → ${keepAliveUrl}`);
 }
+
+// ── Periodic memory log (helps spot leaks early) ──────────────────
+const memTimer = setInterval(() => {
+  const mb = Math.round(process.memoryUsage().rss / 1024 / 1024);
+  if (mb > 400) logger.warn(`[Memory] RSS ${mb}MB — approaching limit`);
+  else logger.debug(`[Memory] RSS ${mb}MB`);
+}, 5 * 60 * 1_000);
+if (memTimer.unref) memTimer.unref();
 
 // ── WhatsApp client events ────────────────────────────────────────
 client.on("qr", (qr) => {
   currentQR = qr;
   isAuthenticated = false;
   qrcode.generate(qr, { small: true });
-  logger.info(`QR code ready — visit your Railway URL to scan it`);
+  logger.info("QR code ready — visit your Railway URL to scan it");
 });
 
 client.on("ready", () => {
@@ -144,32 +154,18 @@ async function initializeBot() {
 
   logger.info(`Prefix:  ${CONFIG.bot.prefix}`);
   logger.info(`Owners:  ${CONFIG.bot.owners.length}`);
-  logger.info(
-    `AI:      ${CONFIG.ai.apiKey ? `enabled (${CONFIG.ai.model})` : "disabled (no XAI_API_KEY)"}`,
-  );
+  logger.info(`AI:      ${CONFIG.ai.apiKey ? `enabled (${CONFIG.ai.model})` : "disabled (no GROQ_API_KEY)"}`);
 
-  const adminCount = Object.values(storage.permissions.botAdmins).flat().length;
-  const modCount = Object.values(storage.permissions.moderators).flat().length;
-  const disabledCount = storage.permissions.disabledChats.length;
+  const adminCount = Object.values(storage.permissions.botAdmins).reduce((s, a) => s + a.length, 0);
+  const modCount   = Object.values(storage.permissions.moderators).reduce((s, a) => s + a.length, 0);
+  logger.info(`Bot Admins: ${adminCount} | Moderators: ${modCount}`);
 
-  logger.info(
-    `Bot Admins: ${adminCount} across ${Object.keys(storage.permissions.botAdmins).length} chat(s)`,
-  );
-  logger.info(
-    `Moderators: ${modCount} across ${Object.keys(storage.permissions.moderators).length} chat(s)`,
-  );
-  if (disabledCount > 0) logger.warn(`Disabled chats: ${disabledCount}`);
+  if (storage.permissions.disabledChats.length > 0)
+    logger.warn(`Disabled chats: ${storage.permissions.disabledChats.length}`);
   if (storage.isGloballyDisabled())
     logger.warn("⚠️  Bot is GLOBALLY DISABLED — only Owner can use it");
 
-  // Start API server before WhatsApp authenticates
-  apiServer.init({
-    activeQuizzes,
-    storage,
-    commandHandler,
-    dataManager,
-    server,
-  });
+  apiServer.init({ activeQuizzes, storage, commandHandler, dataManager, server });
 
   logger.info("Starting WhatsApp client...");
   client.initialize();
@@ -178,21 +174,23 @@ async function initializeBot() {
 // ── Graceful shutdown ─────────────────────────────────────────────
 async function gracefulShutdown(signal) {
   logger.info(`Received ${signal}, shutting down...`);
+  if (keepAliveTimer) clearInterval(keepAliveTimer);
+  clearInterval(memTimer);
   for (const [chatId] of activeQuizzes) quizManager.stop(chatId);
-  try {
-    await client.destroy();
-  } catch {}
+  try { await client.destroy(); } catch { }
   server.close();
   process.exit(0);
 }
 
-process.on("SIGINT", () => gracefulShutdown("SIGINT"));
+process.on("SIGINT",  () => gracefulShutdown("SIGINT"));
 process.on("SIGTERM", () => gracefulShutdown("SIGTERM"));
-process.on("unhandledRejection", (error) =>
-  logger.error("Unhandled rejection:", error?.message || error),
-);
-process.on("uncaughtException", (error) =>
-  logger.error("Uncaught exception:", error?.message || error),
-);
+
+process.on("unhandledRejection", (reason) => {
+  logger.error("Unhandled rejection:", reason?.stack || reason?.message || reason);
+});
+process.on("uncaughtException", (error) => {
+  logger.error("Uncaught exception:", error?.stack || error?.message || error);
+  // Don't exit — let Railway restart if truly fatal
+});
 
 initializeBot();

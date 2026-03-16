@@ -1,15 +1,18 @@
 /**
- * handlers/quizHandlers.js
- * Core quiz engine and quiz-facing commands.
+ * handlers/quizHandlers.js — v3.4.0
  *
- * CHANGES v3.3.2 (resilience update):
- * - On send failure, quiz PAUSES instead of stopping (scores preserved).
- *   A paused quiz auto-resumes after PAUSE_RETRY_MS and tries to continue.
- * - processQuestionEnd is guarded against browser errors: if a browser
- *   error occurs mid-question-end, state is preserved so quiz can resume.
- * - getContact errors are fully swallowed — name falls back to cached/userId.
- * - _sendWithRetry uses longer delays on later attempts to survive transient
- *   WhatsApp Web slowdowns.
+ * Optimizations:
+ * - startQuizInterval uses setTimeout (single-shot) instead of setInterval
+ *   with elapsed-time math. This eliminates timer drift and the O(1s) busy
+ *   poll that was firing every second.
+ * - Per-chat endingQuestion guard moved to a boolean on state (avoids a
+ *   module-level Set lookup on every processQuestionEnd call).
+ * - handleAnswer: contact lookup moved to a try/catch micro-task so
+ *   answer recording is never delayed by a slow WA contact fetch.
+ * - formatQuestion result is computed once per question, not re-computed
+ *   on each retry.
+ * - All setTimeout/setInterval handles are unref()'d so they don't prevent
+ *   graceful shutdown.
  */
 
 const CONFIG = require("../config");
@@ -23,37 +26,49 @@ const messageFormatter = require("../messageFormatter");
 const { getOrCreateState, activeQuizzes } = require("../state");
 const client = require("../client");
 const aiService = require("../Aiservice");
-const {
-  isBrowserError,
-  safeSend,
-  aiCircuitBreaker,
-  safeAi,
-} = require("./helpers");
+const { isBrowserError, safeSend, aiCircuitBreaker, safeAi } = require("./helpers");
 
-// ── Per-chat end-question guard ───────────────────────────────────
-const endingQuestion = new Set();
+const PAUSE_RETRY_MS = 15_000;
 
-// How long to wait before retrying a paused quiz (ms)
-const PAUSE_RETRY_MS = 15000;
+// ── sendQuestionMessage ───────────────────────────────────────────
+async function sendQuestionMessage(chatId, text, imgPath, replyToMsg = null) {
+  try {
+    const media = imgPath ? await utils.loadImage(imgPath) : null;
+    if (media) {
+      try {
+        return await client.sendMessage(chatId, media, { caption: text });
+      } catch (e) {
+        if (isBrowserError(e)) return null;
+        logger.warn("[Send] Image send failed, falling back to text:", e.message);
+      }
+    }
+    if (replyToMsg) {
+      try { return await replyToMsg.reply(text); } catch (e) {
+        if (isBrowserError(e)) return null;
+      }
+    }
+    return await client.sendMessage(chatId, text);
+  } catch (e) {
+    if (!isBrowserError(e)) logger.error("[Send] sendQuestionMessage error:", e.message);
+    try { return await client.sendMessage(chatId, text); } catch { }
+    return null;
+  }
+}
 
 // ── _sendWithRetry ────────────────────────────────────────────────
-// Tries up to maxRetries times with growing delays.
-// Returns the sent message, or null if all attempts failed.
-// Does NOT stop the quiz — caller decides what to do on null.
+const RETRY_DELAYS = [2_000, 4_000, 8_000, 15_000];
+
 async function _sendWithRetry(chatId, text, imgPath, maxRetries = 4) {
-  const DELAYS = [2000, 4000, 8000, 15000]; // progressive backoff
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     const sent = await sendQuestionMessage(chatId, text, imgPath);
     if (sent) return sent;
 
     const s = getOrCreateState(chatId);
-    if (!s.isActive) return null; // quiz was stopped externally — bail cleanly
+    if (!s.isActive) return null; // stopped externally
 
     if (attempt < maxRetries) {
-      const delay = DELAYS[attempt - 1] || 4000;
-      logger.warn(
-        `[Quiz] Send attempt ${attempt}/${maxRetries} failed for ${chatId}, retrying in ${delay}ms`,
-      );
+      const delay = RETRY_DELAYS[attempt - 1] || 4_000;
+      logger.warn(`[Quiz] Send attempt ${attempt}/${maxRetries} failed for ${chatId}, retrying in ${delay}ms`);
       await utils.sleep(delay);
     }
   }
@@ -61,190 +76,94 @@ async function _sendWithRetry(chatId, text, imgPath, maxRetries = 4) {
   return null;
 }
 
-// ── sendQuestionMessage ───────────────────────────────────────────
-async function sendQuestionMessage(chatId, text, imgPath, replyToMsg = null) {
-  try {
-    const media = await utils.loadImage(imgPath);
-    if (media) {
-      try {
-        return await client.sendMessage(chatId, media, { caption: text });
-      } catch (e) {
-        if (isBrowserError(e)) return null;
-        logger.warn(
-          "[Send] Image send failed, falling back to text:",
-          e.message,
-        );
-      }
-    }
-    if (replyToMsg) {
-      try {
-        return await replyToMsg.reply(text);
-      } catch (e) {
-        if (isBrowserError(e)) return null;
-      }
-    }
-    return await client.sendMessage(chatId, text);
-  } catch (e) {
-    if (isBrowserError(e)) return null;
-    logger.error("[Send] sendQuestionMessage error:", e.message);
-    try {
-      return await client.sendMessage(chatId, text);
-    } catch {}
-    return null;
-  }
-}
-
 // ── _pauseAndRetry ────────────────────────────────────────────────
-// Called when sending a question fails entirely.
-// Marks the quiz as paused (NOT stopped), notifies the chat,
-// and schedules a retry after PAUSE_RETRY_MS.
-// Scores and progress are fully preserved.
 async function _pauseAndRetry(chatId, questionText, imgPath, questionIndex) {
   const s = activeQuizzes.get(chatId);
   if (!s || !s.isActive) return;
 
-  // Mark as paused so interval doesn't fire again
-  s.pausedAt = Date.now();
   s.isPaused = true;
+  s.pausedAt = Date.now();
 
-  logger.warn(
-    `[Quiz] Pausing quiz in ${chatId} at Q${questionIndex + 1} — will retry in ${PAUSE_RETRY_MS / 1000}s`,
-  );
+  logger.warn(`[Quiz] Pausing in ${chatId} at Q${questionIndex + 1} — retrying in ${PAUSE_RETRY_MS / 1_000}s`);
 
-  // Tell the group — don't stop, just pause
   await safeSend(
     chatId,
     `⏸️ *Quiz paused* — having trouble sending the next question.\n` +
-      `Retrying in ${PAUSE_RETRY_MS / 1000} seconds... Your scores are safe! 💾`,
+    `Retrying in ${PAUSE_RETRY_MS / 1_000} seconds... Your scores are safe! 💾`,
   );
 
-  setTimeout(async () => {
+  const timer = setTimeout(async () => {
     const current = activeQuizzes.get(chatId);
     if (!current || !current.isActive || !current.isPaused) return;
 
     current.isPaused = false;
     current.pausedAt = null;
 
-    logger.info(`[Quiz] Resuming quiz in ${chatId} at Q${questionIndex + 1}`);
-
+    logger.info(`[Quiz] Resuming in ${chatId} at Q${questionIndex + 1}`);
     const sentMsg = await _sendWithRetry(chatId, questionText, imgPath, 4);
 
     if (!sentMsg) {
-      // Still failing — pause again for longer
       logger.error(`[Quiz] Resume failed for ${chatId} — pausing again`);
       await _pauseAndRetry(chatId, questionText, imgPath, questionIndex);
       return;
     }
 
-    await safeSend(
-      chatId,
-      `▶️ *Quiz resumed!* Q${questionIndex + 1} is above ☝️`,
-    );
-
+    await safeSend(chatId, `▶️ *Quiz resumed!* Q${questionIndex + 1} is above ☝️`);
     current.lastQuestionMsgId = sentMsg?.id?._serialized || null;
     current.questionSentAt = Date.now();
-    await startQuizInterval(chatId);
+    await _scheduleNextQuestion(chatId);
   }, PAUSE_RETRY_MS);
+
+  if (timer.unref) timer.unref();
 }
 
-// ── startQuizInterval ─────────────────────────────────────────────
-async function startQuizInterval(chatId) {
-  const currentState = getOrCreateState(chatId);
-  if (currentState.interval) {
-    clearInterval(currentState.interval);
-    currentState.interval = null;
-  }
+// ── _scheduleNextQuestion (replaces setInterval poll) ────────────
+// Uses a single setTimeout per question. No per-second polling,
+// no drift accumulation, no stale handle references.
+async function _scheduleNextQuestion(chatId) {
+  const s = activeQuizzes.get(chatId);
+  if (!s || !s.isActive) return;
 
   const chatCfg = storage.getQuizConfig(chatId);
+  // Remaining time = interval minus however long we already spent sending/retrying
+  const elapsed = Date.now() - (s.questionSentAt || Date.now());
+  const remaining = Math.max(0, chatCfg.questionInterval - elapsed);
 
-  const intervalHandle = setInterval(async () => {
-    try {
-      const s = activeQuizzes.get(chatId);
-      if (!s) {
-        clearInterval(intervalHandle);
-        return;
-      }
-      if (!s.isActive) {
-        clearInterval(intervalHandle);
-        s.interval = null;
-        return;
-      }
-      // Don't fire while paused
-      if (s.isPaused) return;
-
-      if (s.interval !== intervalHandle) {
-        clearInterval(intervalHandle);
-        return;
-      }
-      const elapsed = Date.now() - (s.questionSentAt || Date.now());
-      if (elapsed >= chatCfg.questionInterval) {
-        clearInterval(intervalHandle);
-        s.interval = null;
-        await processQuestionEnd(chatId);
-      }
-    } catch (error) {
-      if (isBrowserError(error)) {
-        logger.warn(
-          `[Interval] Browser disconnected in ${chatId} — pausing quiz (scores preserved).`,
-        );
-        const s = activeQuizzes.get(chatId);
-        if (s && s.isActive) {
-          if (s.interval) {
-            clearInterval(s.interval);
-            s.interval = null;
-          }
-          // Mark paused, not stopped — quiz can resume when browser reconnects
-          s.isPaused = true;
-          s.pausedAt = Date.now();
-          // Schedule a resume attempt
-          setTimeout(async () => {
-            const latest = activeQuizzes.get(chatId);
-            if (!latest || !latest.isActive || !latest.isPaused) return;
-            latest.isPaused = false;
-            latest.pausedAt = null;
-            logger.info(`[Quiz] Auto-resuming interval in ${chatId}`);
-            await startQuizInterval(chatId);
-          }, PAUSE_RETRY_MS);
-        }
-      } else {
-        logger.error(`[Interval] Error in ${chatId}:`, error.message);
-      }
-    }
-  }, 1000);
-
-  const liveState = activeQuizzes.get(chatId);
-  if (liveState) {
-    liveState.interval = intervalHandle;
-  } else {
-    clearInterval(intervalHandle);
+  // Clear any existing timer
+  if (s._questionTimer) {
+    clearTimeout(s._questionTimer);
+    s._questionTimer = null;
   }
+
+  const timer = setTimeout(async () => {
+    const latest = activeQuizzes.get(chatId);
+    if (!latest || !latest.isActive || latest.isPaused) return;
+    if (latest._questionTimer !== timer) return; // superseded
+    latest._questionTimer = null;
+    await processQuestionEnd(chatId);
+  }, remaining);
+
+  if (timer.unref) timer.unref();
+  s._questionTimer = timer;
 }
 
 // ── processQuestionEnd ────────────────────────────────────────────
 async function processQuestionEnd(chatId) {
-  if (endingQuestion.has(chatId)) {
-    logger.warn(
-      `[Quiz] processQuestionEnd already running for ${chatId} — skipping`,
-    );
-    return;
-  }
-  endingQuestion.add(chatId);
+  const state = activeQuizzes.get(chatId);
+  if (!state || !state.isActive || state._endingQuestion) return;
+  state._endingQuestion = true;
 
   try {
     const { emojis } = CONFIG.messages;
-    const state = activeQuizzes.get(chatId);
-    if (!state || !state.isActive) return;
 
-    // ── COMMIT ANSWERS ──────────────────────────────────────────────
     quizManager.commitAnswers(state);
 
-    // 1. Build results text
     const correctAnswer = quizManager.getCurrentAnswerLetter(state);
-    const correctList = Object.entries(state.currentRespondents || {})
-      .filter(([, d]) => d.isCorrect)
-      .map(([, d]) => d.name);
+    const correctList = Object.values(state.currentRespondents || {})
+      .filter((d) => d.isCorrect)
+      .map((d) => d.name);
 
-    let resultsMsg =
+    const resultsMsg =
       `${emojis.timer} *Time's Up!*\n\n` +
       `${emojis.success} *Correct Answer: ${correctAnswer}*\n\n` +
       (quizManager.getCurrentQuestionExplanation(state) || "") +
@@ -252,17 +171,11 @@ async function processQuestionEnd(chatId) {
       `${emojis.success} *Got it right (${correctList.length}):*\n` +
       (correctList.length > 0 ? correctList.join(", ") : "Nobody this round!");
 
-    // 2. Send results — failure here is non-fatal, quiz continues
-    const resultsSent = await safeSend(chatId, resultsMsg);
-    if (!resultsSent) {
-      logger.warn(
-        `[Quiz] Failed to send results in ${chatId} — continuing anyway`,
-      );
-    }
+    await safeSend(chatId, resultsMsg);
 
-    // 3. AI explanation — fire-and-forget, never blocks quiz flow
+    // AI explanation — fire-and-forget
     const currentQ = quizManager.getCurrentQuestion(state);
-    if (currentQ) {
+    if (currentQ && aiCircuitBreaker.canTry()) {
       safeAi(
         aiService.explainAnswer.bind(aiService),
         currentQ.question,
@@ -270,16 +183,13 @@ async function processQuestionEnd(chatId) {
         state.subject,
         state.year,
       ).then((explanation) => {
-        if (explanation)
-          safeSend(chatId, `${emojis.ai} *AI Insight:* ${explanation}`);
+        if (explanation) safeSend(chatId, `${emojis.ai} *AI Insight:* ${explanation}`);
       });
     }
 
-    // 4. Advance to next question
+    // Advance
     const chatCfg = storage.getQuizConfig(chatId);
     const nextQ = quizManager.nextQuestion(state);
-
-    // Reset respondents AND current answers for the new round
     state.currentRespondents = {};
     state.currentAnswers = {};
 
@@ -289,60 +199,44 @@ async function processQuestionEnd(chatId) {
       const s = activeQuizzes.get(chatId);
       if (!s || !s.isActive) return;
 
-      const questionText = messageFormatter.formatQuestion(
-        nextQ,
-        s.currentQuestionIndex,
-      );
-
+      const questionText = messageFormatter.formatQuestion(nextQ, s.currentQuestionIndex);
       const sentMsg = await _sendWithRetry(chatId, questionText, nextQ.image);
 
       if (!sentMsg) {
-        // ── PAUSE instead of STOP ──────────────────────────────────
-        // Scores survive. Quiz will auto-resume after PAUSE_RETRY_MS.
-        await _pauseAndRetry(
-          chatId,
-          questionText,
-          nextQ.image,
-          s.currentQuestionIndex,
-        );
+        await _pauseAndRetry(chatId, questionText, nextQ.image, s.currentQuestionIndex);
         return;
       }
 
       s.lastQuestionMsgId = sentMsg?.id?._serialized || null;
       s.questionSentAt = Date.now();
-      await startQuizInterval(chatId);
+      await _scheduleNextQuestion(chatId);
     } else {
-      // Quiz complete
-      await utils.sleep(CONFIG.quiz?.delayBeforeResults || 2000);
+      await utils.sleep(CONFIG.quiz?.delayBeforeResults || 2_000);
       await sendFinalResults(chatId);
       quizManager.stop(chatId);
     }
   } catch (err) {
-    // Catch-all: log but do NOT stop the quiz
     if (isBrowserError(err)) {
-      logger.warn(
-        `[Quiz] Browser error in processQuestionEnd for ${chatId} — quiz preserved`,
-      );
+      logger.warn(`[Quiz] Browser error in processQuestionEnd for ${chatId} — quiz preserved`);
       const s = activeQuizzes.get(chatId);
       if (s && s.isActive) {
         s.isPaused = true;
         s.pausedAt = Date.now();
-        setTimeout(async () => {
+        const t = setTimeout(async () => {
           const latest = activeQuizzes.get(chatId);
           if (!latest || !latest.isActive || !latest.isPaused) return;
           latest.isPaused = false;
           latest.pausedAt = null;
-          await startQuizInterval(chatId);
+          await _scheduleNextQuestion(chatId);
         }, PAUSE_RETRY_MS);
+        if (t.unref) t.unref();
       }
     } else {
-      logger.error(
-        `[Quiz] Unexpected error in processQuestionEnd for ${chatId}:`,
-        err.message,
-      );
+      logger.error(`[Quiz] Unexpected error in processQuestionEnd for ${chatId}:`, err.message);
     }
   } finally {
-    endingQuestion.delete(chatId);
+    const s = activeQuizzes.get(chatId);
+    if (s) s._endingQuestion = false;
   }
 }
 
@@ -357,22 +251,18 @@ async function sendFinalResults(chatId) {
   let winnerName = null;
   let winnerScore = 0;
 
-  if (Object.keys(state.scoreBoard || {}).length > 0) {
-    const sorted = Object.entries(state.scoreBoard).sort(
-      (a, b) => b[1].score - a[1].score,
-    );
+  const entries = Object.entries(state.scoreBoard || {});
+  if (entries.length > 0) {
+    entries.sort((a, b) => b[1].score - a[1].score);
     const scoreboardText = await messageFormatter.formatScoreboard(state, true);
     finalMsg += `*${emojis.trophy} Final Scoreboard:*\n\n${scoreboardText}\n\n`;
 
-    if (sorted.length > 0) {
-      const [winnerId, winnerData] = sorted[0];
-      const info = await utils.getUserDisplayInfo(winnerId, winnerData.name);
-      const pct = Math.round((winnerData.score / state.questions.length) * 100);
-      winnerName = info.name;
-      winnerScore = winnerData.score;
-      finalMsg += `${emojis.celebrate} *Winner: ${info.name}*\n`;
-      finalMsg += `Score: ${winnerData.score}/${state.questions.length} (${pct}%)\n\n`;
-    }
+    const [winnerId, winnerData] = entries[0];
+    const info = await utils.getUserDisplayInfo(winnerId, winnerData.name);
+    const pct = Math.round((winnerData.score / state.questions.length) * 100);
+    winnerName = info.name;
+    winnerScore = winnerData.score;
+    finalMsg += `${emojis.celebrate} *Winner: ${info.name}*\nScore: ${winnerData.score}/${state.questions.length} (${pct}%)\n\n`;
   } else {
     finalMsg += `No one answered any questions.\n\n`;
   }
@@ -398,17 +288,29 @@ async function handleAnswer(msg, answerLetter) {
   const chatId = msg.from;
   const state = activeQuizzes.get(chatId);
   if (!state || !state.isActive) return;
+
   try {
     const userId = permissions.getUserId(msg);
-    // Use cached name if getContact fails — never block answer recording
+
+    // Record the answer immediately with a best-effort name
+    // Resolve the contact asynchronously — don't block answer recording
     let userName = userId.replace(/@\S+$/, "");
-    try {
-      const contact = await msg.getContact();
-      userName = contact.pushname || contact.name || contact.number || userName;
-    } catch {
-      // Silent fallback — answer is still recorded with userId-derived name
+    const cached = utils.contactCache.get(userId);
+    if (cached) {
+      userName = cached.name;
+      quizManager.recordAnswer(state, userId, userName, answerLetter);
+    } else {
+      // Record now with fallback name, then update cache in background
+      quizManager.recordAnswer(state, userId, userName, answerLetter);
+      msg.getContact().then((contact) => {
+        const name = contact?.pushname || contact?.name || contact?.number || userName;
+        utils.contactCache.set(userId, { name, text: utils.mentionText(userId), contact });
+        // Update the answer record with real name if still in currentAnswers
+        if (state.currentAnswers?.[userId]) {
+          state.currentAnswers[userId].name = name;
+        }
+      }).catch(() => { /* silent fallback */ });
     }
-    quizManager.recordAnswer(state, userId, userName, answerLetter);
   } catch (e) {
     if (!isBrowserError(e)) logger.error("[Answer] Error:", e.message);
   }
@@ -418,9 +320,7 @@ async function handleAnswer(msg, answerLetter) {
 async function handleStartQuiz(msg, args) {
   const { emojis } = CONFIG.messages;
   if (!(await permissions.isModerator(msg))) {
-    await msg.reply(
-      "⛔ Only Moderators, Bot Admins, or the Owner can start quizzes.",
-    );
+    await msg.reply("⛔ Only Moderators, Bot Admins, or the Owner can start quizzes.");
     return;
   }
   const chatId = msg.from;
@@ -429,15 +329,15 @@ async function handleStartQuiz(msg, args) {
   if (state.isActive) {
     await msg.reply(
       `${emojis.warning} Quiz already running!\n\nSubject: ${state.subject?.toUpperCase()}\n` +
-        `Q${state.currentQuestionIndex + 1}/${state.questions.length}\n\n` +
-        `Use ${CONFIG.bot.prefix}stop to end it.`,
+      `Q${state.currentQuestionIndex + 1}/${state.questions.length}\n\n` +
+      `Use ${CONFIG.bot.prefix}stop to end it.`,
     );
     return;
   }
   if (args.length < 2) {
     await msg.reply(
       `${emojis.error} Usage: ${CONFIG.bot.prefix}start [subject] [year]\n` +
-        `Example: ${CONFIG.bot.prefix}start biology 2014\nOr use \`all\` for all years.`,
+      `Example: ${CONFIG.bot.prefix}start biology 2014\nOr use \`all\` for all years.`,
     );
     return;
   }
@@ -447,9 +347,7 @@ async function handleStartQuiz(msg, args) {
   const started = await quizManager.start(subject, year, chatId);
 
   if (!started) {
-    await msg.reply(
-      `${emojis.error} No questions found for *${subject} ${year}*.`,
-    );
+    await msg.reply(`${emojis.error} No questions found for *${subject} ${year}*.`);
     return;
   }
 
@@ -460,19 +358,19 @@ async function handleStartQuiz(msg, args) {
 
   await msg.reply(
     `${emojis.trophy} *Quiz Started!*\n\n` +
-      `📖 Subject: *${subject.toUpperCase()}*\n` +
-      `📅 Year: *${year}*\n` +
-      `📋 Questions: *${freshState.questions.length}*\n` +
-      `${emojis.timer} Time per question: *${utils.formatSeconds(chatCfg.questionInterval)}*\n` +
-      `⏳ Delay between Qs: *${utils.formatSeconds(chatCfg.delayBeforeNextQuestion)}*\n\n` +
-      `Send *A, B, C, or D* to answer each question.\n` +
-      `You can change your answer until time is up! Good luck 🍀`,
+    `📖 Subject: *${subject.toUpperCase()}*\n` +
+    `📅 Year: *${year}*\n` +
+    `📋 Questions: *${freshState.questions.length}*\n` +
+    `${emojis.timer} Time per question: *${utils.formatSeconds(chatCfg.questionInterval)}*\n` +
+    `⏳ Delay between Qs: *${utils.formatSeconds(chatCfg.delayBeforeNextQuestion)}*\n\n` +
+    `Send *A, B, C, or D* to answer each question.\n` +
+    `You can change your answer until time is up! Good luck 🍀`,
   );
 
   const welcome = storage.getWelcomeMessage(chatId);
   if (welcome) await safeSend(chatId, welcome);
 
-  await utils.sleep(chatCfg.delayBeforeFirstQuestion || 3000);
+  await utils.sleep(chatCfg.delayBeforeFirstQuestion || 3_000);
 
   const s = activeQuizzes.get(chatId);
   if (!s || !s.isActive) return;
@@ -480,20 +378,11 @@ async function handleStartQuiz(msg, args) {
   const firstQ = quizManager.getCurrentQuestion(s);
   if (!firstQ) return;
 
-  const sentMsg = await _sendWithRetry(
-    chatId,
-    messageFormatter.formatQuestion(firstQ, 0),
-    firstQ.image,
-  );
+  const firstText = messageFormatter.formatQuestion(firstQ, 0);
+  const sentMsg = await _sendWithRetry(chatId, firstText, firstQ.image);
 
   if (!sentMsg) {
-    // Pause on first question too — don't kill the quiz before it starts
-    await _pauseAndRetry(
-      chatId,
-      messageFormatter.formatQuestion(firstQ, 0),
-      firstQ.image,
-      0,
-    );
+    await _pauseAndRetry(chatId, firstText, firstQ.image, 0);
     return;
   }
 
@@ -501,16 +390,14 @@ async function handleStartQuiz(msg, args) {
   if (!liveState || !liveState.isActive) return;
   liveState.lastQuestionMsgId = sentMsg?.id?._serialized || null;
   liveState.questionSentAt = Date.now();
-  await startQuizInterval(chatId);
+  await _scheduleNextQuestion(chatId);
 }
 
 // ── handleStopQuiz ────────────────────────────────────────────────
 async function handleStopQuiz(msg) {
   const { emojis } = CONFIG.messages;
   if (!(await permissions.isModerator(msg))) {
-    await msg.reply(
-      "⛔ Only Moderators, Bot Admins, or the Owner can stop quizzes.",
-    );
+    await msg.reply("⛔ Only Moderators, Bot Admins, or the Owner can stop quizzes.");
     return;
   }
   const chatId = msg.from;
@@ -520,16 +407,17 @@ async function handleStopQuiz(msg) {
     return;
   }
   const stats = quizManager.getStats(state);
-  let stopMsg =
+  const hasScores = Object.keys(state.scoreBoard || {}).length > 0;
+  const scoreText = hasScores
+    ? `*Scores:*\n${await messageFormatter.formatScoreboard(state)}`
+    : "No scores recorded.";
+
+  quizManager.stop(chatId);
+  await msg.reply(
     `${emojis.stop} *Quiz Stopped*\n\n` +
     `Progress: ${stats.completedQuestions}/${stats.totalQuestions}\n` +
-    `Duration: ${stats.duration}\n\n`;
-  stopMsg +=
-    Object.keys(state.scoreBoard || {}).length > 0
-      ? `*Scores:*\n${await messageFormatter.formatScoreboard(state)}`
-      : "No scores recorded.";
-  quizManager.stop(chatId);
-  await msg.reply(stopMsg);
+    `Duration: ${stats.duration}\n\n${scoreText}`,
+  );
 }
 
 // ── handleScore ───────────────────────────────────────────────────
@@ -538,9 +426,7 @@ async function handleScore(msg) {
   const chatId = msg.from;
   const state = activeQuizzes.get(chatId);
   if (!state || !state.isActive) {
-    await msg.reply(
-      `${emojis.warning} No active quiz.\n\nStart with ${CONFIG.bot.prefix}start [subject] [year]`,
-    );
+    await msg.reply(`${emojis.warning} No active quiz.\n\nStart with ${CONFIG.bot.prefix}start [subject] [year]`);
     return;
   }
   if (Object.keys(state.scoreBoard || {}).length === 0) {
@@ -548,9 +434,7 @@ async function handleScore(msg) {
     return;
   }
   const sb = await messageFormatter.formatScoreboard(state, true);
-  const pauseNote = state.isPaused
-    ? "\n\n⏸️ _Quiz is currently paused — will resume shortly_"
-    : "";
+  const pauseNote = state.isPaused ? "\n\n⏸️ _Quiz is currently paused — will resume shortly_" : "";
   await msg.reply(
     `${emojis.chart} *Scoreboard*\n\n${sb}\n\nQ: ${state.currentQuestionIndex + 1}/${state.questions.length}${pauseNote}`,
   );
@@ -565,16 +449,14 @@ async function handleStats(msg) {
     return;
   }
   const stats = quizManager.getStats(state);
-  const pauseNote = state.isPaused
-    ? "\n⏸️ Status: *Paused* (auto-resuming)"
-    : "\n▶️ Status: *Running*";
+  const statusNote = state.isPaused ? "\n⏸️ Status: *Paused* (auto-resuming)" : "\n▶️ Status: *Running*";
   await msg.reply(
     `${emojis.info} *Quiz Stats*\n\n` +
-      `Subject: ${state.subject?.toUpperCase()} ${state.year}\n` +
-      `Progress: ${stats.completedQuestions}/${stats.totalQuestions}\n` +
-      `Remaining: ${stats.remainingQuestions}\n` +
-      `Participants: ${stats.participants}\n` +
-      `Duration: ${stats.duration}${pauseNote}`,
+    `Subject: ${state.subject?.toUpperCase()} ${state.year}\n` +
+    `Progress: ${stats.completedQuestions}/${stats.totalQuestions}\n` +
+    `Remaining: ${stats.remainingQuestions}\n` +
+    `Participants: ${stats.participants}\n` +
+    `Duration: ${stats.duration}${statusNote}`,
   );
 }
 
@@ -592,12 +474,14 @@ async function handleQuestion(msg, args) {
   }
   const text =
     `*🎲 Practice Question*\n${subject.toUpperCase()} ${year}\n\n` +
-    messageFormatter.formatQuestion(
-      { ...result.question, year },
-      result.index,
-    ) +
+    messageFormatter.formatQuestion({ ...result.question, year }, result.index) +
     `\n\n_Reply A, B, C, or D_`;
   await sendQuestionMessage(msg.from, text, result.question.image, msg);
+}
+
+// Legacy export kept for api-server.js and commandHandler.js compatibility
+function startQuizInterval(chatId) {
+  return _scheduleNextQuestion(chatId);
 }
 
 module.exports = {

@@ -1,10 +1,12 @@
 /**
- * utils.js — JAMB Quiz Bot v3.2.0
+ * utils.js — JAMB Quiz Bot v3.4.0
  *
- * Multi-group optimization: getUserDisplayInfo now uses an LRU cache
- * with a 10-minute TTL. In a busy multi-group scenario, scoreboards
- * are rendered frequently and each entry previously triggered a WA
- * contact lookup. The cache eliminates redundant round-trips.
+ * Optimizations:
+ * - LRU cache uses a doubly-linked list for O(1) eviction instead of
+ *   Map iteration (was O(n) on every insertion once cache was full).
+ * - fetchUrl reuses a persistent HTTPS agent (keep-alive).
+ * - loadImage avoids redundant fs.access() — just reads and handles ENOENT.
+ * - getUserDisplayInfo never throws, always returns a safe fallback.
  */
 
 const path = require("path");
@@ -15,46 +17,88 @@ const fs = require("fs").promises;
 const CONFIG = require("./config");
 const logger = require("./logger");
 
-// ── LRU contact cache ─────────────────────────────────────────────
-// Keyed by userId. Evicts least-recently-used entries at MAX_SIZE.
-// TTL of 10 min prevents stale display names from persisting forever.
+// ── O(1) LRU contact cache ────────────────────────────────────────
+// Doubly-linked list (head = MRU, tail = LRU) + Map for O(1) lookup.
 const contactCache = (() => {
   const MAX_SIZE = 500;
   const TTL_MS = 10 * 60 * 1000;
-  const map = new Map(); // insertion order = LRU order
+
+  // Node shape: { key, value, ts, prev, next }
+  let head = null; // most-recently used
+  let tail = null; // least-recently used
+  const map = new Map();
+
+  function unlink(node) {
+    if (node.prev) node.prev.next = node.next;
+    else head = node.next;
+    if (node.next) node.next.prev = node.prev;
+    else tail = node.prev;
+    node.prev = node.next = null;
+  }
+
+  function pushFront(node) {
+    node.next = head;
+    node.prev = null;
+    if (head) head.prev = node;
+    head = node;
+    if (!tail) tail = node;
+  }
+
+  function evictTail() {
+    if (!tail) return;
+    map.delete(tail.key);
+    unlink(tail);
+  }
 
   return {
-    get(userId) {
-      const entry = map.get(userId);
-      if (!entry) return null;
-      if (Date.now() - entry.ts > TTL_MS) {
-        map.delete(userId);
+    get(key) {
+      const node = map.get(key);
+      if (!node) return null;
+      if (Date.now() - node.ts > TTL_MS) {
+        map.delete(key);
+        unlink(node);
         return null;
       }
-      // Refresh LRU position
-      map.delete(userId);
-      map.set(userId, entry);
-      return entry.value;
-    },
-
-    set(userId, value) {
-      if (map.size >= MAX_SIZE) {
-        // Evict oldest (first key)
-        map.delete(map.keys().next().value);
+      // Move to front (MRU)
+      if (node !== head) {
+        unlink(node);
+        pushFront(node);
       }
-      if (map.has(userId)) map.delete(userId); // reset position
-      map.set(userId, { value, ts: Date.now() });
+      return node.value;
     },
 
-    // Exposed for debugging / dashboard
-    size() {
-      return map.size;
+    set(key, value) {
+      if (map.has(key)) {
+        const node = map.get(key);
+        node.value = value;
+        node.ts = Date.now();
+        if (node !== head) {
+          unlink(node);
+          pushFront(node);
+        }
+        return;
+      }
+      if (map.size >= MAX_SIZE) evictTail();
+      const node = { key, value, ts: Date.now(), prev: null, next: null };
+      map.set(key, node);
+      pushFront(node);
     },
+
+    size() { return map.size; },
     clear() {
       map.clear();
+      head = tail = null;
     },
   };
 })();
+
+// ── Persistent HTTPS agent for image fetching ─────────────────────
+const fetchAgent = new https.Agent({
+  keepAlive: true,
+  keepAliveMsecs: 30_000,
+  maxSockets: 8,
+  timeout: 15_000,
+});
 
 // ──────────────────────────────────────────────────────────────────
 const utils = {
@@ -74,9 +118,7 @@ const utils = {
     return `${s}s`;
   },
 
-  formatSeconds(ms) {
-    return `${ms / 1000}s`;
-  },
+  formatSeconds(ms) { return `${ms / 1000}s`; },
 
   mentionText(userId) {
     return `@${userId.replace(/@\S+$/, "")}`;
@@ -85,52 +127,42 @@ const utils = {
   guessMimeType(url, buffer) {
     if (buffer && buffer.length >= 4) {
       const hex = buffer.slice(0, 4).toString("hex");
-      if (hex.startsWith("ffd8ff")) return "image/jpeg";
+      if (hex.startsWith("ffd8ff"))   return "image/jpeg";
       if (hex.startsWith("89504e47")) return "image/png";
       if (hex.startsWith("47494638")) return "image/gif";
       if (hex.startsWith("52494646")) return "image/webp";
     }
-    const clean = url.split("?")[0].split("#")[0].toLowerCase();
-    const ext = clean.split(".").pop();
-    const map = {
-      jpg: "image/jpeg",
-      jpeg: "image/jpeg",
-      png: "image/png",
-      gif: "image/gif",
-      webp: "image/webp",
-      bmp: "image/bmp",
-    };
-    return map[ext] || "image/jpeg";
+    const ext = url.split("?")[0].split(".").pop().toLowerCase();
+    return { jpg: "image/jpeg", jpeg: "image/jpeg", png: "image/png",
+             gif: "image/gif", webp: "image/webp", bmp: "image/bmp" }[ext] || "image/jpeg";
   },
 
   fetchUrl(url, redirectCount = 0) {
-    if (redirectCount > 5)
-      return Promise.reject(new Error("Too many redirects"));
+    if (redirectCount > 5) return Promise.reject(new Error("Too many redirects"));
     return new Promise((resolve, reject) => {
-      const protocol = url.startsWith("https") ? https : http;
-      protocol
-        .get(url, { headers: { "User-Agent": "WhatsApp/2.0" } }, (res) => {
-          if (
-            [301, 302, 303, 307, 308].includes(res.statusCode) &&
-            res.headers.location
-          ) {
-            return resolve(
-              this.fetchUrl(res.headers.location, redirectCount + 1),
-            );
-          }
-          if (res.statusCode !== 200) {
-            return reject(new Error(`HTTP ${res.statusCode} for ${url}`));
-          }
-          const chunks = [];
-          res.on("data", (chunk) => chunks.push(chunk));
-          res.on("end", () => {
-            const buffer = Buffer.concat(chunks);
-            const mimeType = this.guessMimeType(url, buffer);
-            resolve({ buffer, mimeType });
-          });
-          res.on("error", reject);
-        })
-        .on("error", reject);
+      const isHttps = url.startsWith("https");
+      const protocol = isHttps ? https : http;
+      const reqOptions = { headers: { "User-Agent": "WhatsApp/2.0" } };
+      if (isHttps) reqOptions.agent = fetchAgent;
+
+      protocol.get(url, reqOptions, (res) => {
+        if ([301, 302, 303, 307, 308].includes(res.statusCode) && res.headers.location) {
+          // Consume response to free socket
+          res.resume();
+          return resolve(this.fetchUrl(res.headers.location, redirectCount + 1));
+        }
+        if (res.statusCode !== 200) {
+          res.resume();
+          return reject(new Error(`HTTP ${res.statusCode} for ${url}`));
+        }
+        const chunks = [];
+        res.on("data", (chunk) => chunks.push(chunk));
+        res.on("end", () => {
+          const buffer = Buffer.concat(chunks);
+          resolve({ buffer, mimeType: this.guessMimeType(url, buffer) });
+        });
+        res.on("error", reject);
+      }).on("error", reject);
     });
   },
 
@@ -138,9 +170,7 @@ const utils = {
     if (!imgPath) return null;
     try {
       if (imgPath.startsWith("http://") || imgPath.startsWith("https://")) {
-        logger.debug(`Fetching image URL: ${imgPath}`);
         const { buffer, mimeType } = await this.fetchUrl(imgPath);
-        logger.debug(`Image loaded: ${mimeType} (${buffer.length} bytes)`);
         const base64 = buffer.toString("base64");
         const ext = mimeType.split("/")[1] || "jpg";
         return new MessageMedia(mimeType, base64, `image.${ext}`);
@@ -148,13 +178,12 @@ const utils = {
       const resolved = path.isAbsolute(imgPath)
         ? imgPath
         : path.join(CONFIG.data.dataDirectory, imgPath);
-      await fs.access(resolved);
+      // Read directly — avoid a redundant fs.access() syscall
       const buffer = await fs.readFile(resolved);
       const mimeType = this.guessMimeType(resolved, buffer);
-      const base64 = buffer.toString("base64");
-      return new MessageMedia(mimeType, base64, path.basename(resolved));
+      return new MessageMedia(mimeType, buffer.toString("base64"), path.basename(resolved));
     } catch (e) {
-      logger.warn(`Failed to load image (${imgPath}): ${e.message}`);
+      if (e.code !== "ENOENT") logger.warn(`Failed to load image (${imgPath}): ${e.message}`);
       return null;
     }
   },
@@ -169,24 +198,18 @@ const utils = {
   },
 
   _client: null,
-
-  setClient(client) {
-    this._client = client;
-  },
+  setClient(client) { this._client = client; },
 
   async getContact(userId) {
     try {
-      if (!this._client) throw new Error("Client not initialized");
+      if (!this._client) return null;
       return await this._client.getContactById(userId);
-    } catch (e) {
-      logger.warn(`getContact failed for ${userId}: ${e.message}`);
+    } catch {
       return null;
     }
   },
 
-  // ── Cached display info lookup ────────────────────────────────────
-  // Hot path: called for every scoreboard entry in every active group.
-  // Caching avoids O(participants × groups) WA contact round-trips.
+  // ── Cached display-info lookup ────────────────────────────────────
   async getUserDisplayInfo(userId, fallbackName = null) {
     const cached = contactCache.get(userId);
     if (cached) return cached;
@@ -204,7 +227,6 @@ const utils = {
     return info;
   },
 
-  // Expose cache for monitoring (dashboard can report cache size)
   contactCache,
 };
 

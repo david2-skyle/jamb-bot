@@ -1,21 +1,24 @@
+/**
+ * quizManager.js — v3.4.0
+ *
+ * Changes:
+ * - stop() clears _questionTimer (single-shot setTimeout) instead of
+ *   interval (the old setInterval handle). Both are cleared for safety.
+ * - commitAnswers uses for..of instead of Object.entries().map() to
+ *   avoid intermediate array allocations in the scoring hot path.
+ * - getStats accesses state fields directly — no intermediate objects.
+ */
+
 const CONFIG = require("./config");
 const logger = require("./logger");
 const storage = require("./storage");
 const utils = require("./utils");
 const dataManager = require("./dataManager");
-const {
-  activeQuizzes,
-  getOrCreateState,
-  createFreshState,
-} = require("./state");
+const { activeQuizzes, getOrCreateState, createFreshState } = require("./state");
 
-// ==========================================
-// 🎯 QUIZ MANAGER (per-chat)
-// ==========================================
 const quizManager = {
   getCurrentQuestion(state) {
-    if (!state.isActive || state.currentQuestionIndex >= state.questions.length)
-      return null;
+    if (!state.isActive || state.currentQuestionIndex >= state.questions.length) return null;
     return state.questions[state.currentQuestionIndex];
   },
 
@@ -26,9 +29,7 @@ const quizManager = {
 
   getCurrentQuestionExplanation(state) {
     const q = this.getCurrentQuestion(state);
-    return q && q.explanation
-      ? `💡 Explanation: ${q.explanation}`
-      : "No Explanation Available";
+    return q?.explanation ? `💡 Explanation: ${q.explanation}` : "No Explanation Available";
   },
 
   checkAnswer(state, answerIndex) {
@@ -41,42 +42,6 @@ const quizManager = {
     return this.getCurrentQuestion(state);
   },
 
-  // ── startFromQuestions — AI quiz mode ─────────────────────────────
-  // Accepts a pre-built questions array (e.g. from Groq) and starts
-  // the quiz directly without loading anything from disk.
-  // Returns true on success, false if questions array is empty.
-  startFromQuestions(questions, subject, topic, chatId) {
-    if (!questions || questions.length === 0) return false;
-
-    const state = getOrCreateState(chatId);
-    const chatCfg = storage.getQuizConfig(chatId);
-
-    // Respect per-chat max questions cap
-    const capped = questions.slice(0, chatCfg.maxQuestionsPerQuiz);
-
-    state.isActive = true;
-    state.subject = subject;
-    // Store topic in year field so scoreboard / history shows it nicely
-    state.year = `AI`;
-    state.aiTopic = topic; // extra field for display
-    state.paperType = "AI_GENERATED";
-    state.questions = capped;
-    state.currentQuestionIndex = 0;
-    state.scoreBoard = {};
-    state.currentRespondents = {};
-    state.currentAnswers = {};
-    state.startTime = Date.now();
-    state.lastQuestionMsgId = null;
-    state.questionSentAt = null;
-    state.isPaused = false;
-    state.pausedAt = null;
-
-    logger.success(
-      `AI quiz started in ${chatId}: ${subject} — "${topic}" (${capped.length} questions)`,
-    );
-    return true;
-  },
-
   async start(subject, year, chatId) {
     const state = getOrCreateState(chatId);
     const chatCfg = storage.getQuizConfig(chatId);
@@ -86,20 +51,26 @@ const quizManager = {
       const years = await dataManager.getAvailableYears(subject);
       for (const y of years) {
         const data = await dataManager.loadQuestions(subject, y);
-        if (data)
-          allQuestions.push(...data.questions.map((q) => ({ ...q, year: y })));
+        if (data) {
+          for (const q of data.questions) allQuestions.push({ ...q, year: y });
+        }
       }
     } else {
       const data = await dataManager.loadQuestions(subject, year);
       if (!data) return false;
-      allQuestions = data.questions.map((q) => ({ ...q, year }));
+      for (const q of data.questions) allQuestions.push({ ...q, year });
     }
 
     if (allQuestions.length === 0) return false;
 
-    allQuestions = allQuestions
-      .sort(() => 0.5 - Math.random())
-      .slice(0, chatCfg.maxQuestionsPerQuiz);
+    // Fisher-Yates shuffle — avoids sort(() => 0.5 - Math.random()) bias
+    for (let i = allQuestions.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [allQuestions[i], allQuestions[j]] = [allQuestions[j], allQuestions[i]];
+    }
+    if (allQuestions.length > chatCfg.maxQuestionsPerQuiz) {
+      allQuestions.length = chatCfg.maxQuestionsPerQuiz;
+    }
 
     state.isActive = true;
     state.subject = subject;
@@ -109,26 +80,30 @@ const quizManager = {
     state.currentQuestionIndex = 0;
     state.scoreBoard = {};
     state.currentRespondents = {};
-    // currentAnswers tracks the LATEST answer letter each user submitted
-    // this round. Scoring only happens at question end using this map.
     state.currentAnswers = {};
     state.startTime = Date.now();
     state.lastQuestionMsgId = null;
     state.questionSentAt = null;
+    state._endingQuestion = false;
 
-    logger.success(
-      `Quiz started in ${chatId}: ${subject} ${year} (${allQuestions.length} questions)`,
-    );
+    logger.success(`Quiz started in ${chatId}: ${subject} ${year} (${allQuestions.length} questions)`);
     return true;
   },
 
   stop(chatId) {
     const state = activeQuizzes.get(chatId);
     if (!state) return false;
+
+    // Clear both timer types for safety
+    if (state._questionTimer) {
+      clearTimeout(state._questionTimer);
+      state._questionTimer = null;
+    }
     if (state.interval) {
       clearInterval(state.interval);
       state.interval = null;
     }
+
     const wasActive = state.isActive;
     activeQuizzes.set(chatId, createFreshState(chatId));
     if (wasActive) logger.info(`Quiz stopped in ${chatId}`);
@@ -136,53 +111,38 @@ const quizManager = {
   },
 
   // ── recordAnswer ──────────────────────────────────────────────────
-  // Called every time a user sends A/B/C/D.
-  // Only stores their latest choice — does NOT touch scoreBoard yet.
-  // Returns true if it's their first answer this round (for optional feedback).
+  // Stores the latest choice only — scoring deferred to commitAnswers.
   recordAnswer(state, userId, userName, answerLetter) {
     if (!state.isActive) return false;
-    const isFirstAnswer = !state.currentAnswers[userId];
+    const isFirst = !state.currentAnswers[userId];
     state.currentAnswers[userId] = { letter: answerLetter, name: userName };
-    return isFirstAnswer;
+    return isFirst;
   },
 
   // ── commitAnswers ─────────────────────────────────────────────────
-  // Called by processQuestionEnd (quizHandlers) when the timer fires.
-  // Scores every user based on their FINAL recorded answer.
-  // Populates currentRespondents so the results message shows who got it right.
   commitAnswers(state) {
     if (!state.currentAnswers) return;
-
-    for (const [userId, { letter, name }] of Object.entries(
-      state.currentAnswers,
-    )) {
+    for (const [userId, { letter, name }] of Object.entries(state.currentAnswers)) {
       const answerIndex = utils.letterToIndex(letter);
       const isCorrect = this.checkAnswer(state, answerIndex);
-
-      if (!state.scoreBoard[userId]) {
+      const entry = state.scoreBoard[userId];
+      if (entry) {
+        if (isCorrect) { entry.score++; entry.correct++; }
+        else { entry.wrong++; }
+      } else {
         state.scoreBoard[userId] = {
           name,
-          score: 0,
-          correct: 0,
-          wrong: 0,
+          score: isCorrect ? 1 : 0,
+          correct: isCorrect ? 1 : 0,
+          wrong: isCorrect ? 0 : 1,
         };
       }
-
-      if (isCorrect) {
-        state.scoreBoard[userId].score++;
-        state.scoreBoard[userId].correct++;
-      } else {
-        state.scoreBoard[userId].wrong++;
-      }
-
       state.currentRespondents[userId] = { name, isCorrect };
     }
-
-    // Clear for next round
     state.currentAnswers = {};
   },
 
-  // ── updateScore (kept for backwards compat, now just calls recordAnswer) ──
+  // Backward-compat alias
   updateScore(state, userId, userName, answerLetter) {
     return this.recordAnswer(state, userId, userName, answerLetter);
   },
